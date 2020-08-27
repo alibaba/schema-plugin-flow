@@ -23,7 +23,7 @@
   "scripts": {
     "prepare": "npm run build",
     "test": "mocha --compilers js:@babel/register test/index.test.js ",
-    "lint": "eslint 'src/**/*.@(js|jsx)'",
+    "lint": "eslint --ext .jsx,.js src/",
     "precommit": "npm run lint",
     "backup-prepublish": "npm run lint && npm run build",
     "type-check": "tsc --noEmit --watch",

@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "build": "babel --root-mode upward src --out-dir lib --extensions \".ts,.tsx,.js,.jsx\"",
-    "lint": "eslint 'src/**/*.@(js|jsx)'",
+    "lint": "eslint --ext .jsx,.js src/",
     "precommit": "npm run lint",
     "prepare": "npm run lint && npm run build"
   },

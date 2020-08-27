@@ -21,7 +21,7 @@
     "build": "npm run build:js",
     "build:js": "babel --root-mode upward src --out-dir lib --extensions \".ts,.tsx,.js,.jsx\"",
     "test": "mocha --compilers js:@babel/register test/index.test.js ",
-    "lint": "eslint 'src/**/*.@(js|jsx)'",
+    "lint": "eslint --ext .jsx,.js src/",
     "precommit": "npm run lint",
     "prepare": "npm run lint && npm run build"
   },

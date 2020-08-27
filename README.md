@@ -28,5 +28,6 @@ $ npm run start
 *  then visit `http://localhost:8000`.
 
 ## SifoApp (sifo-react) Demo
-In this demo, there are seven independent extend-plugins. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.
+In this demo, there are seven independent extend-plugins. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
+
   ![demo](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

@@ -1,0 +1,104 @@
+{
+  "settings": {
+    "import/core-modules": [
+      "react",
+      "react-dom",
+      "prop-types"
+    ]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "comma-dangle": 0,
+    "no-plusplus": 0,
+    "arrow-parens": [
+      2,
+      "as-needed"
+    ],
+    "no-mixed-operators": [
+      "error",
+      {
+        "groups": [
+          [
+            "%",
+            "**"
+          ],
+          [
+            "%",
+            "+"
+          ],
+          [
+            "%",
+            "-"
+          ],
+          [
+            "%",
+            "*"
+          ],
+          [
+            "%",
+            "/"
+          ],
+          [
+            "**",
+            "+"
+          ],
+          [
+            "**",
+            "-"
+          ],
+          [
+            "**",
+            "*"
+          ],
+          [
+            "**",
+            "/"
+          ],
+          [
+            "&",
+            "|",
+            "^",
+            "~",
+            "<<",
+            ">>",
+            ">>>"
+          ],
+          [
+            "==",
+            "!=",
+            "===",
+            "!==",
+            ">",
+            ">=",
+            "<",
+            "<="
+          ],
+          [
+            "&&",
+            "||"
+          ],
+          [
+            "in",
+            "instanceof"
+          ]
+        ],
+        "allowSamePrecedence": false
+      }
+    ],
+    "no-template-curly-in-string": 1,
+    "jsx-a11y/label-has-for": 0
+  }
+}

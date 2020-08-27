@@ -1,0 +1,77 @@
+{
+  "component": "Container",
+  "id": "$form_demo",
+  "attributes": {
+    "className": "form-demo"
+  },
+  "children": [
+    {
+      "component": "Form",
+      "id": "$form_id",
+      "attributes": {
+        "className": "form-demo-form"
+      },
+      "children": [
+        {
+          "id": "userName",
+          "component": "Input",
+          "attributes": {
+            "name": "userName",
+            "label": "user name",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "gender",
+          "component": "Select",
+          "attributes": {
+            "name": "gender",
+            "label": "gender",
+            "options": [
+              {
+                "value": "male",
+                "label": "male"
+              },
+              {
+                "value": "female",
+                "label": "female"
+              },
+              {
+                "value": "other",
+                "label": "other"
+              }
+            ],
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "component": "Container",
+      "id": "$footer_id",
+      "attributes": {
+        "className": "form-demo-footer"
+      },
+      "children": [
+        {
+          "component": "Button",
+          "id": "$submit",
+          "attributes": {
+            "type": "primary"
+          },
+          "children": [
+            "Submit"
+          ]
+        }
+      ]
+    }
+  ]
+}

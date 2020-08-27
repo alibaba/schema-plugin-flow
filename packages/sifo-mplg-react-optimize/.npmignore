@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+.build
+npm-debug.log
+npm-debug.log.*
+mochawesome-reports/
+node_modules/
+demo/
+test/
+src/

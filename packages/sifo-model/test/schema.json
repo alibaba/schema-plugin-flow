@@ -1,0 +1,105 @@
+{
+  "id": "container",
+  "component": "Container",
+  "attributes": {
+    "label": "容器main"
+  },
+  "children": [
+    {
+      "id": "container",
+      "component": "Container",
+      "attributes": {
+        "label": "容器iddup"
+      },
+      "children": [
+        {
+          "component": "Input",
+          "attributes": {
+            "onChange": "{onSubjectChange}",
+            "className": "pcp-subject",
+            "dataType": "text",
+            "id": "subject",
+            "name": "subject",
+            "label": "询价单标题",
+            "rules": {
+              "required": true,
+              "maxLength": 60
+            }
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test02",
+            "name": "test02",
+            "label": "test02",
+            "rules": {}
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test03",
+            "name": "test03",
+            "label": "test03",
+            "rules": {}
+          },
+          "children":[
+            {
+              "component": "Input",
+              "attributes": {
+                "onChange": "{onSubjectChange}",
+                "className": "pcp-subject",
+                "dataType": "text",
+                "id": "subject111",
+                "name": "subject111",
+                "label": "询价单标题111",
+                "rules": {
+                  "required": true,
+                  "maxLength": 60
+                }
+              }
+            }
+          ]
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test04",
+            "name": "test04",
+            "label": "test04",
+            "rules": {}
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test05",
+            "name": "test05",
+            "label": "test05",
+            "rules": {}
+          }
+        }
+      ]
+    },
+    {
+      "component": "Select",
+      "attributes": {
+        "onChange": "{onSubjectChange}",
+        "className": "pcp-subject",
+        "dataType": "select",
+        "id": "subject222",
+        "name": "subject222",
+        "label": "询价单标题222",
+        "rules": {
+          "required": true,
+          "maxLength": 60
+        }
+      }
+    }
+  ]
+}

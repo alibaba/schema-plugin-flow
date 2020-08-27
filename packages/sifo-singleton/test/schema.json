@@ -1,0 +1,35 @@
+{
+  "id":"container",
+  "component": "Container",
+  "attributes": {
+    "label": "容器"
+  },
+  "children": [
+    {
+      "component": "Input",
+      "attributes": {
+        "onChange": "{onSubjectChange}",
+        "className": "pcp-subject",
+        "dataType": "text",
+        "id": "subject",
+        "name": "subject",
+        "label": "询价单标题",
+        "rules": {
+          "required": true,
+          "maxLength": 60
+        }
+      }
+    },
+    {
+      "component": "Input",
+      "attributes": {
+        "dataType": "text",
+        "id": "test02",
+        "name": "test02",
+        "label": "test02",
+        "rules": {
+        }
+      }
+    }
+  ]
+}

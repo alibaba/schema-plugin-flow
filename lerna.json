@@ -1,0 +1,29 @@
+{
+  "version": "independent",
+  "npmClient": "npm",
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "*.md",
+        "*.txt",
+        "docs/**",
+        "examples/**",
+        "test/**",
+        "**/test/**",
+        "demo/**",
+        "**/demo/**",
+        "node_modules/",
+        "**/node_modules/"
+      ],
+      "message": "chore(release): publish"
+    },
+    "bootstrap": {
+      "sifo-build-remarks": ["packages using different build tools"],
+      "hoist": false,
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
+  "packages": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "container",
+  "component": "Container",
+  "attributes": {
+    "id": "container",
+    "label": "容器"
+  },
+  "children": [
+    {
+      "id": "container01",
+      "component": "Container",
+      "attributes": {
+        "id": "container01",
+        "label": "容器01"
+      },
+      "children": [
+        {
+          "component": "Input",
+          "attributes": {
+            "onChange": "{onSubjectChange}",
+            "className": "pcp-subject",
+            "dataType": "text",
+            "id": "subject01",
+            "name": "subject01",
+            "label": "询价单标题01",
+            "value": "",
+            "rules": {
+              "required": true,
+              "maxLength": 60
+            }
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test01",
+            "value": "",
+            "name": "test01",
+            "label": "test01",
+            "rules": {}
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test03",
+            "value": "",
+            "name": "test03",
+            "label": "test03",
+            "rules": {}
+          }
+        },
+        "纯文本节点"
+      ]
+    },
+    {
+      "component": "Container",
+      "attributes": {
+        "label": "容器02"
+      },
+      "children": [
+        {
+          "component": "Input",
+          "attributes": {
+            "onChange": "{onSubjectChange}",
+            "className": "pcp-subject",
+            "dataType": "text",
+            "id": "subject02",
+            "value": "",
+            "name": "subject02",
+            "label": "询价单标题02",
+            "rules": {
+              "required": true,
+              "maxLength": 60
+            }
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "dataType": "text",
+            "id": "test02",
+            "value": "",
+            "name": "test02",
+            "label": "test02",
+            "rules": {}
+          }
+        }
+      ]
+    }
+  ]
+}

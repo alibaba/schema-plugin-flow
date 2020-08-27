@@ -1,0 +1,15 @@
+node_modules/
+docs/
+demo/
+examples/
+webpack.config.js
+test/
+dist/
+lib/
+node_modules/
+/packages/*/node_modules
+/packages/*/lib
+/packages/*/dist
+dist/
+mochawesome-reports/
+lib/

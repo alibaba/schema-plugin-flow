@@ -8,7 +8,7 @@ Sifo Model 是一个前端插件管理模型，以schema为基本数据结构，
 
 *SifoModel实例化参数*
 
-参数          | 说明        | 类型 | 是否必传 | 默认值
+参数          | 说明        | 类型 | 是否必传 | 默认值
 -------------|-------------|-----|-----|-----
 namespace    | 命名空间     | string | 是 | - |
 refreshApi   | 刷新执行接口， 参数为callback，如有，应在刷新完成后回调 | function | 是 | - |
@@ -19,11 +19,11 @@ modelOptions | 模型选项，详情见参数说明 | object | 否 | - |
 
 ### modelOptions参数说明
 
-参数 | 说明 | 类型 | 是否必传 | 默认值
+参数 | 说明 | 类型 | 是否必传 | 默认值
 -----|-----|-----|-----|-----
 externals | 任意外部信息 | object | 否 | {} |
-components | 组件 | object | 否 | {} |
-modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function: mApi => void | 否 | - |
+components | 组件 | object | 否 | {} |
+modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function: mApi => void | 否 | - |
 getModelPluginArgs | 获取模型插件实例化时的构造函数参数 | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | - |
 
 > 代码示例
@@ -73,12 +73,12 @@ sifoModel.destroy();// 销毁
 }
 ```
 
-## 模型生命周期与插件生命周期方法
-模型在实例化后，调用实例的 `run` 方法触发生命周期执行。插件可按需注册生命周期方法，每个生命周期方法后的【】标注表示其在整个模型生命周期上的执行次序，方法详情见下文。一般来说，生命周期方法的参数为：
+## 模型生命周期与插件生命周期方法
+模型在实例化后，调用实例的 `run` 方法触发生命周期执行。插件可按需注册生命周期方法，每个生命周期方法后的【】标注表示其在整个模型生命周期上的执行次序，方法详情见下文。一般来说，生命周期方法的参数为：
 *`params:{ mApi, event }`*
-其中 `mApi` 是模型接口，详细说明见下文。
+其中 `mApi` 是模型接口，详细说明见下文。
       
-在模型销毁前，调用实例的 `destroy` 方法将先后触发页面插件和模型插件的 `onDestroy` 生命周期方法，插件可在此时进行一些数据清除等操作。
+在模型销毁前，调用实例的 `destroy` 方法将先后触发页面插件和模型插件的 `onDestroy` 生命周期方法，插件可在此时进行一些数据清除等操作。
 
 * `render`：【11】说明：非显式方法，模型渲染，调用的是实例化参数 refreshApi方法。
 
@@ -200,13 +200,13 @@ class modelPlugin {
         if ('test' === node.id) {
           node.marked = true;
           // ...
-          return false;// 返回false，则不再继续遍历
+          return false;// 返回false，则不再继续遍历
         };
         if(node.id === 'endNode'){
           return 'continue';// 返回 continue，则不再沿此分支上继续遍历，但依然遍历兄弟分支
         }
       }[, id]);
-    // 从id节点向根节点遍历
+    // 从id节点向根节点遍历
     this.schemaInstance.loopUp((node)=>{},id);
   }
   onModelApiCreated = params => {
@@ -253,7 +253,7 @@ class modelPlugin {
 
 | 方法名            | 参数/类型               | 返回值类型             | 描述       |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
-| namespace        | ✘                      | string              | 命名空间，非方法      |
+| namespace        | ✘                      | string              | 命名空间，非方法      |
 | instanceId       | ✘                      | string              | 模型实例Id，非方法      |
 | getExternals     | ()                     | object              | 获取externals数据      |
 | getGlobalData    | ([key: string])        | object              | 获取存储在key值下的数据对象，globalData是一个公共数据容器                                                                       |
@@ -281,7 +281,7 @@ class modelPlugin {
   * prepose 参数表示是否将事件注册前置，即先于非前置注册的事件触发，默认不前置，同一级别内遵循先注册先触发原则。移除事件监听时 prepose 参数需要与注册时的 prepose 参数相一致。
   * event handler 的参数第一位是`context`，context包含`event`和`mApi`。context后是事件原始参数，依照原始参数顺序排列。
   * event.key 是 addEventListener 的对象 id（即id参数）。
-  * event.getOldAttributes(id) 可获取事件开始执行前指定id的属性。mApi.getAttributes 可获取事件执行到当前时，指定id的属性。要特别指出的是，event handler 内直接用 mApi.getAttributes 得到的属性不能保证是最终属性，如果需要获取事件执行结束后的最终属性（因为事件监听方法后可能还有其它插件注册了事件监听），可在 mApi.setAttributes(...).then 等异步方法回调内实现。
+  * event.getOldAttributes(id) 可获取事件开始执行前指定id的属性。mApi.getAttributes 可获取事件执行到当前时，指定id的属性。要特别指出的是，event handler 内直接用 mApi.getAttributes 得到的属性不能保证是最终属性，如果需要获取事件执行结束后的最终属性（因为事件监听方法后可能还有其它插件注册了事件监听），可在 mApi.setAttributes(...).then 等异步方法回调内实现。
   * event.getUpdatedStates() 可获取事件执行到当前时，所有发生过更新的节点属性。
   * event.next(...args) 可修改对后续插件的入参（不包含context），无修改时不需调用。
   * event.stop() 将阻止后续插件的执行。

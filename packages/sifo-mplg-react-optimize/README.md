@@ -7,7 +7,7 @@ react渲染优化的sifo-model modelPlugin模型插件
 
 *In general, you should use it as the last one in the plugins list.*
 
-代码示例
+代码示例
 
 ```javascript
 import SifoModel from '@schema-plugin-flow/sifo-model';

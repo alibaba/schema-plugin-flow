@@ -128,7 +128,7 @@ mApi.dispatchWatch('aMessage', 'this is a msg');
 
 sifo-react 是封装了 sifo-model 和 sifo-singleton 的一个 React 组件。
 #### 快速上手
-下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。
+下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。
 ```jsx
 import React from 'react';
 import SifoApp from '@schema-plugin-flow/sifo-react';
@@ -202,7 +202,7 @@ export default App;
 ```
 #### 外部扩展
 
-如果一个页面是用 sifo 开发的，第三方可以在不接触原始页面代码的情况下，对页面进行扩展。这里用到了 sifo-singleton ，只要在目标页面渲染前载入了扩展件，扩展功能就会在目标页面上生效。
+如果一个页面是用 sifo 开发的，第三方可以在不接触原始页面代码的情况下，对页面进行扩展。这里用到了 sifo-singleton ，只要在目标页面渲染前载入了扩展件，扩展功能就会在目标页面上生效。
 ```js
 import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
 const singleton = new SifoSingleton('test_namespace');// 对目标命名空间进行扩展
@@ -226,7 +226,7 @@ singleton.registerItem('testExtendId', () => {
 * View 定义了 $header 片段，以使扩展件可以在页面指定位置渲染内容。
 ```js
 import { sifoAppDecorator } from '@schema-plugin-flow/sifo-react';
-@sifoAppDecorator('target_namespace', { fragments: ['$header', innerSchema], components: {}, plugins: [], openLogger: true })
+@sifoAppDecorator('target_namespace', { fragments: ['$header', innerSchema], components: {},plugins: [], openLogger: true })
 class View extends React.Component {
   constructor(props) {
     super(props);

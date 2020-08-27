@@ -6,20 +6,20 @@ sifo-react 以 sifo-model 为内核，使用插件式的开发模式，为页面
 
 ## SifoApp (sifo-react) Props
 
-参数          | 说明        | 类型 | 是否必传 | 默认值
+参数          | 说明        | 类型 | 是否必传 | 默认值
 -------------|-------------|-----|-----|-----
 namespace    | 命名空间，这是一个功能集合的主要标识，第三方将根据命名空间来进行功能扩展     | string | 是 | - |
 schema       | schema，描述了页面结构      | object | 是 | - |
-components | 组件 | object | 是 | {} |
+components | 组件 | object | 是 | {} |
 plugins      | 插件，分为模型插件、页面插件和组件插件         | array：[{ componentPlugin, pagePlugin, modelPlugin }, { modelPlugin: otherModelPlugin }] | 否 | [] |
 externals | 任意其它信息 | object | 否 | {} |
-modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function | 否 |
+modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function | 否 |
 openLogger | 是否在控制台打印出执行日志，不建议在生产环境使用 | bool | 否 | false |
 getModelPluginArgs | 获取模型插件实例化时的构造函数参数 | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | | - |
 className | 样式类 |string | 否 |  |
 
 ## QuickStart
-下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
+下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
 ```javascript
 import React from 'react';
 import SifoApp from '@schema-plugin-flow/sifo-react';
@@ -94,7 +94,7 @@ export default App;
 ```
 
 ## 外部扩展
-如果一个页面是用 sifo 开发的，开发者可以在不接触原始代码的情况下，对页面进行扩展。这里用到了 [sifo-singleton](../sifo-singleton) 全局扩展容器，只要在目标页面渲染前载入了扩展插件、组件，扩展功能就会在目标页面上生效。
+如果一个页面是用 sifo 开发的，开发者可以在不接触原始代码的情况下，对页面进行扩展。这里用到了 [sifo-singleton](../sifo-singleton) 全局扩展容器，只要在目标页面渲染前载入了扩展插件、组件，扩展功能就会在目标页面上生效。
 
 ```javascript
 import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
@@ -114,11 +114,11 @@ singleton.registerItem('testExtendId', () => {
 ## sifoAppDecorator
 为一个组件追加扩展能力时，可用修饰器方式。sifoAppDecorator 第一个参数是命名空间，第二个参数与上文的“SifoApp参数”一致（namespace 和 schema 除外）。此外还增加了如下参数：
 
-参数          | 说明        | 类型 | 是否必传 | 默认值
+参数          | 说明        | 类型 | 是否必传 | 默认值
 -------------|-------------|-----|-----|-----
 fragments    | 片段列表。片段可以只定义一个id，通过 getFragment 方法获取片段来渲染；也可以传一个 schema，以 schema 的第一层 id 来标识  | array | 否 | - |
 
-被 sifoAppDecorator 修饰的组件，props 中将出现 sifoApp 对象，对象包含 addEventListener、 watch、getFragment 等方法和 mApi 接口。
+被 sifoAppDecorator 修饰的组件，props 中将出现 sifoApp 对象，对象包含 addEventListener、 watch、getFragment 等方法和 mApi 接口。
 
 ### sifoAppDecorator 示例
 下面的示例包含：
@@ -132,7 +132,7 @@ import React from 'react';
 import { sifoAppDecorator } from '@schema-plugin-flow/sifo-react';
 @sifoAppDecorator('target_namespace', {
   fragments: ['$testFragment', innerSchema], 
-  components: {}, 
+  components: {},
   plugins: [], 
   openLogger: true
 })
@@ -281,7 +281,7 @@ const TestComponent = {
 }
 ```
 
-## 模型插件推荐列表
+## 模型插件推荐列表
 * [React标记渲染优化插件](../sifo-mplg-react-optimize)
 
 ## 示例

@@ -15,7 +15,7 @@ import TaskQueue from './TaskQueue';
 enum COMP_HANDLER {
   onComponentInitial = 'onComponentInitial', // 8
   afterPageRender = 'afterPageRender', // 13 这时组件一般（不能保证）已经渲染
-};
+}
 /**
  * 页面插件生命周期方法
  */
@@ -25,7 +25,7 @@ enum PAGE_HANDLER {
   beforeRender = 'beforeRender', // 9
   afterRender = 'afterRender', // 12
   onDestroy = 'onDestroy', // 14
-};
+}
 // render: 'render', 11
 /**
  * 模型插件生命周期方法
@@ -38,7 +38,7 @@ enum MODEL_HANDLER {
   onModelApiCreated = 'onModelApiCreated', // 6 模型接口创建
   onReadyToRender = 'onReadyToRender', // 10 即将进行渲染
   onDestroy = 'onDestroy', // 15
-};
+}
 
 // 三类插件在plugins参数的项中的键名
 const pluginKeyMap: PluginKeyMap = {
@@ -46,17 +46,19 @@ const pluginKeyMap: PluginKeyMap = {
   pagePlugins: 'pagePlugin',
   componentPlugins: 'componentPlugin'
 };
+// tslint:disable-next-line: no-empty
 const noop = () => { };
 const defArgs = () => ([]);
 /**
  * SifoModel 插件管理模型
  */
 export default class Model {
+  // tslint:disable-next-line: no-any
   [key: string]: any;
   instanceId: string;
   namespace: string;
   refreshApi: DefaultFunc;
-  externals: ModelOptions["externals"];
+  externals: ModelOptions['externals'];
   initialSchema: SchemaNode;
   plugins: SifoPlugin[];
   modelPluginIds: string[];
@@ -65,7 +67,7 @@ export default class Model {
   mApi: ModelApi | null;
   targetSchema: SchemaNode;
   rendered: boolean;
-  modelApiRef: ModelOptions["modelApiRef"];
+  modelApiRef: ModelOptions['modelApiRef'];
   globalDataContainer: DynamicObject;
   taskQueue: TaskQueue;
   shadowBox: ShadowBox | null;
@@ -88,19 +90,19 @@ export default class Model {
   ) {
     const { externals, components, modelApiRef, getModelPluginArgs } = modelOptions; // 模型选项
     /** * 初始环境 ** */
-    this.instanceId = uuid();// 用来唯一标识模型实例
-    this.namespace = namespace || this.instanceId;// 命名空间用来唯一标识模型，
+    this.instanceId = uuid(); // 用来唯一标识模型实例
+    this.namespace = namespace || this.instanceId; // 命名空间用来唯一标识模型，
     this.refreshApi = refreshApi;
     this.externals = externals || {}; // 任意externals
     this.initialSchema = schema || {}; // 初始的schema
     this.plugins = plugins || [];
     this.getModelPluginArgs = getModelPluginArgs || defArgs;
-    this.initialComponents = objectReadOnly(components || {});// 不能改原始组件映射关系
+    this.initialComponents = objectReadOnly(components || {}); // 不能改原始组件映射关系
     this.components = {};
     this.mApi = null; // 模型接口
     this.targetSchema = {}; // 经过处理的schema,用来创建树实例
-    this.rendered = false;// 标识是否已经渲染
-    this.modelApiRef = modelApiRef || noop;// 对外暴露modelApi
+    this.rendered = false; // 标识是否已经渲染
+    this.modelApiRef = modelApiRef || noop; // 对外暴露modelApi
     /** * 数据容器 ** */
     this.globalDataContainer = {}; // 全局数据容器
     this.modelPluginIds = []; // 记录加载过的模型插件
@@ -182,13 +184,16 @@ export default class Model {
       throw new Error('[sifo-model] plugins expected array');
     }
     Object.keys(pluginKeyMap).forEach((key: string) => {
+      // tslint:disable-next-line: no-any
       plugins.forEach((pluginsItem: any) => {
         const plgName = pluginKeyMap[key];
         const plugin = pluginsItem[plgName];
-        if (!plugin) return;
+        if (!plugin) { return; }
         if (key === 'modelPlugins') { // 模型插件是class形式
           const Id = plugin.ID;
-          if (this.modelPluginIds.indexOf(plugin) === -1 && this.modelPluginIds.indexOf(Id) === -1) { // 模型插件既要判断ID也要判断本身
+          // 模型插件既要判断ID也要判断本身
+          if (this.modelPluginIds.indexOf(plugin) === -1
+            && this.modelPluginIds.indexOf(Id) === -1) { 
             if (Id) { // 有可能被多次引入
               this.modelPluginIds.push(Id);
             }
@@ -198,10 +203,10 @@ export default class Model {
               instanceId: this.instanceId,
               namespace: this.namespace,
               externals: this.externals
-            });// [a, b]
-            if (!newParams || !Array.isArray(newParams)) newParams = [newParams];
+            }); // [a, b]
+            if (!newParams || !Array.isArray(newParams)) { newParams = [newParams]; }
             try {
-              this[key].push(new plugin(...newParams));// eslint-disable-line
+              this[key].push(new plugin(...newParams)); // eslint-disable-line
             } catch (e) {
               console.error(`[sifo-model] new ${plgName} ${Id || 'No_ID_Model_Plugin'} failed. errMsg: ${e}`);
             }
@@ -230,13 +235,13 @@ export default class Model {
    */
   onNodePreprocess = () => {
     const pageHandlers: AnyPluginHandler[] = this.getPageHandlers(PAGE_HANDLER.onNodePreprocess);
-    const targetSchema = this.doNodePreprocess(<PrePluginHandler[]>pageHandlers, this.initialSchema);
+    const targetSchema = this.doNodePreprocess(<PrePluginHandler[]> pageHandlers, this.initialSchema);
     const modelHandlers: AnyPluginHandler[] = this.getModelHandlers(MODEL_HANDLER.onNodePreprocess);
-    this.targetSchema = this.doNodePreprocess(<PrePluginHandler[]>modelHandlers, targetSchema);
+    this.targetSchema = this.doNodePreprocess(<PrePluginHandler[]> modelHandlers, targetSchema);
   }
   doNodePreprocess = (handlers: PrePluginHandler[], dealSchema: object) => {
-    let targetSchema = deepClone(dealSchema);// 拷贝,可能有function，不能用JSON.stringify
-    if (!handlers || handlers.length === 0) return targetSchema;
+    let targetSchema = deepClone(dealSchema); // 拷贝,可能有function，不能用JSON.stringify
+    if (!handlers || handlers.length === 0) { return targetSchema; }
     const informations = {
       instanceId: this.instanceId,
       namespace: this.namespace,
@@ -250,7 +255,7 @@ export default class Model {
         const retNode = handlers[i]({ ...newNode }, informations);
         newNode = retNode || newNode;
       }
-      newNode.attributes = { ...newNode.attributes };// 防止为null
+      newNode.attributes = { ...newNode.attributes }; // 防止为null
       return newNode;
     });
     return targetSchema;
@@ -265,7 +270,7 @@ export default class Model {
     for (let i = 0; i < handlers.length; i += 1) {
       // 周期方法onComponentsWrap是普通函数，唯一参数是actualComponents对象
       const eHandler: AnyPluginHandler = handlers[i];
-      const wrappedComps = (<PrePluginHandler>eHandler)({ ...actualComponents });
+      const wrappedComps = (<PrePluginHandler> eHandler)({ ...actualComponents });
       if (wrappedComps) {
         Object.assign(actualComponents, wrappedComps);
       }
@@ -301,7 +306,7 @@ export default class Model {
       setAttributes: this.setAttributes,
       replaceComponent: this.replaceComponent, // 动态更改渲染组件
       getComponentName: this.getComponentName, // 获取指定id的渲染组件名
-      queryNodeIds: this.queryNodeIds,//查询节点Id，返回的是数组
+      queryNodeIds: this.queryNodeIds, // 查询节点Id，返回的是数组
       /* 注：可考虑支持这些功能，但会涉及很多地方的处理 --> schema应该是一份完全的数据，不应该有动态节点变化
         removeChildren/addChildren/copyNode 要处理schemaInstance重建（以最新的schema为基础），
         EventEmitter的instance更换-局部更新
@@ -332,7 +337,7 @@ export default class Model {
       // 不放开 schemaLoopUp: this.loopUp,
       // 不放开 schemaLoopDown: this.loopDown,
     }
-  );
+  )
 
   /**
    * 创建模型api, 可在此修改模型方法
@@ -350,15 +355,15 @@ export default class Model {
     const handlers = this.getModelHandlers(MODEL_HANDLER.onModelApiCreated);
     // mApi扩展中间件实现
     const applyModelApiMiddleware = (apiName: string, middleware: ModelApiMiddleware) => {
-      if (!this.mApi || !apiName || !middleware) return;
+      if (!this.mApi || !apiName || !middleware) { return; }
       const originFunc = this.mApi[apiName];
       if (!originFunc) {
-        this.mApi[apiName] = middleware(v => v, true);// 兼容多模型插件时出现此方法
+        this.mApi[apiName] = middleware(v => v, true); // 兼容多模型插件时出现此方法
       } else {
-        if (typeof originFunc !== 'function') return;
+        if (typeof originFunc !== 'function') { return; }
         this.mApi[apiName] = middleware(originFunc, false);
       }
-    }
+    };
     const event = {
       applyModelApiMiddleware,
       eventType: MODEL_HANDLER.onModelApiCreated,
@@ -389,7 +394,7 @@ export default class Model {
   onComponentInitial = () => {
     this.schemaInstance.loopDown((node: SchemaNode) => {
       const { id, attributes } = node;
-      const attribute = objectReadOnly({ ...attributes });// 防止直接修改，否则可能影响eventListener
+      const attribute = objectReadOnly({ ...attributes }); // 防止直接修改，否则可能影响eventListener
       // onComponentInitial内通过model.setAttributes方法更新属性。
       if (id) {
         const handlers = this.getComponentHandlers(
@@ -446,17 +451,17 @@ export default class Model {
      * 而如果在 run 开始时就发起一个请求，在 response 后进行 reloadPage，
      * 此时的 response 可能在第一个 task 后，也可能在第二个 task 后注入 microtask queue 中(不兼容时可能是个task)
      */
-    //setTimeout(() => {
+    // setTimeout(() => {
     const handlers = this.getPageHandlers(PAGE_HANDLER.afterRender);
     const event = { eventType: PAGE_HANDLER.afterRender };
     this.reducer(handlers, event);
-    //}, 0);
+    // }, 0);
   }
 
   afterPageRender = () => {
     this.schemaInstance.loopDown((node: SchemaNode) => {
       const { id, attributes } = node;
-      const attribute = objectReadOnly({ ...attributes });// 防止直接修改，否则可能影响eventListener
+      const attribute = objectReadOnly({ ...attributes }); // 防止直接修改，否则可能影响eventListener
       if (id) {
         const handlers = this.getComponentHandlers(
           id,
@@ -476,10 +481,10 @@ export default class Model {
    */
   destroy = () => {
     this.taskQueue.discard();
-    if(this.shadowBox){
+    if (this.shadowBox) {
       this.shadowBox.shadowMagic();
     }
-    this.rendered = false;// 屏蔽refreshApi的调用，但允许mApi的调用
+    this.rendered = false; // 屏蔽refreshApi的调用，但允许mApi的调用
     if (this.modelApiRef) {
       this.modelApiRef(null);
     }
@@ -545,9 +550,9 @@ export default class Model {
    * @param {*} event
    * @param {*} cancelable
    */
-  reducer(handlers: PluginHandler[], event: DynamicObject, cancelable = false) {
-    const args: PluginEventArgs = <PluginEventArgs>objectReadOnly({ event, mApi: this.mApi });
-    if (cancelable) args.event.cancel = false;
+  reducer(handlers: PluginHandler[], event: DynamicObject, cancelable: boolean = false) {
+    const args: PluginEventArgs = <PluginEventArgs> objectReadOnly({ event, mApi: this.mApi });
+    if (cancelable) { args.event.cancel = false; }
     for (let i = 0; i < handlers.length; i += 1) {
       handlers[i](args);
       if (cancelable && args.event.cancel === true) {
@@ -606,7 +611,7 @@ export default class Model {
   /**
    * 获取指定id的渲染组件名
    */
-  getComponentName: ModelApi["getComponentName"] = (id: string) => {
+  getComponentName: ModelApi['getComponentName'] = (id: string) => {
     const item = this.schemaInstance.nodeMap[id];
     if (item) {
       return item.component;
@@ -616,8 +621,8 @@ export default class Model {
 
   getAttributes: ModelApi['getAttributes'] = (id: string) => {
     const node = this.schemaInstance.nodeMap[id];
-    if (!node) return undefined;
-    return { ...node.attributes };// 防止直接修改
+    if (!node) { return undefined; }
+    return { ...node.attributes }; // 防止直接修改
   }
 
   getGlobalData: ModelApi['getGlobalData'] = key => {
@@ -638,18 +643,17 @@ export default class Model {
       if (evaluateSelector(node, selector)) {
         ids.push(node.id);
       }
-    }, id);
+    },   id);
     return ids;
   }
 
   refresh: ModelApi['refresh'] = () => {
-    if (!this.rendered) return Promise.resolve();
+    if (!this.rendered) { return Promise.resolve(); }
     return new Promise(resolve => this.refreshApi(resolve));
   }
 
   /**
-   *（公开方法）重新加载
-   * 包含schema
+   * (公开方法）重新加载 包含schema 
    * @param {*} params 新的初始数据
    */
   reloadPage: ModelApi['reloadPage'] = (params = {}) => {
@@ -661,6 +665,7 @@ export default class Model {
     this.controller.reloadPage(params);
   }
   // 如果有方法是直接绑定在属性上，是否让后续插件覆盖? => 覆盖，eventListener优先级高于普通属性
+  // tslint:disable-next-line: max-line-length
   addEventListener: ModelApi['addEventListener'] = (id: string, eventName: string, handler: SifoEventListener, prepose: boolean = false) => {
     let item = this.schemaInstance.nodeMap[id];
     if (!item) {
@@ -674,14 +679,16 @@ export default class Model {
       [eventName]: eventHandler
     };
     if (this.mApi) {
-      this.mApi.setAttributes(id, {}, true);// 通知属性变化
+      this.mApi.setAttributes(id, {}, true); // 通知属性变化
     }
   }
 
+  // tslint:disable-next-line: max-line-length
   removeEventListener: ModelApi['removeEventListener'] = (id: string, eventName: string, handler: SifoEventListener, prepose: boolean = false) => {
     this.eventEmitter.removeEventListener(id, eventName, handler, prepose);
   }
 
+  // tslint:disable-next-line: max-line-length
   hasEventListener: ModelApi['hasEventListener'] = (id: string, eventName: string) => this.eventEmitter.hasHandler(id, eventName);
 
   watch: ModelApi['watch'] = (key: string, handler: SifoEventListener) => {

@@ -2,7 +2,7 @@
  * @author FrominXu
  */
 import EventEmitter from './Event';
-
+/* tslint:disable: no-any no-empty */
 const WATCH_EVENT_NAME = 'SIFO_MODEL_INNER_WATCH_EVENT_NAME';
 const KEY_SUFFIX = 'SIFO_MODEL_INNER_WATCH_KEY_SUFFIX';
 class WatcherKeyType {
@@ -19,7 +19,7 @@ class WatcherKeyType {
     return this.id;
   }
 }
-const getId = (key: string) => new WatcherKeyType(key);//`${key}_${KEY_SUFFIX}`; // 后缀比前缀能更快进行查找
+const getId = (key: string) => new WatcherKeyType(key); // `${key}_${KEY_SUFFIX}`; // 后缀比前缀能更快进行查找
 export default class Watcher {
   eventEmitter: EventEmitter;
   watchList: { [key: string]: any };
@@ -43,7 +43,7 @@ export default class Watcher {
     this.watchList[iId.id] = eventHandler;
   }
   removeWatch: ModelApi['removeWatch'] = (key: string, handler: SifoEventListener) => {
-    //const iId = getId(key);
+    // const iId = getId(key);
     const iId = this.idMap[key];
     if (iId) {
       this.eventEmitter.removeEventListener(iId, WATCH_EVENT_NAME, handler);

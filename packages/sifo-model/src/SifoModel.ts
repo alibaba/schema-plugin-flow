@@ -3,7 +3,7 @@
  */
 import { objectReadOnly } from './utils/common-utils';
 import Model from './Model';
-
+/* tslint:disable: no-any no-empty */
 const noop = () => { };
 /**
  * SifoModel 插件管理模型
@@ -12,12 +12,12 @@ export default class SifoModel {
   [key: string]: any;
   namespace: string;
   refreshApi: DefaultFunc;
-  externals: ModelOptions["externals"];
+  externals: ModelOptions['externals'];
   initialSchema: SchemaNode;
   plugins: SifoPlugin[];
   initialComponents: object;
   components: ModelOptions['components'];
-  modelApiRef: ModelOptions["modelApiRef"];
+  modelApiRef: ModelOptions['modelApiRef'];
   /**
    *
    * @param namespace 命名空间
@@ -42,7 +42,7 @@ export default class SifoModel {
     this.initialComponents = {};
     const controller = {
       reloadPage: this.reloadPage,
-    }
+    };
     this.model = new Model(namespace, refreshApi, schema, plugins, modelOptions, controller);
     this.bindModelProps(this.model);
     this.modelOptions = modelOptions;
@@ -76,19 +76,19 @@ export default class SifoModel {
       externals: newExternals,
       getModelPluginArgs: newGetModelPluginArgs,
       components: newInitialComponents
-    }
+    };
     const discardedModel = this.model;
     const controller = {
       reloadPage: this.reloadPage,
-    }
+    };
     // 替换原实例的refreshApi
-    discardedModel.refreshApi = (callback: Function) => { if (callback) callback() };
+    discardedModel.refreshApi = (callback: Function) => { if (callback) callback(); };
     this.model = new Model(this.namespace, this.refreshApi, newSchema, newPlugins, newModelOptions, controller);
     this.bindModelProps(this.model);
     // 执行新实例，放到下个eventloop执行
     setTimeout(() => {
       this.model.run();
-    }, 0);
+    }, 0); // tslint:disable-line: align
   }
   /**
    * 销毁，由外部触发，以进行相关销毁操作
@@ -96,7 +96,7 @@ export default class SifoModel {
   destroy = () => {
     this.model.destroy();
     // 阻断刷新
-    this.model.refreshApi = (callback: Function) => { if (callback) callback() };
+    this.model.refreshApi = (callback: Function) => { if (callback) callback(); };
     this.model = null;
   }
 }

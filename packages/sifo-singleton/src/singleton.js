@@ -55,15 +55,15 @@ class Sifo_SINGLETON_INSTANCE {//eslint-disable-line
     });
   }
 }
-const getSifoGlobalHolder = function () {
-  if (typeof globalThis !== 'undefined') { return globalThis; }
+function getSifoGlobalHolder() {
+  if (typeof globalThis !== 'undefined') { return globalThis; } // eslint-disable-line
   if (typeof window !== 'undefined') { return window; }
   if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
+  if (typeof self !== 'undefined') { return self; } // eslint-disable-line
   console.error('[sifo-singleton]: sifoGlobalHolder not found!');
   return {};
-};
-var sifoGlobalHolder = getSifoGlobalHolder();
+}
+const sifoGlobalHolder = getSifoGlobalHolder();
 const UNIQUE = 'cc419ae8-1890-46e2-874f-eaf918f3a880';
 export default class SifoSingleton {//eslint-disable-line
   constructor(namespace) {

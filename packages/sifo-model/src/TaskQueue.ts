@@ -26,6 +26,7 @@ class TaskQueue {
     if (this.taskQueue.length > this.curTaskIndex) {
       const curTask = this.taskQueue[this.curTaskIndex];
       this.curTaskIndex = this.curTaskIndex + 1;
+      // tslint:disable-next-line: no-unused-expression
       curTask && curTask();
     }
   }

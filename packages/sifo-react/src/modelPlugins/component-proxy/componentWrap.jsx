@@ -92,7 +92,7 @@ const componentWrap = Component => {
     // 特殊组件默认按正常渲染走
     const { render, rerenderType = 'normal', unmount } = Component;
     const { rerenderKey, rerenderType: dynamicType, ...others } = props;
-    const renderType = dynamicType ? dynamicType : rerenderType;
+    const renderType = dynamicType || rerenderType;
     // 如果是rerenderKey类型，则按rerenderKey渲染
     const rednerKey = renderType === 'rerenderKey' ? (rerenderKey || initRerenderKey) : null;
     return (
@@ -100,13 +100,19 @@ const componentWrap = Component => {
         {...others}
         renderProxy={render} // 渲染方法
         rerenderType={renderType}
-        rerenderKey={rednerKey}  // 重渲染标识
+        rerenderKey={rednerKey} // 重渲染标识
         unmount={unmount}
-      >
-      </RenderComponentProxy>
+      />
     );
   };
   RenderProxyWrap.displayName = wrapName;
+  RenderProxyWrap.propTypes = {
+    rerenderKey: T.string,
+    rerenderType: T.oneOf(['normal', 'rerenderKey']).isRequired,
+  };
+  RenderProxyWrap.defaultProps = {
+    rerenderKey: ''
+  };
   return RenderProxyWrap;
 };
 export default componentWrap;

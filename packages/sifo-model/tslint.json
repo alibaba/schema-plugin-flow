@@ -1,5 +1,4 @@
 {
-    "extends": ["tslint-react"],
     "rules": {
         "align": [
             true,
@@ -13,7 +12,7 @@
             true,
             "check-space"
         ],
-        "curly": true,
+        "curly": [true, "ignore-same-line"],
         "eofline": false,
         "forin": true,
         "indent": [ true, "spaces" ],
@@ -27,16 +26,7 @@
         "no-any": true,
         "no-arg": true,
         "no-bitwise": true,
-        "no-console": [
-            true,
-            "log",
-            "error",
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
+        "no-console": false,
         "no-consecutive-blank-lines": true,
         "no-construct": true,
         "no-debugger": true,

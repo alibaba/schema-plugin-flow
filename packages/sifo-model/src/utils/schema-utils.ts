@@ -1,6 +1,7 @@
 /**
  * @author FrominXu
  */
+/* tslint:disable: no-any no-empty */
 const getDealWithNode = (dealRules: DynamicObject) => (targetNode: SchemaNode) => {
   const { component = '' } = targetNode;
   const dealFunc = typeof dealRules === 'function' ? dealRules : dealRules[component];
@@ -15,14 +16,14 @@ const getDealWithNode = (dealRules: DynamicObject) => (targetNode: SchemaNode) =
  * @param {*} dealRules
  * @param {*} alias
  */
-export function nodeRevise(schema: SchemaNode, dealRules = {}, alias: DynamicObject = {}) {
+export function nodeRevise(schema: SchemaNode, dealRules: any = {}, alias: DynamicObject = {}) {
   const nodeRebuild = (node: SchemaNode) => {
     const {
       id, component, attributes, children, ...other
     } = node;
     const attr = node[alias.attributes] || attributes || {};
     const newNode = {
-      ...other,// 允许在节点上放其它属性
+      ...other, // 允许在节点上放其它属性
       component: node[alias.component] || component,
       attributes: attr,
       children: node[alias.children] || children || [],
@@ -44,7 +45,6 @@ export function nodeRevise(schema: SchemaNode, dealRules = {}, alias: DynamicObj
 
   return reviser(schema);
 }// revise
-
 
 export default {
   nodeRevise

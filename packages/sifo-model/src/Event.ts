@@ -2,14 +2,14 @@
  * @author FrominXu
  */
 import { objectReadOnly, deepClone } from './utils/common-utils';
-
+/* tslint:disable: no-any no-empty */
 enum EVENT_STATUS {
   init = 'init',
   opened = 'opened',
   closed = 'closed',
   allClosed = 'allClosed',
   stop = 'stop',
-};
+}
 class EventStatus {
   /**
    * 事件状态
@@ -25,10 +25,10 @@ class EventStatus {
     return this._status;
   }
   setStatus(status: string) {
-    if (status == EVENT_STATUS.opened) {
+    if (status === EVENT_STATUS.opened) {
       this._eventTaskCount += 1;
       this._status = EVENT_STATUS.opened;
-    } else if (status == EVENT_STATUS.closed) {
+    } else if (status === EVENT_STATUS.closed) {
       this._eventTaskCount -= 1;
       if (this._eventTaskCount <= 0) {
         // 嵌套事件全部关闭才最终关闭
@@ -50,13 +50,13 @@ const createEventHandler = (emitter: EmitterArgs) => (...originArg: any[]) => {
   } = emitter;
   let handlers: any = getHandlers();
   let nextArg = originArg;
-  let ret;// 事件返回值
-  let eventmApi = eventStart();// 事件开始
+  let ret; // 事件返回值
+  let eventmApi = eventStart(); // 事件开始
   let stopEvent: any = () => {
     // 如果在stop后当前方法又触发了EventListener，会刷掉stop状态，直接置空handlers来阻止后续插件执行
     eventStatus.setStatus(EVENT_STATUS.stop);
     handlers = [];
-  }
+  };
   let event: SifoEvent | null = {
     ...eventmApi,
     key,
@@ -64,7 +64,7 @@ const createEventHandler = (emitter: EmitterArgs) => (...originArg: any[]) => {
     stop: () => { stopEvent(); }, // 防持久装置
     next: (...nArg: any[]) => { nextArg = nArg; },
   };
-  let context: SifoEventArgs | null = <SifoEventArgs>objectReadOnly({ event, mApi });
+  let context: SifoEventArgs | null = <SifoEventArgs> objectReadOnly({ event, mApi });
   try {
     for (let i = 0; i < handlers.length; i += 1) {
       const returnVal = handlers[i](context, ...nextArg);
@@ -79,7 +79,7 @@ const createEventHandler = (emitter: EmitterArgs) => (...originArg: any[]) => {
       }
     }
   } finally {
-    eventEnd();// 事件结束 这个里面有可能触发watch的EventListener，导致return延后
+    eventEnd(); // 事件结束 这个里面有可能触发watch的EventListener，导致return延后
     event = null;
     context = null;
     eventmApi = null;
@@ -114,7 +114,7 @@ export default class EventEmitter {
     this.updatedStates = {};
     // 事件链中更新的key的旧属性
     this.oldStates = {};
-    this.refreshOnEnd = false;// 事件结束后刷新
+    this.refreshOnEnd = false; // 事件结束后刷新
     this.eventStatus = new EventStatus(EVENT_STATUS.init);
     this.mApiWrap();
   }
@@ -146,7 +146,7 @@ export default class EventEmitter {
       if (updatedStates && Object.keys(updatedStates).length > 0) {
         // 发布watch, 这个时候才能保证是最终状态，要注意的是，dispatchWatch本身也是一批event
         if (this.refreshOnEnd) {
-          this.refreshOnEnd = false;// 复位
+          this.refreshOnEnd = false; // 复位
           // 批量刷新
           this.mApi.refresh();
         }
@@ -181,7 +181,7 @@ export default class EventEmitter {
       return new Promise((resolve, reject) => {
         originSetAttributes(id, attributes, refresh).then((res: any) => {
           resolve(res);
-        }, (rej: any) => {
+        }, (rej: any) => {  // tslint:disable-line: align
           reject(rej);
         });
         // dispatch设计成同步状态，这样得到的结果是一个set一个watch
@@ -201,6 +201,7 @@ export default class EventEmitter {
     }
   }
 
+  // tslint:disable-next-line: max-line-length
   addEventListener(key: string | EventKeyType, eventName: string, handler: SifoEventListener, prepose: boolean = false) {
     const id = key ? (typeof key === 'string' ? key : `${key.id}`) : 'undefined';
     if (!this.hasHandler(id, eventName)) {
@@ -209,7 +210,7 @@ export default class EventEmitter {
           normalQ: [], // 普通事件队列
           preposeQ: [] // 前置事件队列
         }
-      });// 对象事件
+      }); // 对象事件
     }
     let handlers: any = this.eventHandler[id][eventName];
     if (handlers) {
@@ -223,7 +224,7 @@ export default class EventEmitter {
       }
     }
     const emitter: EmitterArgs = {
-      key: typeof key == 'string' ? key : (key.eventKey || id),
+      key: typeof key === 'string' ? key : (key.eventKey || id),
       eventName,
       mApi: this.mApi,
       getHandlers: () => ([...this.eventHandler[id][eventName].preposeQ, ...this.eventHandler[id][eventName].normalQ]),
@@ -247,6 +248,7 @@ export default class EventEmitter {
     if (this.eventHandler[id][eventName]) return true;
     return false;
   }
+  // tslint:disable-next-line: max-line-length
   removeEventListener(key: string | EventKeyType, eventName: string, handler: SifoEventListener, prepose: boolean = false) {
     const id = key ? (typeof key === 'string' ? key : `${key.id}`) : 'undefined';
     if (this.hasHandler(id, eventName)) {
@@ -257,7 +259,7 @@ export default class EventEmitter {
       if (!targetQueue) return;
       for (let i = targetQueue.length - 1; i >= 0; i -= 1) {
         if (targetQueue[i] === handler) {
-          targetQueue.splice(i, 1);// 保证对象不变
+          targetQueue.splice(i, 1); // 保证对象不变
         }
       }
     }

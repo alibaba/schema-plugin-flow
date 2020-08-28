@@ -25,6 +25,7 @@ singleton.registerItem('ext-quick-start', () => {
     plugins:[
       { componentPlugin }
     ],
+    components: {},
     openLogger: true
   }
 });

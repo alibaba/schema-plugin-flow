@@ -15,7 +15,7 @@ function treeParser(currentNode: SchemaNode, parentNode: SchemaNode | null, reco
     recorder(parsedNode);
   }
   if (parentNode && parentNode.id) {
-    parsedNode.__parentId__ = parentNode.id;// 记录父节点id，不直接指向父节点是为了能做深拷贝
+    parsedNode.__parentId__ = parentNode.id; // 记录父节点id，不直接指向父节点是为了能做深拷贝
   }
   const { children } = currentNode;
   parsedNode.children = [];
@@ -33,13 +33,14 @@ function treeParser(currentNode: SchemaNode, parentNode: SchemaNode | null, reco
  * schema tree
  */
 class SchemaTree {
+  // tslint:disable-next-line: no-any
   nodeMap: { [id: string]: SchemaNode | null, __duplicated__id__node__?: any };
   parsedTree: SchemaNode | null;
   initialTree: SchemaNode | null;
   constructor(initialTree: SchemaNode) {
     // id与节点的映射表，是接口操作的主要依据
     this.nodeMap = {};
-    this.nodeMap.__duplicated__id__node__ = {};//存重复id的节点
+    this.nodeMap.__duplicated__id__node__ = {}; // 存重复id的节点
     objectReadOnly(this.nodeMap);
     const recorder = (parsedNode: SchemaNode) => {
       const { id } = parsedNode;

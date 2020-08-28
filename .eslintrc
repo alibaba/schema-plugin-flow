@@ -1,4 +1,6 @@
 {
+  "extends": "airbnb",
+  "parser": "babel-eslint",
   "settings": {
     "import/core-modules": [
       "react",
@@ -19,10 +21,11 @@
       "experimentalObjectRestSpread": true
     }
   },
-  "parser": "babel-eslint",
   "rules": {
+    "linebreak-style": [0, "error", "windows"],
     "comma-dangle": 0,
     "no-plusplus": 0,
+    "no-console": 0,
     "arrow-parens": [
       2,
       "as-needed"
@@ -99,6 +102,9 @@
       }
     ],
     "no-template-curly-in-string": 1,
+    "react/prop-types": [2, { "ignore": ["children", "className"] }],
+    "react/forbid-prop-types": [2, { "forbid": ["any"] }],
+    "react/jsx-filename-extension": [2, { "extensions": [".tsx", ".jsx"] }],
     "jsx-a11y/label-has-for": 0
   }
 }

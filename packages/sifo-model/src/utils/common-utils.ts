@@ -1,6 +1,7 @@
 /**
  * @author FrominXu
  */
+/* tslint:disable: no-any no-empty */
 export const hasOwnProperty = (obj: object, propName: any) => Object.hasOwnProperty.call(obj, propName);
 
 export const keyHolder = (key: any, defValue: any) => {
@@ -20,7 +21,7 @@ export const schemaTraverser = (node: SchemaNode, target: string, loopFunc: Defa
   if (!loopFunc) return;
   if (typeof node !== 'object') return;
   let goOn = loopFunc(node);
-  if (goOn === false) return false;// 返回false，则不再继续遍历
+  if (goOn === false) return false; // 返回false，则不再继续遍历
   if (goOn === 'continue') return; // 返回 continue，则不再沿此分支上继续遍历，但依然遍历兄弟分支
   // goOn 不是 false或continue 则继续遍历下个节点
   const nextNode = node[target];
@@ -39,7 +40,7 @@ export const schemaTraverser = (node: SchemaNode, target: string, loopFunc: Defa
         nodeMap.__duplicated__id__node__[id].forEach((dup: SchemaNode) => {
           const { children: dChildren } = dup;
           if (dChildren) {
-            const dIdx = dChildren.indexOf(node);// 当前节点是某重复id节点的子节点
+            const dIdx = dChildren.indexOf(node); // 当前节点是某重复id节点的子节点
             if (dIdx >= 0) mapNode = dup; // 找到真正的parent
           }
         });
@@ -89,13 +90,13 @@ function getValueByKeyPath(obj: DynamicObject, keyPath: string) {
       result = curObj;
     }
   }
-  return result === undefined ? "" : `${result}`;
+  return result === undefined ? '' : `${result}`;
 }
 
 export function evaluateSelector(node: SchemaNode, selector: string | Function) {
   if (typeof selector === 'string') {
     const temp = selector.split('==');
-    if (temp.length != 2) return false;
+    if (temp.length !== 2) return false;
     const targetKey = temp[0];
     const conditionValue = temp[1];
     const targetValue = getValueByKeyPath(node, targetKey);
@@ -128,9 +129,9 @@ const shadowMagic = (entity: DynamicObject, exception?: string[]) => {
     } else {
       entity[key] = value;
     }
-  })
+  });
   return;
-}
+};
 /**
  * 创建一个影子，向外暴露的是影子
  * @param entity 
@@ -140,17 +141,15 @@ export const createShadow = (entity: DynamicObject) => {
   Object.keys(entity).forEach(key => {
     const value = entity[key];
     if (typeof value === 'function') {
-      shadow[key] = (...arg: any[]) => (entity[key](...arg));// 用entity来检索，而不直接使用value
+      shadow[key] = (...arg: any[]) => (entity[key](...arg)); // 用entity来检索，而不直接使用value
     } else {
       shadow[key] = value;
     }
-  })
+  });
   const shadowBox: ShadowBox = {
     shadow,
     entity,
     shadowMagic: (exception) => shadowMagic(entity, exception)
   };
   return shadowBox;
-}
-
-
+};

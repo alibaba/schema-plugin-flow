@@ -100,6 +100,7 @@ export function evaluateSelector(node: SchemaNode, selector: string | Function) 
     const targetKey = temp[0];
     const conditionValue = temp[1];
     const targetValue = getValueByKeyPath(node, targetKey);
+    // tslint:disable-next-line:triple-equals
     return targetValue == conditionValue;
   } else if (typeof selector === 'function') {
     const { children, attributes, ...others } = node;

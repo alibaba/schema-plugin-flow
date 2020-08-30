@@ -446,7 +446,8 @@ export default class Model {
    */
   afterRender = () => {
     /**
-     * 1. The second parameter to setState() is an optional callback function that will be executed once setState is completed and the component is re-rendered（updated）.
+     * 1. The second parameter to setState() is an optional callback function 
+     * that will be executed once setState is completed and the component is re-rendered（updated）.
      * 2. react setState callback 是一个 task，如果再用 setTimeout，就会再产生一个 task，
      * 而如果在 run 开始时就发起一个请求，在 response 后进行 reloadPage，
      * 此时的 response 可能在第一个 task 后，也可能在第二个 task 后注入 microtask queue 中(不兼容时可能是个task)

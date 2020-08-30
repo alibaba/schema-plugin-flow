@@ -25,6 +25,7 @@
     "prepare": "npm run build",
     "test": "mocha --compilers js:@babel/register test/index.test.js ",
     "lint-back": "eslint --ext .jsx,.js,.ts src/",
+    "lint": "tslint \"src/**/*.ts\" -e \"src/types/*.ts\" --force",
     "precommit": "npm run lint",
     "backup-prepublish": "npm run lint && npm run build",
     "type-check": "tsc --noEmit --watch",

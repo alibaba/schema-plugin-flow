@@ -10,6 +10,9 @@
     "url": "git@github.com:alibaba/schema-plugin-flow.git",
     "directory": "packages/sifo-mplg-react-optimize"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "schema-plugin-flow",
     "sifo",

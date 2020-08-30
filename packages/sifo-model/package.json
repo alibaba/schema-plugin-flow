@@ -1,10 +1,11 @@
 {
   "name": "@schema-plugin-flow/sifo-model",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "FrominXu",
   "description": "schema plugins management model",
   "license": "MIT",
   "types": "lib/index.d.ts",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:alibaba/schema-plugin-flow.git",

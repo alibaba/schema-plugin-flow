@@ -12,12 +12,13 @@ react渲染优化的sifo-model modelPlugin模型插件
 ```javascript
 import SifoModel from '@schema-plugin-flow/sifo-model';
 //
+const plugins = [..., { modelPlugin: reactOptimizeModelPlugin }];
 new SifoModel(
   namespace,
   refreshApi,
   schema,
-  [..., { modelPlugin: reactOptimizeModelPlugin }]
-)
+  plugins
+);
 ```
 ## 扩展的 mApi 模型接口
 

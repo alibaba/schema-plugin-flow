@@ -36,6 +36,10 @@ export default {
             path: '../sifo-mplg-react-optimize'
           },
           {
+            title: "sifo-vue",
+            path: '../sifo-vue'
+          },
+          {
             title: "sifo-singleton",
             path: '../sifo-singleton'
           }
@@ -65,6 +69,14 @@ export default {
     {
       title: 'sifo-react-demo',
       path: '/sifo-react-doc',
+    },
+    {
+      title: 'sifo-vue-demo',
+      path: '//localhost:8080',
+    },
+    {
+      title: 'GitHub',
+      path: 'https://github.com/alibaba/schema-plugin-flow',
     }
   ],
 };

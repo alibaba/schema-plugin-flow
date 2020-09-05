@@ -1,0 +1,96 @@
+{
+  "component": "s-container",
+  "id": "$mainContainer",
+  "attributes": {
+    "label": "主容器"
+  },
+  "children": [
+    {
+      "component": "a-button",
+      "id": "btn_change_id",
+      "attributes": {
+        "type": "primary"
+      },
+      "children": [
+        "按钮"
+      ]
+    },
+    {
+      "component": "a-date-picker",
+      "id": "date",
+      "attributes": {
+        "type": "primary",
+        "placeholder": "日期"
+      }
+    },
+    {
+      "component": "a-input",
+      "id": "name",
+      "attributes": {
+        "placeholder": "名称"
+      }
+    },
+    {
+      "component": "s-container",
+      "id": "$subContainer",
+      "attributes": {
+        "style": {
+          "border": "1px solid green",
+          "padding": "8px"
+        },
+        "label": "二级容器"
+      },
+      "children": [
+        {
+          "component": "a-input",
+          "attributes": {
+            "placeholder": "请输入"
+          }
+        },
+        {
+          "component": "a-input",
+          "attributes": {
+            "props": {
+              "placeholder": "请输入"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "component": "a-input",
+      "attributes": {
+        "props": {
+          "placeholder": "请输入"
+        }
+      }
+    },
+    {
+      "component": "a-input",
+      "attributes": {
+        "props": {
+          "placeholder": "请输入"
+        }
+      }
+    },
+    "这是一段文本",
+    {
+      "component": "h1",
+      "attributes": {},
+      "children": [
+        "h1 的内容"
+      ]
+    },
+    {
+      "component": "anchored-heading",
+      "attributes": {
+        "props": {
+          "level": 2
+        }
+      },
+      "children": [
+        "h2 的内容"
+      ]
+    }
+  ]
+}

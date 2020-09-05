@@ -21,6 +21,7 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * `sifo-model` is the core of Sifo, which using JSON (as Schema) to describe page's structures and using plugins as logic controller. There are three kinds of plugin: modelPlugin、 pagePlugin and componentPluign.
 * `sifo-singleton` is a global extensions holder. All kinds of extend-plugins and extend-components are registered to it.
 * `sifo-react` is a React Component encapsulates sifo-model and sifo-singleton.
+* `sifo-vue` is a Vue Component encapsulates sifo-model and sifo-singleton.
 
 ## Installation
 
@@ -28,6 +29,7 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 $ npm i @schema-plugin-flow/sifo-model --save
 $ npm i @schema-plugin-flow/sifo-react --save
 $ npm i @schema-plugin-flow/sifo-mplg-react-optimize --save
+$ npm i @schema-plugin-flow/sifo-vue --save
 ```
 
 ## Try
@@ -43,7 +45,21 @@ $ npm run start
 
 *  then visit `http://localhost:8000`.
 
-## SifoApp (sifo-react) Demo
-In this demo, there are seven independent extend-plugins. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
+## Try for Vue
+you can try to run the examples.
+*  clone code and start
+
+```shell
+$ git clone https://github.com/alibaba/schema-plugin-flow.git
+$ cd schema-plugin-flow
+$ npm run i
+$ npm run i-vue
+$ npm run start-vue
+```
+
+*  then visit `http://localhost:8080`.
+
+## SifoApp (sifo-react/sifo-vue) Demo
+In this demo, there are seven extend-plugins in seven independent js. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
 
   ![demo](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

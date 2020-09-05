@@ -3,8 +3,10 @@ title: Description
 ---
 ## 概要
 Sifo 以 `sifo-model` 为内核，以 schema 作为描述页面结构的数据格式，使用插件式的开发模式，可为页面提供灵活的定制与扩展能力。包含但不限于：页面结构的修改、渲染组件的替换、组件属性的变更、组件事件的监听与阻断等。结合不同的模型插件，可以实现更加丰富的功能。    
-`sifo-react` 实现了在 React 框架下对 sifo-model 的封装；  
 `sifo-singleton` 是全局扩展容器，各类定制扩展插件、组件统一注册到其中。
+`sifo-react` 实现了在 React 框架下对 sifo-model 的封装；  
+`sifo-vue` 实现了在 Vue 框架下对 sifo-model 的封装；  
+
 ## 技术介绍
 
 ### sifo-model
@@ -127,6 +129,7 @@ mApi.dispatchWatch('aMessage', 'this is a msg');
 ### sifo-react
 
 sifo-react 是封装了 sifo-model 和 sifo-singleton 的一个 React 组件。
+
 #### 快速上手
 下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。
 ```jsx
@@ -261,6 +264,108 @@ class View extends React.Component {
     )
   }
 ```
+
+### sifo-vue
+sifo-vue 是封装了 sifo-model 和 sifo-singleton 的一个 Vue 组件。
+
+#### 快速上手
+下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
+```javascript
+<template>
+  <sifo-app
+    :namespace="namespace"
+    class="quick-start-demo"
+    :plugins="plugins"
+    :components="components"
+    :schema="schema"
+    :openLogger="openLogger"
+  />
+</template>
+// 注意改为script
+<script--xxx-->
+import SifoApp from "@schema-plugin-flow/sifo-vue";
+// register local components
+const components = {
+  Container: {
+    template: "<div><slot></slot></div>",
+  },
+  Slogan: {
+    template: "<h2>{{content}}</h2>",
+    props: ["content"],
+  },
+  Button: {
+    template: `<button @click="$emit('click')">click to change</button>`,
+  },
+};
+// schema 定义了初始的页面结构
+const schema = {
+  component: "Container",
+  id: "mainId",
+  attributes: {},
+  children: [
+    {
+      component: "Slogan",
+      id: "slogan_id",
+      attributes: {
+        content: "hello world",
+      },
+    },
+    {
+      component: "Button",
+      id: "test_btn_id",
+      attributes: {},
+    },
+  ],
+};
+// 组件插件可以实现与组件相关的功能
+const componentPlugin1 = {
+  test_btn_id: {
+    onComponentInitial: (params) => {
+      const { event, mApi } = params;
+      mApi.addEventListener(event.key, "click", () => {
+        mApi.setAttributes("slogan_id", {
+          content: "hello sifo",
+        });
+      });
+    },
+  },
+};
+// 第二个插件
+const componentPlugin2 = {
+  test_btn_id: {
+    onComponentInitial: (params) => {
+      const { event, mApi } = params;
+      mApi.addEventListener(event.key, "click", () => {
+        console.log("test_btn_id clicked!");
+      });
+    },
+  },
+};
+const plugins = [
+  { componentPlugin: componentPlugin1 },
+  { componentPlugin: componentPlugin2 },
+];
+export default {
+  name: "quick-start",
+  components: { SifoApp },
+  beforeCreate: function () {
+    const sifoAppProps = {
+      namespace: "quick-start",
+      plugins: plugins,
+      components,
+      schema,
+      openLogger: true,
+    };
+    Object.keys(sifoAppProps).forEach((key) => {
+      this[key] = sifoAppProps[key];
+    });
+  },
+};
+</script--xxx-->
+```
+
+#### 外部扩展
+同上文 sifo-react 外部扩展部分
 
 ## 附录：
 #### [1] 扩展涵盖了几个方面：   

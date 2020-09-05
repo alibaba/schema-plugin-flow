@@ -5,7 +5,7 @@
   "description": "A highly extensible JavaScript library, abbreviated as Sifo. 高扩展性、可二开的插件式前端开发框架",
   "scripts": {
     "i": "npm install --ignore-scripts && lerna bootstrap",
-    "update": "lerna clean",
+    "clean": "lerna clean",
     "publish": "npm run prepare && lerna publish",
     "prepare": "npm run lint && npm run build",
     "prepublish-back": "npm run lint && npm run build",
@@ -13,7 +13,10 @@
     "lint": "lerna run lint",
     "test": "lerna run test",
     "lerna-build": "lerna run build",
-    "start": "npm run build && npx dumi dev ",
+    "i-vue": "node examples-vue/server.js i",
+    "build-vue": "node examples-vue/server.js build",
+    "start-vue": "cd examples-vue && npm run serve",
+    "start": "npm run build && npm run dev",
     "dev": "npx dumi dev"
   },
   "devDependencies": {

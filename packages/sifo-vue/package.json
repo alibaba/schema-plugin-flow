@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-vue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "FrominXu",
   "description": "sifo Vue",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "prepare": "npm run lint && npm run build"
   },
   "dependencies": {
-    "@schema-plugin-flow/sifo-model": "^1.0.0",
-    "@schema-plugin-flow/sifo-singleton": "^1.0.0",
+    "@schema-plugin-flow/sifo-model": "^1.1.0",
+    "@schema-plugin-flow/sifo-singleton": "^1.0.1",
     "classnames": "^2.2.6",
     "uuid": "^3.3.2"
   },

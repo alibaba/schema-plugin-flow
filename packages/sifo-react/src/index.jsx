@@ -48,7 +48,14 @@ class SifoApp extends PureComponent {
       plugins,
       customPlugins,
       ...presetPlugins,
-      { modelPlugin: PluginResetter },
+      {
+        modelPlugin: {
+          plugin: PluginResetter,
+          argsProvider: () => {
+            return [{ openLogger: openLogger || showLogger }];
+          }
+        }
+      },
     );
     if (openLogger || showLogger) {
       combinedPlugins.push({ modelPlugin: SifoLogger });
@@ -63,9 +70,6 @@ class SifoApp extends PureComponent {
       },
       externals,
       getModelPluginArgs: (id, info) => {
-        if (id === 'plugin_reset_model_plugin') {
-          return [{ openLogger: openLogger || showLogger }];
-        }
         if (getModelPluginArgs) {
           return getModelPluginArgs(id, info);
         }

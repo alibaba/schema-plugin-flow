@@ -89,12 +89,21 @@ class Decorator extends React.Component {
         })
       ]
     };
-    const { plugins: customPlugins, components: customComps } = getRegisteredItems(namespace);
+    const {
+      plugins: customPlugins, components: customComps, openLogger: showLogger = false
+    } = getRegisteredItems(namespace);
     const combinedPlugins = [...baseOrderPlugins].concat(
       plugins,
       customPlugins,
       ...presetPlugins,
-      { modelPlugin: PluginResetter },
+      {
+        modelPlugin: {
+          plugin: PluginResetter,
+          argsProvider: () => {
+            return [{ openLogger: openLogger || showLogger }];
+          }
+        }
+      },
     );
     if (openLogger) {
       combinedPlugins.push({ modelPlugin: SifoLogger });
@@ -115,9 +124,6 @@ class Decorator extends React.Component {
       },
       externals: { ...externals, initProps, fragments },
       getModelPluginArgs: (id, info) => {
-        if (id === 'plugin_reset_model_plugin') {
-          return [{ openLogger }];
-        }
         if (getModelPluginArgs) {
           return getModelPluginArgs(id, info);
         }

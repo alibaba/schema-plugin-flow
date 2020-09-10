@@ -28,7 +28,14 @@ const SifoApp = {
       plugins,
       customPlugins,
       ...presetPlugins,
-      { modelPlugin: PluginResetter },
+      {
+        modelPlugin: {
+          plugin: PluginResetter,
+          argsProvider: () => {
+            return [{ openLogger: openLogger || showLogger, needOptimize: optimize }];
+          }
+        }
+      }
     );
     if (openLogger || showLogger) {
       combinedPlugins.push({ modelPlugin: SifoLogger });
@@ -46,9 +53,6 @@ const SifoApp = {
       },
       externals,
       getModelPluginArgs: (id, info) => {
-        if (id === 'plugin_reset_model_plugin') {
-          return [{ openLogger: openLogger || showLogger, needOptimize: optimize }];
-        }
         if (id === 'sifo_vue_model_plugin') {
           return { sifoVueInstance: this };
         }
@@ -71,7 +75,7 @@ const SifoApp = {
       modelOptions
     );
     // store vue node instance when need optimize
-    this.sifoAppNodesMap = [];
+    this.sifoAppNodesMap = {};
   },
   created: function () {
   },

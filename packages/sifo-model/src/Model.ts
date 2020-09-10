@@ -61,7 +61,7 @@ export default class Model {
   externals: ModelOptions['externals'];
   initialSchema: SchemaNode;
   plugins: SifoPlugin[];
-  modelPluginIds: string[];
+  modelPluginIds: (string | ModelPlugin)[];
   initialComponents: object;
   components: ModelOptions['components'];
   mApi: ModelApi | null;
@@ -190,28 +190,40 @@ export default class Model {
         const plugin = pluginsItem[plgName];
         if (!plugin) { return; }
         if (key === 'modelPlugins') { // 模型插件是class形式
-          const Id = plugin.ID;
-          // 模型插件既要判断ID也要判断本身
-          if (this.modelPluginIds.indexOf(plugin) === -1
-            && this.modelPluginIds.indexOf(Id) === -1) { 
-            if (Id) { // 有可能被多次引入
-              this.modelPluginIds.push(Id);
+          // tslint:disable-next-line: no-any
+          let modelPlugin: any = plugin;
+          let getModelPluginArgs = this.getModelPluginArgs;
+          if (typeof modelPlugin === 'object') {
+            const { argsProvider, plugin: mPlg } = <ModelPluginProvider> modelPlugin;
+            if (!mPlg) return;
+            modelPlugin = mPlg;
+            if (argsProvider && typeof argsProvider === 'function') {
+              getModelPluginArgs = argsProvider;
             }
-            this.modelPluginIds.push(plugin);
-            // 获取模型创建参数
-            let newParams = this.getModelPluginArgs(Id, {
-              instanceId: this.instanceId,
-              namespace: this.namespace,
-              externals: this.externals
-            }); // [a, b]
-            if (!newParams || !Array.isArray(newParams)) { newParams = [newParams]; }
-            try {
-              this[key].push(new plugin(...newParams)); // eslint-disable-line
-            } catch (e) {
-              console.error(`[sifo-model] new ${plgName} ${Id || 'No_ID_Model_Plugin'} failed. errMsg: ${e}`);
-            }
-          } else {
+          }
+          // 获取模型创建参数
+          const Id = modelPlugin.ID;
+          if (!(this.modelPluginIds.indexOf(modelPlugin) === -1 && this.modelPluginIds.indexOf(Id) === -1)) {
             console.info(`[sifo-model] ${plgName}: ${Id || 'No_ID_Model_Plugin'} already exist.`);
+            return;
+          }
+          // 模型插件既要判断ID也要判断本身
+          if (Id) { // 有可能被多次引入
+            this.modelPluginIds.push(Id);
+          }
+          this.modelPluginIds.push(plugin);
+          const info = {
+            instanceId: this.instanceId,
+            namespace: this.namespace,
+            externals: this.externals
+          };
+          try {
+            let newParams = getModelPluginArgs(Id, info); // [a, b]
+            if (!newParams || !Array.isArray(newParams)) newParams = [newParams];
+            const mPlugin = new modelPlugin(...newParams);
+            this[key].push(mPlugin);
+          } catch (e) {
+            console.error(`[sifo-model] new ${plgName} ${Id || 'No_ID_Model_Plugin'} failed. errMsg: ${e}`);
           }
         } else {
           if (this[key].indexOf(plugin) === -1) {
@@ -331,7 +343,7 @@ export default class Model {
         }
         return null;
       },
-      getComponents: () => this.components,
+      getComponents: () => ({ ...this.components }),
       // 注： registPlugins: this.registPlugins, // 注册插件是否在插件给？=> 暂不放开，注意模型插件的权限
       // to think: registComponent，有时可能需要由外部组件来包装已存在组件，达到保留原组件逻辑的情况下修改渲染样式
       // 不放开 schemaLoopUp: this.loopUp,
@@ -506,7 +518,7 @@ export default class Model {
     this.splitPlugins(plugins);
   }
 
-  getModelHandlers(event: keyof (ModelPlugin)): AnyPluginHandler[] {
+  getModelHandlers(event: Exclude<keyof ModelPlugin, 'ID'>): AnyPluginHandler[] {
     const handlers: AnyPluginHandler[] = [];
     this.modelPlugins.forEach((handler: ModelPlugin) => {
       if (handler && hasOwnProperty(handler, event)) {

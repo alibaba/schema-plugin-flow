@@ -37,12 +37,21 @@ class PluginResetter {
           plugins,
           customPlugins,
           ...presetPlugins,
-          { modelPlugin: PluginResetter },
+          {
+            modelPlugin: {
+              plugin: PluginResetter,
+              argsProvider: () => {
+                return [
+                  { openLogger: this.openLogger || showLogger, needOptimize: this.needOptimize }
+                ];
+              }
+            }
+          },
         );
         if (this.openLogger || showLogger) {
           newPlgs.push({ modelPlugin: SifoLogger });
         }
-        if (this.optimize) {
+        if (this.needOptimize) {
           newPlgs.push({ modelPlugin: VueOptimize });
         }
       }

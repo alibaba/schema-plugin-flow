@@ -24,12 +24,23 @@ modelOptions | 模型选项，详情见参数说明 | object | 否 | - |
 externals | 任意外部信息 | object | 否 | {} |
 components | 组件 | object | 否 | {} |
 modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function: mApi => void | 否 | - |
-getModelPluginArgs | 获取模型插件实例化时的构造函数参数 | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | - |
+getModelPluginArgs | 获取模型插件实例化时的构造函数参数, 构造参数也可在传入 modelPlugin 时提供, 见后文 argsProvider | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | - |
 
 > 代码示例
 ```javascript
 import SifoModel from '@schema-plugin-flow/sifo-model';
 //
+const plugins = [
+  { componentPlugin, pagePlugin, modelPlugin: ModelPluginA }, 
+  {
+    modelPlugin: {
+      plugin: ModelPluginB,
+      argsProvider: (mId, info) => {
+        return [arg1, arg2];
+      }
+    }
+  }
+];
 const refreshApi = (callback) => {
   // do refresh
   callback(); 
@@ -44,9 +55,11 @@ const sifoModel = new SifoModel(
     schema,
     plugins,
     modelOptions);
-sifoModel.run();// 运行
+// 运行
+sifoModel.run();
 // do something ...
-sifoModel.destroy();// 销毁
+// 销毁
+sifoModel.destroy();
 ```
 
 ## schema 格式规范
@@ -242,6 +255,25 @@ class modelPlugin {
     // do something
   }
 }
+```
+
+使用示例
+```javascript
+const plugins = [
+  {
+    modelPlugin: ModelPluginA,
+    pagePlugin: {}
+  },
+  {
+    modelPlugin: {
+      plugin: ModelPluginB,
+      // 提供实例化构造参数
+      argsProvider: (mId, info) => {
+        return [arg1, arg2];
+      }
+    }
+  }
+]
 ```
 
 ## 生命周期关系图

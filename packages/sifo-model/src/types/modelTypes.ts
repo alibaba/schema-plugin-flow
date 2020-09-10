@@ -1,4 +1,4 @@
-
+  /* tslint:disable: no-any */
 interface PluginKeyMap {
   [key: string]: string;
   modelPlugins: string;
@@ -7,7 +7,7 @@ interface PluginKeyMap {
 }
 
 interface DynamicObject {
-  [key: string]: any
+  [key: string]: any;
 }
 interface ShadowBox {
   shadow: DynamicObject;
@@ -37,7 +37,7 @@ interface ModelApi {
   /**
    * 获取存储在key值下的数据对象，globalData是一个公共数据容器
    */
-  getGlobalData: (key?: string) => any,
+  getGlobalData: (key?: string) => any;
   /**
    * 存储一个指定key的数据对象
    */
@@ -64,7 +64,7 @@ interface ModelApi {
    * @param direction 遍历方向，默认 loopDown
    * @param startId 遍历的起始节点 id，loopDown 时默认从根节点开始
    */
-  queryNodeIds:(selector: string | Function, direction?: 'loopDown' | 'loopUp', startId?: string) => string[]; 
+  queryNodeIds: (selector: string | Function, direction?: 'loopDown' | 'loopUp', startId?: string) => string[]; 
   /**
    * 组件注册监听事件
    */
@@ -76,7 +76,7 @@ interface ModelApi {
   /**
    * 对指定组件事件是否有进行监听
    */
-  hasEventListener: (id: string, eventName: string) => boolean,
+  hasEventListener: (id: string, eventName: string) => boolean;
   /**
    * 注册观测事件，一般用于观测指定id节点(key参数)的属性变化，也可用于自定义观测
    */
@@ -92,23 +92,23 @@ interface ModelApi {
   /**
    * 重新加载页面，reloadPage将重跑所有生命周期。仅在afterRender后生效。
    */
-  reloadPage: (params: ReloadPageParams) => void,
+  reloadPage: (params: ReloadPageParams) => void;
   /**
    * 强制刷新页面，一般是在批量更新了节点属性后调用
    */
-  refresh: () => any;// 批量修改schema的属性后，调用刷新使更新生效
+  refresh: () => any; // 批量修改schema的属性后，调用刷新使更新生效
   /**
    * 获取初始schema
    */
-  getInitialSchema: () => SchemaNode, // 初始的schema
+  getInitialSchema: () => SchemaNode; // 初始的schema
   /**
    * 获取渲染时schema
    */
-  getSchema: () => SchemaNode | null,
+  getSchema: () => SchemaNode | null;
   /**
    * 获取渲染时components
    */
-  getComponents: () => DynamicObject | undefined,
+  getComponents: () => DynamicObject | undefined;
 }
 interface PluginEventArgs {
   mApi: ModelApi;
@@ -132,7 +132,7 @@ type AnyPluginHandler = PluginHandler | PrePluginHandler;
  * 组件插件项
  */
 interface ComponentPluginItem {
-  //[handlerName: string]: PluginHandler;
+  // [handlerName: string]: PluginHandler;
   /**
    * 组件初始化
    */
@@ -146,13 +146,13 @@ interface ComponentPluginItem {
  * 组件插件集
  */
 interface ComponentPluginSet {
-  [componentId: string]: ComponentPluginItem
+  [componentId: string]: ComponentPluginItem;
 }
 /**
  * 页面插件
  */
 interface PagePlugin {
-  //[handlerName: string]: AnyPluginHandler | undefined;
+  // [handlerName: string]: AnyPluginHandler | undefined;
   /**
    *  对节点动态修改
    */
@@ -168,11 +168,11 @@ interface PagePlugin {
   /**
    * 渲染后
    */
-  afterRender?: PluginHandler;// 12
+  afterRender?: PluginHandler; // 12
   /**
    * 销毁
    */
-  onDestroy?: PluginHandler;// 13
+  onDestroy?: PluginHandler; // 13
 }
 
 // render: 'render', 11
@@ -180,8 +180,8 @@ interface PagePlugin {
  * 模型插件
  */
 interface ModelPlugin {
-  // ID: string;
-  //[handlerName: string]: AnyPluginHandler | undefined;
+  ID: string;
+  // [handlerName: string]: AnyPluginHandler | undefined;
   // onModelInitial: 'onModelInitial',//1 注：class类型，直接new class
   /**
    * 对schema预处理
@@ -206,7 +206,7 @@ interface ModelPlugin {
   /**
    * 销毁
    */
-  onDestroy?: PluginHandler;// 13
+  onDestroy?: PluginHandler; // 13
 }
 /**
  * 模型实例化可选参数
@@ -215,15 +215,15 @@ interface ModelOptions {
   /**
    * 模型接口mApi外传方法
    */
-  modelApiRef?: (mApi: ModelApi | null) => void,
+  modelApiRef?: (mApi: ModelApi | null) => void;
   /**
    * 任意外部信息
    */
-  externals?: object,
+  externals?: object;
   /**
    * 组件
    */
-  components?: object,
+  components?: object;
   /**
    * 获取模型插件实例化时的构造函数参数
    * @param modelPluginId 模型插件的ID
@@ -231,14 +231,24 @@ interface ModelOptions {
   getModelPluginArgs?: (modelPluginId: string, info: ModelInformation) => any;
 }
 /**
+ * 可提供参数的模型插件
+ */
+interface ModelPluginProvider {
+  /**
+   * 返回模型插件的实例构造参数: (info) => { return [arg1, arg2]; }
+   */
+  argsProvider?: (modelPluginId: string, info: ModelInformation) => any;
+  plugin: ModelPlugin;
+}
+/**
  * SifoModel插件参数
  */
 interface SifoPlugin {
-  //[key: string]: ModelPlugin | PagePlugin | ComponentPluginSet | undefined;
+  // [key: string]: ModelPlugin | PagePlugin | ComponentPluginSet | undefined;
   /**
    * 模型插件
    */
-  modelPlugin?: ModelPlugin;
+  modelPlugin?: ModelPlugin | ModelPluginProvider;
   /**
    * 页面插件
    */
@@ -246,12 +256,12 @@ interface SifoPlugin {
   /**
    * 组件插件
    */
-  componentPlugin?: ComponentPluginSet
+  componentPlugin?: ComponentPluginSet;
 }
 interface ModelInformation {
-  instanceId: string
-  namespace?: string
-  externals?: ModelOptions['externals']
+  instanceId: string;
+  namespace?: string;
+  externals?: ModelOptions['externals'];
 }
 
 type DefaultFunc = (args?: any) => any;

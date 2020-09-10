@@ -27,7 +27,7 @@ class formModelPlugin {
   // 用来标识模型插件身份
   static ID = '06595a73-b0df-4028-95fd-8e08c929dab5';
   constructor(props) {
-    console.log('getModelPluginArgs model plugins arg:', props);
+    console.log('form model plugins arg:', props);
     // 存储模型状态
     this.validator = {};
     this.id2Name = {};// 记录id与name的对应关系

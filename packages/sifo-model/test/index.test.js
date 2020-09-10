@@ -73,10 +73,27 @@ describe('===================model init===================', () => {
   });
   console.log('optimizeModelPlg.ID', optimizeModelPlg.ID);
   let modelPluginArgs = null;
+  let argsProvider = null;
   let refreshApi = (callback) => { console.log('!!!!!!refresh'); callback() },
     externals = {},
     schema = test_schema,
-    plugins = [test_plugins, test_plugins, singleton.getRegisteredPlugins(), { modelPlugin: optimizeModelPlg }, { modelPlugin: optimizeModelPlg }, { modelPlugin: formModelPlugin }],
+    plugins = [
+      test_plugins,
+      test_plugins,
+      singleton.getRegisteredPlugins(),
+      { modelPlugin: optimizeModelPlg },
+      { modelPlugin: optimizeModelPlg },
+      {
+        modelPlugin: {
+          plugin: formModelPlugin,
+          argsProvider: (id, info) => { 
+            argsProvider = 'get';
+            console.log('argsProvider', id, info)
+            return "this is form mplg args"
+          }
+        }
+      }
+    ],
     components = {},
     modelApiRef = (api) => { console.log('api ref', api); mApi = api; },
     modelOptions = {
@@ -113,6 +130,7 @@ describe('===================model init===================', () => {
     })
     expect(mApi).to.be.a('object');
     expect(modelPluginArgs).to.eql('test');
+    expect(argsProvider).to.eql('get');
     //console.log('mApi', mApi);
     //console.log('getSchema', JSON.stringify(schemaNode));
     const schemaNode2 = schemaNode.children[0];

@@ -35,7 +35,14 @@ class PluginResetter {
           plugins,
           customPlugins,
           ...presetPlugins,
-          { modelPlugin: PluginResetter },
+          {
+            modelPlugin: {
+              plugin: PluginResetter,
+              argsProvider: () => {
+                return [{ openLogger: this.openLogger || showLogger }];
+              }
+            }
+          }
         );
         if (this.openLogger || showLogger) {
           newPlgs.push({ modelPlugin: SifoLogger });

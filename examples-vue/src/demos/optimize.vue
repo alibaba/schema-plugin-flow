@@ -100,11 +100,11 @@ const components = {
   Input: {
     template: `
       <div :style='{ margin: "8px" }'>&nbsp;&nbsp;
-        {{name}}: <input @input="$emit('change',$event)" />&nbsp;&nbsp;
+        {{name}}: <input @input="$emit('change',$event)" :value="value"/>&nbsp;&nbsp;
         rerendered: {{new Date().getMilliseconds()}}
       </div>
     `,
-    props: ["name"],
+    props: ["name", "value"],
   },
 };
 const pagePlugin = {

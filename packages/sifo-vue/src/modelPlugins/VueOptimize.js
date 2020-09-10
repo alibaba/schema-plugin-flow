@@ -18,6 +18,8 @@ class vueOptimizeModelPlugin {
       if (!node.attributes) return;
       // 对所有节点进行一次初始标记
       node.__renderOptimizeMark__ = "sifo-vue-optimize-init-mark";// eslint-disable-line
+      // 节点唯一标识，不使用节点id
+      node.__renderOptimizeId__ = uuid(); // eslint-disable-line
       // 禁用渲染优化标记初始为false
       node.attributes.muteRenderOptimizeMark = false;// eslint-disable-line
     });

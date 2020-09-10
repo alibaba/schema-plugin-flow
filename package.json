@@ -4,7 +4,7 @@
   "license": "MIT",
   "description": "A highly extensible JavaScript library, abbreviated as Sifo. 高扩展性、可二开的插件式前端开发框架",
   "scripts": {
-    "i": "npm install --ignore-scripts && lerna bootstrap",
+    "i": "npm install --no-package-lock --ignore-scripts && lerna bootstrap",
     "clean": "lerna clean",
     "publish": "npm run prepare && lerna publish",
     "prepare": "npm run lint && npm run build",

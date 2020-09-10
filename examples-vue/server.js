@@ -28,7 +28,7 @@ function installPkgs(callback) {
     fs.unlinkSync(fielPath);
   }
   console.log('run: npm i');
-  const cmdStr = 'npm install';
+  const cmdStr = 'npm install --no-package-lock';
   exec(cmdStr, { maxBuffer: 1024 * 500 }, (err, stdout, stderr) => {
     if (err) {
       console.log(err);

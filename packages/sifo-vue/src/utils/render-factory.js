@@ -8,9 +8,13 @@
 function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
   if (typeof node === 'string') return node;
   const {
-    component, attributes = {}, id, __renderOptimizeMark__, children = []
+    component,
+    attributes = {},
+    __renderOptimizeId__: optimizeId,
+    __renderOptimizeMark__,
+    children = []
   } = node;
-  const { muteRenderOptimizeMark = false } = attributes;// eslint-disable-line
+  const { muteRenderOptimizeMark = false, ...otherAttrs } = attributes;// eslint-disable-line
   // 对属性 进行分类
   /*
   const { scopedSlots, slot, key, ref, refInFor, style = {},
@@ -24,34 +28,34 @@ function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
   */
   // console.log('node render', node, props, on);
   let nodeInstance = null;
-  if (needOptimize && id && muteRenderOptimizeMark !== true) {
-    if (sifoAppNodesMap[id]
-      && sifoAppNodesMap[id].__renderOptimizeMark__ === __renderOptimizeMark__) {
+  if (needOptimize && optimizeId && muteRenderOptimizeMark !== true) {
+    if (sifoAppNodesMap[optimizeId]
+      && sifoAppNodesMap[optimizeId].__renderOptimizeMark__ === __renderOptimizeMark__) {
       // eslint-disable-next-line prefer-destructuring
-      nodeInstance = sifoAppNodesMap[id].nodeInstance;
+      nodeInstance = sifoAppNodesMap[optimizeId].nodeInstance;
     } else {
-      delete sifoAppNodesMap[id];
+      sifoAppNodesMap[optimizeId] = null;
       const childrenNodes = children.map(child => {
         return renderFactory(child, createElement, sifoAppNodesMap, needOptimize);
       });
       nodeInstance = createElement(
         component,
-        { ...attributes },
+        otherAttrs,
         childrenNodes
       );
-      sifoAppNodesMap[id] = {
+      sifoAppNodesMap[optimizeId] = {
         __renderOptimizeMark__,
         nodeInstance
       };
     }
   } else {
-    delete sifoAppNodesMap[id];
+    delete sifoAppNodesMap[optimizeId];
     const childrenNodes = children.map(child => {
       return renderFactory(child, createElement, sifoAppNodesMap, needOptimize);
     });
     nodeInstance = createElement(
       component,
-      { ...attributes },
+      otherAttrs,
       childrenNodes
     );
   }

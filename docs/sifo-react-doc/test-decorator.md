@@ -214,6 +214,7 @@ class TestDecorator extends React.Component {
     };
     const { sifoApp } = props;
     const mApi = sifoApp.mApi;
+    console.log('test-decorator: constructor')
     this.setState = sifoApp.addEventListener('setState', this.setState.bind(this));
     this.onClick = sifoApp.addEventListener('onClick', this.onClick.bind(this));
     this.onClickArrow = sifoApp.addEventListener('onClickArrow', this.onClickArrow);
@@ -239,9 +240,14 @@ class TestDecorator extends React.Component {
       test: new Date().getMilliseconds()
     })
   }
+  componentWillUnmount(){
+    console.log('test-decorator unmounted!')
+  }
   render() {
     const { test, customState } = this.state;
     console.log('render ---- origin state:', this.state);
+    console.log('render ---- mApi instance:', this.props.sifoApp.mApi.instanceId);
+    this.props.sifoApp.mApi.getAttributes('$test_inner')
     const headFragment = this.props.sifoApp.getFragment('$header');
     const bodyFragment = this.props.sifoApp.getFragment('$body');
     const testInnerSchema = this.props.sifoApp.getFragment('$test_inner');

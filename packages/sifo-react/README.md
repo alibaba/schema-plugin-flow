@@ -144,7 +144,7 @@ class View extends React.Component {
     // 加入事件监听，这些事件实际上是挂在了以当前命名空间为id的schema节点上
     this.onSubmit = sifoApp.addEventListener('onSubmit', this.onSubmit);
     this.setState = sifoApp.addEventListener('setState', this.setState.bind(this));
-    this.onChange = sifoApp.addEventListener('onChange', this.onChange);
+    this.onChange = sifoApp.addEventListener('onChange', this.onChange, true); // prepose传入true可使事件先于扩展件注册
     // 注册观测任务
     sifoApp.watch('getState', (context, getter) => {
       getter(this.state);

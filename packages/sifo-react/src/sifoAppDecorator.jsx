@@ -105,7 +105,7 @@ class Decorator extends React.Component {
         }
       },
     );
-    if (openLogger) {
+    if (openLogger || showLogger) {
       combinedPlugins.push({ modelPlugin: SifoLogger });
     }
     const combinedComponents = {
@@ -114,14 +114,46 @@ class Decorator extends React.Component {
       FragmentContainer,
       SifoAppContainer
     };
+    const mApiRef = mApi => {
+      this.mApi = mApi;
+      if (modelApiRef) {
+        modelApiRef(mApi);
+      }
+      if (!mApi) { this.sifoApp = null; return; }
+      // 在reloadPage 后要重置 sifoApp
+      this.sifoApp = {
+        mApi: this.mApi,
+        watch: (key, handler, ...other) => {
+          const watchList = (this.mApi.getAttributes(namespace) || {}).sifoAppWatchList || [];
+          // 记录被观测的对象
+          this.mApi.setAttributes(namespace, {
+            sifoAppWatchList: [...watchList, { [key]: handler }]
+          }, false);
+          this.mApi.watch(key, handler, ...other);
+        },
+        /**
+         * 不向被修饰对象暴露context，以减少对原方法的侵入，若需要context，可使用mApi的addEventListener方法；
+         * 此方法在扩展件之后执行，若需要前置，可传入prepose参数
+         */
+        addEventListener: (name, func, ...arg) => {
+          const middleFunc = (e, ...other) => func(...other);
+          this.mApi.addEventListener(namespace, name, middleFunc, ...arg);
+          const handler = this.mApi.getAttributes(namespace)[name];
+          return handler;
+        },
+        getFragment: key => {
+          // 按节点id获取片段
+          const item = this.mApi.getSchema().children.find(child => child.id === key);
+          if (!item) return null;
+          item.attributes['data-sifo-fragment'] = key; // 防止插件覆盖
+          const comps = this.mApi ? this.mApi.getComponents() : {};
+          return renderFactory(item, comps);
+        }
+      };
+    };
     const modelOptions = {
       components: combinedComponents,
-      modelApiRef: mApi => {
-        this.mApi = mApi;
-        if (modelApiRef) {
-          modelApiRef(mApi);
-        }
-      },
+      modelApiRef: mApiRef,
       externals: { ...externals, initProps, fragments },
       getModelPluginArgs: (id, info) => {
         if (getModelPluginArgs) {
@@ -138,31 +170,6 @@ class Decorator extends React.Component {
       modelOptions
     );
     this.sifoModel.run();
-    this.sifoApp = {
-      mApi: this.mApi,
-      watch: (key, handler, ...other) => {
-        const watchList = (this.mApi.getAttributes(namespace) || {}).sifoAppWatchList || [];
-        // 记录被观测的对象
-        this.mApi.setAttributes(namespace, {
-          sifoAppWatchList: [...watchList, { [key]: handler }]
-        }, false);
-        this.mApi.watch(key, handler, ...other);
-      },
-      addEventListener: (name, func, ...arg) => {
-        // 被修饰对象不暴露context，以减少对原方法的侵入
-        const middleFunc = (e, ...other) => func(...other);
-        this.mApi.addEventListener(namespace, name, middleFunc, ...arg);
-        const handler = this.mApi.getAttributes(namespace)[name];
-        return handler;
-      },
-      getFragment: key => {
-        // 按节点id获取片段
-        const item = this.mApi.getSchema().children.find(child => child.id === key);
-        if (!item) return null;
-        item.attributes['data-sifo-fragment'] = key; // 防止插件覆盖
-        return renderFactory(item, combinedComponents);
-      }
-    };
   }
   componentDidMount() {
     this.mounted = true;
@@ -198,7 +205,8 @@ class Decorator extends React.Component {
     const namespace = this.mApi ? this.mApi.namespace : nameSps;
     return (
       <div
-        key={namespace}
+        // 传入了 sifoApp 到被修饰组件，所以需要用instanceId保证实例指向正确
+        key={this.mApi.instanceId}
         data-sifo-namespace={namespace}
         className={cls('sifo-react', className)}
       >

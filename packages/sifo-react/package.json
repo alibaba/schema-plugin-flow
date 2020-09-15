@@ -2,7 +2,7 @@
   "name": "@schema-plugin-flow/sifo-react",
   "version": "1.1.1",
   "author": "FrominXu",
-  "description": "sifo React",
+  "description": "A highly extensible JavaScript library, for React. 高扩展性、可二开的插件式前端开发框架",
   "license": "MIT",
   "main": "index.js",
   "repository": {

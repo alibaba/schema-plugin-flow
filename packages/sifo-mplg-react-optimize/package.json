@@ -2,7 +2,7 @@
   "name": "@schema-plugin-flow/sifo-mplg-react-optimize",
   "version": "1.0.3",
   "author": "FrominXu",
-  "description": "sifo-react-optimize-model-plugin",
+  "description": "React rendering optimize for sifo-react.",
   "license": "MIT",
   "main": "index.js",
   "repository": {

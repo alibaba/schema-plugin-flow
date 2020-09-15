@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-model",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "FrominXu",
   "description": "schema plugins management model",
   "license": "MIT",

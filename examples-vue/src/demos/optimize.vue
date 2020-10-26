@@ -33,7 +33,7 @@
 <script>
 import SifoApp from "@schema-plugin-flow/sifo-vue";
 const schema = {
-  component: "ContainerX",
+  component: "Container",
   children: [
     {
       component: "Input",
@@ -43,7 +43,7 @@ const schema = {
       },
     },
     {
-      component: "ContainerX",
+      component: "Container",
       children: [
         {
           component: "Input",
@@ -53,7 +53,7 @@ const schema = {
           },
         },
         {
-          component: "ContainerX",
+          component: "Container",
           children: [
             {
               component: "Input",
@@ -90,7 +90,7 @@ const schema = {
   ],
 };
 const components = {
-  ContainerX: {
+  Container: {
     template: `
     <div :style='{ margin: "8px", border: "1px solid #ccc" }'>
       <slot></slot>

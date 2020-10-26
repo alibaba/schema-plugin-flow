@@ -1,5 +1,5 @@
 const forbiddenKeys = ['on'];
-const classKeys = ['slot', 'key', 'ref', 'refInFor', 'muteRenderOptimizeMark'];
+const classKeys = ['slot', 'key', 'class', 'ref', 'refInFor', 'muteRenderOptimizeMark'];
 const classObjects = ['scopedSlots', 'refInFor', 'style', 'attrs', 'props', 'domProps', 'nativeOn'];
 const classArray = ['directives'];
 export function classifyAttributes(oldAttrs, newAttrs) {

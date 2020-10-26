@@ -5,7 +5,7 @@
  * @param {*} node
  * @param {*} createElement
  */
-function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
+function renderFactory(node, createElement, components, sifoAppNodesMap, needOptimize) {
   if (typeof node === 'string') return node;
   const {
     component,
@@ -14,6 +14,7 @@ function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
     __renderOptimizeMark__,
     children = []
   } = node;
+  const RComponent = components[component] || component;
   const { muteRenderOptimizeMark = false, ...otherAttrs } = attributes;// eslint-disable-line
   // 对属性 进行分类
   /*
@@ -36,10 +37,10 @@ function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
     } else {
       sifoAppNodesMap[optimizeId] = null;
       const childrenNodes = children.map(child => {
-        return renderFactory(child, createElement, sifoAppNodesMap, needOptimize);
+        return renderFactory(child, createElement, components, sifoAppNodesMap, needOptimize);
       });
       nodeInstance = createElement(
-        component,
+        RComponent,
         otherAttrs,
         childrenNodes
       );
@@ -51,10 +52,10 @@ function renderFactory(node, createElement, sifoAppNodesMap, needOptimize) {
   } else {
     delete sifoAppNodesMap[optimizeId];
     const childrenNodes = children.map(child => {
-      return renderFactory(child, createElement, sifoAppNodesMap, needOptimize);
+      return renderFactory(child, createElement, components, sifoAppNodesMap, needOptimize);
     });
     nodeInstance = createElement(
-      component,
+      RComponent,
       otherAttrs,
       childrenNodes
     );

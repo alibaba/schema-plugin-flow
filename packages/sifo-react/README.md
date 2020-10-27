@@ -1,6 +1,6 @@
 # sifo-react
 
-sifo-react 是组装了[sifo-model](../sifo-model)、[sifo-singleton](../sifo-singleton) 的一个React组件。      
+sifo-react 是组装了[sifo-model](https://www.npmjs.com/package/@schema-plugin-flow/sifo-model)、[sifo-singleton](https://www.npmjs.com/package/@schema-plugin-flow/sifo-singleton) 的一个React组件。      
 
 sifo-react 以 sifo-model 为内核，使用插件式的开发模式，为页面提供了多级定制与扩展能力。包含但不限于：页面结构的修改、渲染组件的替换、组件属性的变更、组件事件的监听与阻断等。结合不同的模型插件，可以实现更加丰富的特定功能。
 
@@ -94,7 +94,7 @@ export default App;
 ```
 
 ## 外部扩展
-如果一个页面是用 sifo 开发的，开发者可以在不接触原始代码的情况下，对页面进行扩展。这里用到了 [sifo-singleton](../sifo-singleton) 全局扩展容器，只要在目标页面渲染前载入了扩展插件、组件，扩展功能就会在目标页面上生效。
+如果一个页面是用 sifo 开发的，开发者可以在不接触原始代码的情况下，对页面进行扩展。这里用到了 `sifo-singleton` 全局扩展容器，只要在目标页面渲染前载入了扩展插件、组件，扩展功能就会在目标页面上生效。
 
 ```javascript
 import SifoSingleton from '@schema-plugin-flow/sifo-singleton';

@@ -1,0 +1,160 @@
+{
+  "component": "Container",
+  "id": "main_id",
+  "attributes":{
+    "class": "form-demo-main"
+  },
+  "children": [
+    {
+      "id": "projectId",
+      "component": "Input",
+      "attributes": {
+        "class": "test-projectId",
+        "name": "projectId",
+        "label": "项目名称",
+        "placeholder": "项目名称，包含校验规则与校验函数",
+        "rules": [
+          {
+            "required": true,
+            "message": "你需要填写项目的名称",
+            "trigger": [
+              "pressEnter",
+              "change"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "component": "Select",
+      "attributes": {
+        "id": "type",
+        "name": "type",
+        "label": "类型",
+        "placeholder": "请选择类型",
+        "style": {
+          "width": "100%"
+        },
+        "rules": [
+          {
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "component": "Input",
+      "id": "typeDesc",
+      "attributes": {
+        "name": "typeDesc",
+        "label": "类型描述",
+        "placeholder": "类型描述",
+        "rules": [
+          {
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "component": "Input",
+      "id": "subject",
+      "attributes": {
+        "class": "test-subject",
+        "itemClassName": "subject-form-item",
+        "name": "subject",
+        "label": "设置字段样式",
+        "placeholder": "请输入主题",
+        "labelCol": {
+          "span": 8
+        },
+        "wrapperCol": {
+          "span": 8,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "component": "Container",
+      "id": "sub_contain",
+      "children": [
+        {
+          "component": "Input",
+          "attributes": {
+            "id": "numbertest",
+            "name": "numbertest",
+            "label": "整数校验",
+            "rules": [
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "id": "floattest",
+            "name": "floattest",
+            "label": "小数校验",
+            "rules": [
+              {
+                "max": 99.9
+              }
+            ]
+          }
+        },
+        {
+          "component": "Input",
+          "attributes": {
+            "id": "lentest",
+            "name": "lentest",
+            "label": "长度校验",
+            "rules": [
+              {
+                "maxLength": 9
+              }
+            ]
+          }
+        },
+        {
+          "id": "innerComp",
+          "component": "Container",
+          "attributes": {
+            "class": "test-projectId",
+            "name": "innerComp",
+            "label": "内层组件测试"
+          },
+          "children": [
+            "测试字段内层组件"
+          ]
+        }
+      ]
+    },
+    {
+      "component": "Container",
+      "id": "footerBar",
+      "children": [
+        {
+          "component": "Button",
+          "attributes": {
+            "id": "submitBtn",
+            "type": "primary",
+            "title": "提交"
+          }
+        },
+        {
+          "component": "Button",
+          "attributes": {
+            "id": "resetBtn",
+            "type": "normal",
+            "title": "设置数据"
+          }
+        }
+      ],
+      "attributes": {
+        "class": "footer-opt"
+      }
+    }
+  ]
+}

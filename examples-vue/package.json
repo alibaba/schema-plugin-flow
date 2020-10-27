@@ -10,6 +10,8 @@
   "dependencies": {
     "@schema-plugin-flow/sifo-singleton": "^1.0.0",
     "@schema-plugin-flow/sifo-vue": "file:../packages/sifo-vue",
+    "@schema-plugin-flow/sifo-mplg-form-antdv": "file:../packages/sifo-mplg-form-antdv",
+    "@schema-plugin-flow/sifo-mplg-form-core": "file:../packages/sifo-mplg-form-core",
     "ant-design-vue": "^1.6.5",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"

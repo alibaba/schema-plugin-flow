@@ -1,0 +1,49 @@
+import defaultFormItemWrapper from './componentWrap';
+
+class AntdVueFormModelPlugin {
+  static ID = 'sifo_antdv_form_model_plugin';
+  constructor(props) {
+    const { formItemWrapper } = props || {};
+    this.mApi = null;
+    this.formItemWrapper = formItemWrapper || defaultFormItemWrapper;
+  }
+  onComponentsWrap = components => {
+    const rComp = Object.assign({}, components);
+    const wrappedComps = {};
+    // 包含FormItem组件，识别__isField__属性
+    Object.keys(rComp).forEach(key => {
+      const comp = rComp[key];
+      wrappedComps[key] = this.formItemWrapper(comp);
+    });
+    return wrappedComps;
+  }
+
+  onModelApiCreated = params => {
+    const { mApi, event } = params;
+    this.mApi = mApi;
+    const { applyModelApiMiddleware } = event;
+    const getPropsMiddleware = () => id => {
+      const attr = this.mApi.getAttributes(id) || {};
+      return attr.props;
+    };
+    applyModelApiMiddleware('getProps', getPropsMiddleware);
+    const setPropsMiddleware = () => (id, props) => {
+      return this.mApi.setAttributes(id, { props });
+    };
+    applyModelApiMiddleware('setProps', setPropsMiddleware);
+    // form-core 依赖这个方法取FormItem属性，vue中重写这个方法
+    const getFormItemPropsMiddleware = () => id => {
+      const attr = this.mApi.getAttributes(id);
+      if (!attr) return {};
+      const props = attr.props || {};
+      return {
+        rules: props.rules,
+        value: props.value,
+        validators: props.validators,
+        validateDisabled: props.validateDisabled
+      };
+    };
+    applyModelApiMiddleware('getFormItemProps', getFormItemPropsMiddleware);
+  }
+}
+export default AntdVueFormModelPlugin;

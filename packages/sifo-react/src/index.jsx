@@ -84,13 +84,16 @@ class SifoApp extends PureComponent {
       modelOptions
     );
   }
+
   componentDidMount() {
     this.model.run();
   }
+
   componentWillUnmount() {
     this.model.destroy();
     this.model = null;
   }
+
   /* react 模式时，model.render 后的执行顺序：
     -> schema node componentDidMount
     -> root componentDidUpdate ( SifoModel.run 在 root.componentDidMount 中调用)
@@ -109,6 +112,7 @@ class SifoApp extends PureComponent {
       }
     });
   }
+
   render() {
     const schema = this.mApi ? this.mApi.getSchema() : {};
     const components = this.mApi ? this.mApi.getComponents() : {};

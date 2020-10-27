@@ -7,7 +7,7 @@
 | ---------------- | ---------------------| ---------------- | ------------|
 | formNodeId     |  string    |    schema中的表单节点id，用来指定表单字段在schema中的范围           |    schema根节点id   |
 | fieldKey     |  string/function  |    `字段标识`，用来判定一个节点是否为字段及确定字段名。参数为string时，从attributes上对应string的属性判定，默认当attributes上有name属性时为字段；当参数为function时，有返回值时判定为字段。          |    'name'   |
-| onChange     |  { changeHandler, eventName }  |    统一绑定的值变更事件， eventName 表示变更事件名         |    { changeHandler: defaultChangeHandler, eventName: 'onChange' }   |
+| fieldChange     |  { changeHandler, eventName }  |    统一绑定的值变更事件， eventName 表示变更事件名         |    { changeHandler: defaultChangeHandler, eventName: 'onChange' }   |
 | scrollToFirstError     |  bool  |    校验失败时，是否滚动到失败位置         |   true   |
 
 

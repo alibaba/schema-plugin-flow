@@ -8,6 +8,7 @@ const defaultChangeHandler = (context, value) => {
   const { event, mApi } = context;
   mApi.setAttributes(event.key, { value }, true);
 };
+
 // 表单模型
 class FormCoreModelPlugin {
   static ID = 'sifo-mplg-form-core';

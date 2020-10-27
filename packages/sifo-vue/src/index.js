@@ -5,6 +5,7 @@ import { getRegisteredItems } from './utils/singleton-utils';
 import presetPlugins, { baseOrderPlugins } from './modelPlugins';
 import PluginResetter from './modelPlugins/PluginResetter';
 import VueOptimize from './modelPlugins/VueOptimize';
+
 /* eslint-disable func-names, object-shorthand */
 const SifoApp = {
   name: 'sifo-app',

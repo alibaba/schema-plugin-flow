@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-form-core",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "FrominXu",
   "description": "sifo form-core model plugin. 表单内核模型插件",
   "license": "MIT",
@@ -25,8 +25,6 @@
     "precommit": "npm run lint",
     "prepare": "npm run lint && npm run build",
     "test": "mocha --compilers js:@babel/register test/index.test.js "
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",

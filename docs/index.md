@@ -23,6 +23,11 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * `sifo-react` is a React Component encapsulates sifo-model and sifo-singleton.
 * `sifo-vue` is a Vue Component encapsulates sifo-model and sifo-singleton.
 
+### modelPlugins
+* `sifo-mplg-react-optimize` is a modelPlugin for React optimize.
+* `sifo-mplg-form-core` is a sifo form-core model plugin.
+* `sifo-mplg-form-antdv` is a sifo form with ant-design-vue, works with sifo-mplg-form-core.
+
 ## Installation
 
 ```shell

@@ -36,6 +36,14 @@ export default {
             path: '../sifo-mplg-react-optimize'
           },
           {
+            title: "sifo-mplg-form-core",
+            path: '../sifo-mplg-form-core'
+          },
+          {
+            title: "sifo-mplg-form-antdv",
+            path: '../sifo-mplg-form-antdv'
+          }, 
+          {
             title: "sifo-vue",
             path: '../sifo-vue'
           },

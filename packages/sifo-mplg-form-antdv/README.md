@@ -57,7 +57,10 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
   * 覆盖了 mApi.getFormItemProps 方法来适配 vue；
 
 ## schema 格式
-初始配置可将 value, rules 等放在 attributes上； schema 节点 id 应与 fieldKey（此处指字段标识对应的值）一致。
+* 初始配置可将 value, rules 等放在 attributes 上； 运行时在 attributes.props 上;
+* schema 节点 id 应与 fieldKey（此处指字段标识对应的值）一致;
+* class 是字段组件的样式；itemClassName 是FormItem层的样式；
+* labelCol 控制FormItem标签; wrapperCol 控制FormItem字段组件;
 ```json
 {
   "id": "fieldKey01",
@@ -74,7 +77,16 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
           "change"
         ]
       }
-    ]
+    ],
+    "class": "test-control-class",
+    "itemClassName": "test-form-item-class",
+    "labelCol": {
+      "span": 8
+    },
+    "wrapperCol": {
+      "span": 16,
+      "offset": 0
+    }
   }
 }
 ```

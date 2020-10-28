@@ -206,7 +206,7 @@ class FormCoreModelPlugin {
         return;
       }
       const { validators = [] } = this.mApi.getFormItemProps(id) || {};
-      this.setAttributes(id, {
+      this.mApi.setAttributes(id, {
         validators: validators.filter(valid => {
           return valid.validator !== validatorItem.validator;
         })
@@ -258,7 +258,7 @@ class FormCoreModelPlugin {
     applyModelApiMiddleware('validateAll', validateAllMiddleware);
     // todo: reset 方法
     const scrollIntoViewMiddleware = () => fieldKey => {
-      const domNode = document.querySelector(`[data-field-key="${fieldKey}_${mApi.instanceId}"]`);
+      const domNode = document.querySelector(`[data-field-key="${fieldKey}_${this.mApi.instanceId}"]`);
       if (domNode) {
         domNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }
@@ -267,7 +267,7 @@ class FormCoreModelPlugin {
     // 绑定统一的onChange事件
     const ids = Object.keys(this.id2FieldKey);
     ids.forEach(id => {
-      mApi.addEventListener(id, this.onChangeEventName, this.onChangeHandler);
+      this.mApi.addEventListener(id, this.onChangeEventName, this.onChangeHandler);
     });
   }
   // 即将进行渲染

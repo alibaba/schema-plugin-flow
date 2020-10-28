@@ -44,6 +44,10 @@ export default {
             path: '../sifo-mplg-form-antdv'
           }, 
           {
+            title: "sifo-mplg-form-antd",
+            path: '../sifo-mplg-form-antd'
+          }, 
+          {
             title: "sifo-vue",
             path: '../sifo-vue'
           },

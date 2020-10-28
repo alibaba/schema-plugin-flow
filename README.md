@@ -11,6 +11,7 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * [sifo-mplg-react-optimize](./packages/sifo-mplg-react-optimize) is a modelPlugin for sifo-react optimization.
 * [sifo-mplg-form-core](./packages/sifo-mplg-form-core) is a sifo form-core model plugin.
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) is a sifo form with ant-design-vue, works with sifo-mplg-form-core and sifo-vue.
+* [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) is a sifo form with ant-design, works with sifo-mplg-form-core and sifo-react.
 
 ## Installation
 

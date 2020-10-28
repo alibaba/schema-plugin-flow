@@ -1,6 +1,6 @@
 ---
 title: use-mplg-optimize
-order: 3
+order: 4
 ---
 `sifo-react` is 'top-down' rendering type, you can use the modelPlugin  `@schema-plugin-flow/sifo-mplg-react-optimize` to optimize the rerendering in complex project.
 

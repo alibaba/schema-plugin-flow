@@ -6,9 +6,10 @@
   "scripts": {
     "i": "npm install --no-package-lock --ignore-scripts && lerna bootstrap",
     "clean": "lerna clean",
-    "publish": "npm run prepare && lerna publish",
     "prepare": "npm run lint && npm run build",
-    "prepublish-back": "npm run lint && npm run build",
+    "publish": "npm run prepare && lerna publish",
+    "publish-from-git": "lerna publish from-git",
+    "publish-from-package": "lerna publish from-package",
     "build": "lerna exec -- babel --root-mode upward src --out-dir lib --copy-files --extensions \".ts,.tsx,.js,.jsx\"",
     "lint": "lerna run lint",
     "test": "lerna run test",

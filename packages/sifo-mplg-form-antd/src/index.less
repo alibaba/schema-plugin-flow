@@ -1,0 +1,50 @@
+.sifo-antd-form-item {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000a6;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  margin-bottom: 24px;
+  vertical-align: top;
+  &-label{
+    display: inline-block;
+    padding-right: 8px;
+    overflow: hidden;
+    line-height: 39.9999px;
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: middle;
+    >label{
+        color: #000000d9;
+    }
+    &-left {
+      text-align: left;
+    }
+  }
+  &-required:before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #f5222d;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: "*";
+  }
+  &-control{
+    position: relative;
+    line-height: 40px;
+    zoom: 1;
+  }
+  &-has-error {
+    color: #f5222d;
+    clear: both;
+    min-height: 22px;
+    margin-top: -2px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}

@@ -1,70 +1,12 @@
 ---
-title: formDemo
-order: 2
+title: Form Demo
+order: 3
 ---
-Ant Design Form
+Sifo Form with ant-design
 ```jsx
 import * as React from 'react';
-import SifoApp, { SifoModelTypes } from "@schema-plugin-flow/sifo-react";
-import FormModelPlugin from './form-demo/mplg-antd-form';
-import schema from './form-demo/schema.json';
-import './form-demo/index.less';
-import 'antd/dist/antd.css';
-//
-const components = {
-  Container: props => <div {...props} />
-};
-const componentPlugin = {
-  $form_id: {
-    onComponentInitial: params => {
-      const { event, mApi } = params;
-      mApi.setAttributes(event.key, {
-        labelCol: {
-          span: 6,
-        },
-        wrapperCol: {
-          span: 14,
-        },
-      });
-      mApi.addEventListener(event.key, 'onValuesChange', (ctx, changedValues, allValues) => { 
-        console.log(changedValues);
-      })
-    }
-  },
-  $submit: {
-    onComponentInitial: params => {
-      const { event, mApi } = params;
-      mApi.addEventListener(event.key, 'onClick', () => {
-        // mApi.submit()
-        mApi.validateFields().then(d => { 
-          const values = mApi.getFieldsValue();
-          console.log('values:', values);
-        }).catch(e => { 
-          console.log(e)
-        })
-      })
-    }
-  }
-};
-const plugins = [
-  {
-    componentPlugin, modelPlugin: FormModelPlugin 
-  }
-];
-//
-const FormDemo = (props) => {
-  const {  } = props;
-  return (
-    <SifoApp
-      className='sifo-form-demo'
-      namespace='form-demo'
-      components={components}
-      schema={schema}
-      plugins={plugins}
-      openLogger={true}
-    />
-  );
-};
+import FormDemo from './form-demo';
+import "./form-demo/index.less";
 //
 export default FormDemo;
 ```

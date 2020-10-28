@@ -1,6 +1,6 @@
 ---
 title: testDecorator
-order: 3
+order: 2
 ---
 
 

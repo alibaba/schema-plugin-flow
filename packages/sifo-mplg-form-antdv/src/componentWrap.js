@@ -51,7 +51,7 @@ function renderLabel(h, props) {
     )
   ) : null;
 }
-function renderWrapper(h, props, opts, children) {
+function renderWrapper(h, props, opts, fieldNode) {
   const { wrapperCol, validateInfo } = props;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = {
@@ -65,12 +65,13 @@ function renderWrapper(h, props, opts, children) {
     class: controlWrapperClass,
     key: 'control',
   };
-  const controlChildren = Array.isArray(children) ? children : [children];
+  const extraNodes = [];
   const errorMsg = getErrorMsg(validateInfo);
   if (errorMsg) {
-    controlChildren.push(h(
+    extraNodes.push(h(
       'div',
       {
+        key: 'field-error',
         class: 'sifo-antdv-form-item-has-error'
       },
       [errorMsg]
@@ -86,7 +87,8 @@ function renderWrapper(h, props, opts, children) {
         class: controlClassName
       },
       [
-        ...controlChildren,
+        fieldNode,
+        ...extraNodes,
       ]
     )
   ]);
@@ -95,11 +97,12 @@ const componentWrap = Component => {
   const SifoFormWrap = {
     functional: true,
     render(createElement, context) {
-      const { props, __isField__, ...rest } = context.data; // 一般的属性都在props中
+      const {
+        props, __isField__, __fieldKey__, 'data-field-key': dataFieldKey, ...rest
+      } = context.data; // 一般的属性都在props中
       if (!Component) return null;
       if (!__isField__) {
-        const dirProps = { ...context.data };
-        return createElement(Component, { ...dirProps }, context.children);
+        return createElement(Component, context.data, context.children);
       }
       // 字段
       const {
@@ -115,18 +118,20 @@ const componentWrap = Component => {
         {
           class: itemClssName,
           attrs: {
-            'data-field-key': context.data['data-field-key']
+            'data-field-key': dataFieldKey
           },
           props: {}
         },
         [
           renderLabel(createElement, props, {}),
-          renderWrapper(createElement, props, {}, [
+          renderWrapper(
+            createElement, props, {},
             createElement(Component, {
               ...rest,
-              props: fieldProps, // props
+              props: fieldProps,
+              key: __fieldKey__,
             }, context.children)
-          ])
+          )
         ]
       );
     }

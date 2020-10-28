@@ -55,9 +55,14 @@ class FormCoreModelPlugin {
         // 标识是字段实体节点
         Object.assign(
           node.attributes,
-          { __isField__: true, 'data-field-key': `${fieldKey}_${instanceId}` }
+          {
+            __isField__: true,
+            __fieldKey__: fieldKey,
+            'data-field-key': `${fieldKey}_${instanceId}`
+          }
         );
         node.__isField__ = true;
+        node.__fieldKey__ = fieldKey;
         this.id2FieldKey[id] = fieldKey;
         this.fieldKey2Id[fieldKey] = id;
         return 'continue';

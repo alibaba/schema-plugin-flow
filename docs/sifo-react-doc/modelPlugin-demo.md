@@ -8,8 +8,8 @@ import * as React from 'react';
 import SifoApp, { SifoModelTypes } from "@schema-plugin-flow/sifo-react";
 import FormModelPlugin from './modelPlugin-demo/mplg-antd-form';
 import schema from './modelPlugin-demo/schema.json';
-import './modelPlugin-demo/index.less';
 import 'antd/dist/antd.css';
+import './modelPlugin-demo/index.less';
 //
 const components = {
   Container: props => <div {...props} />

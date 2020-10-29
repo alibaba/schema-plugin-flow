@@ -4,6 +4,8 @@ sifo form with ant-design-vue.
 
 AntdVueFormModelPlugin 是在 SifoFormCore (@schema-plugin-flow/sifo-mplg-form-core) 基础上封装的UI层. mApi 同 SifoFormCore。
 
+codesandbox.io: [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4) 
+
 ## 类实例化参数
 | 参数名            |  参数类型             |   描述            |   默认值     |
 | ---------------- | ---------------------| ---------------- | ------------|
@@ -152,4 +154,4 @@ const validatorItem = {
   },
   trigger: ['eventName'], // 在何时触发，默认是类实例参数 fieldChange 的 eventName 
 }
-```
+```  

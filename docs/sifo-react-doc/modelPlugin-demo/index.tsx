@@ -2,7 +2,6 @@ import * as React from 'react';
 import SifoApp, { SifoModelTypes } from "@schema-plugin-flow/sifo-react";
 import FormModelPlugin from './mplg-antd-form';
 import schema from './schema.json';
-import './index.less';
 
 const components = {
   Container: props => <div {...props} />

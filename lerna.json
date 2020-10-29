@@ -4,17 +4,15 @@
   "command": {
     "publish": {
       "ignoreChanges": [
-        "*.md",
         "*.txt",
         "docs/**",
         "examples/**",
-        "test/**",
+        "examples-vue/**",
         "**/test/**",
-        "demo/**",
         "**/demo/**",
         "node_modules/",
         "**/node_modules/"
-      ],
+      ], 
       "message": "chore(release): publish"
     },
     "bootstrap": {

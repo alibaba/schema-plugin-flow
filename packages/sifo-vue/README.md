@@ -4,6 +4,14 @@ sifo-vue 是组装了[sifo-model](https://www.npmjs.com/package/@schema-plugin-f
 
 sifo-vue 以 sifo-model 为内核，使用插件式的开发模式，为页面提供了多级定制与扩展能力。包含但不限于：页面结构的修改、渲染组件的替换、组件属性的变更、组件事件的监听与阻断等。结合不同的模型插件，可以实现更加丰富的特定功能。
 
+* ![插件示例](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)
+
+## codesandbox.io
+* sifo-vue
+  * [sifo-vue-quick-start](https://codesandbox.io/s/sifo-vue-quick-start-7668x)    
+  * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
+  * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)   
+
 ## SifoApp (sifo-vue) Props
 
 参数          | 说明        | 类型 | 是否必传 | 默认值
@@ -146,6 +154,3 @@ singleton.registerItem('testExtendId', () => {
   }
 });
 ```
-
-## 示例
-* ![插件示例](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

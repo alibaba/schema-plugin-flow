@@ -4,6 +4,15 @@ sifo-react 是组装了[sifo-model](https://www.npmjs.com/package/@schema-plugin
 
 sifo-react 以 sifo-model 为内核，使用插件式的开发模式，为页面提供了多级定制与扩展能力。包含但不限于：页面结构的修改、渲染组件的替换、组件属性的变更、组件事件的监听与阻断等。结合不同的模型插件，可以实现更加丰富的特定功能。
 
+* ![插件示例](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)
+
+## codesandbox.io
+* sifo-react
+  * [sifo-react-quick-start](https://codesandbox.io/s/sifo-react-quick-start-lhmyu)    
+  * [sifo-react-decorator](https://codesandbox.io/s/sifo-react-test-decorator-sef79)    
+  * [sifo-mplg-form-antd](https://codesandbox.io/s/sifo-react-form-antd-o0hoq)     
+  * [sifo-react-mplg-optimize](https://codesandbox.io/s/sifo-react-mplg-optimize-sfmts)  
+
 ## SifoApp (sifo-react) Props
 
 参数          | 说明        | 类型 | 是否必传 | 默认值
@@ -283,6 +292,3 @@ const TestComponent = {
 
 ## 模型插件推荐列表
 * [React标记渲染优化插件](../sifo-mplg-react-optimize)
-
-## 示例
-* ![插件示例](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

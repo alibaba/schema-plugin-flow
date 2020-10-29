@@ -5,7 +5,6 @@ import SifoFormCore from "@schema-plugin-flow/sifo-mplg-form-core";
 import AntdFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antd";
 import schema from "./schema-form.json";
 import plugins from './plugins';
-import './index.less';
 
 const components = {
   Container: ({ children, ...other}) => (

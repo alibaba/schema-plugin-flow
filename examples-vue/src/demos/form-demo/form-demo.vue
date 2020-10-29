@@ -19,6 +19,7 @@ import SifoFormCore from "@schema-plugin-flow/sifo-mplg-form-core";
 import AntdVueFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antdv";
 import schema from "./schema-form.json";
 import plugins from './plugins';
+import "ant-design-vue/dist/antd.css";
 import "./index.less";
 
 const components = {

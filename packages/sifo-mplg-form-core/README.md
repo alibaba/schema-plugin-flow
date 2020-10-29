@@ -2,6 +2,12 @@
 
 表单（内核）模型插件，对表单字段进行统一的管理，并提供了一些表单操作api。
 
+## codesandbox.io
+* sifo-react  
+  * [sifo-mplg-form-antd](https://codesandbox.io/s/sifo-react-form-antd-o0hoq)     
+* sifo-vue
+  * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)   
+
 ## 类实例化参数
 | 参数名            |  参数类型             |   描述            |   默认值     |
 | ---------------- | ---------------------| ---------------- | ------------|

@@ -64,7 +64,7 @@ const createEventHandler = (emitter: EmitterArgs) => (...originArg: any[]) => {
     stop: () => { stopEvent(); }, // 防持久装置
     next: (...nArg: any[]) => { nextArg = nArg; },
   };
-  let context: SifoEventArgs | null = <SifoEventArgs> objectReadOnly({ event, mApi });
+  let context: SifoEventArgs | null = <SifoEventArgs>objectReadOnly({ event, mApi });
   try {
     for (let i = 0; i < handlers.length; i += 1) {
       const returnVal = handlers[i](context, ...nextArg);
@@ -141,6 +141,8 @@ export default class EventEmitter {
     // 有时会嵌套触发事件，此时需要全部事件关闭后才能清空
     if (this.eventStatus.getStatus() === EVENT_STATUS.allClosed) {
       const updatedStates = this.updatedStates;
+      const oldStates = this.oldStates;
+      // 重置临时状态
       this.updatedStates = {};
       this.oldStates = {};
       if (updatedStates && Object.keys(updatedStates).length > 0) {
@@ -151,7 +153,7 @@ export default class EventEmitter {
           this.mApi.refresh();
         }
         // dispatch设计成同步状态，而在同一个event中，是event最终执行完后再dispatch
-        this.dispatchWatch(updatedStates);
+        this.dispatchWatch(updatedStates, oldStates);
       }
     }
   }
@@ -162,6 +164,7 @@ export default class EventEmitter {
   mApiWrap() {
     const originSetAttributes = this.mApi.setAttributes;
     this.mApi.setAttributes = (id, attributes, refreshImmediately = true) => {
+      const oldState = this.mApi.getAttributes(id);
       let refresh = !!refreshImmediately;
       this.refreshOnEnd = this.refreshOnEnd || refresh;
       const eventStatus = this.eventStatus.getStatus();
@@ -170,7 +173,7 @@ export default class EventEmitter {
         refresh = false;
         // 保存事件执行前的状态
         if (this.oldStates[id] === undefined) {
-          this.oldStates[id] = this.mApi.getAttributes(id);
+          this.oldStates[id] = oldState;
         }
         // 保存事件执行中的变更状态
         this.updatedStates[id] = {
@@ -186,7 +189,7 @@ export default class EventEmitter {
         });
         // dispatch设计成同步状态，这样得到的结果是一个set一个watch
         if (eventStatus !== EVENT_STATUS.opened) { // opened状态在event.allClosed后批量dispatchWatch
-          this.dispatchWatch({ [id]: { ...attributes } });
+          this.dispatchWatch({ [id]: { ...attributes } }, { [id]: oldState });
         }
       });
     };
@@ -195,8 +198,14 @@ export default class EventEmitter {
    *  分发属性变化
    *  1. 由setAttributes触发 2. 触发时属性应该是最终状态 3. 事件中应在事件队列最后一个执行完后解决
    */
-  dispatchWatch = (changes: DispatchWatchArgs) => {
+  dispatchWatch = (updatedStates: DynamicObject = {}, oldStates: DynamicObject = {}) => {
+    // 用变更的属性与旧属性进行观测分发
     if (this.watcher) {
+      const changes = Object.keys(updatedStates).map(key => {
+        return {
+          [key]: [updatedStates[key], oldStates[key]]
+        };
+      });
       this.watcher.dispatchWatch(changes);
     }
   }

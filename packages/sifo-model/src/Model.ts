@@ -712,13 +712,13 @@ export default class Model {
     this.watcher.removeWatch(key, handler);
   }
 
-  dispatchWatch: ModelApi['dispatchWatch'] = (key: string, data: DispatchWatchData) => {
+  dispatchWatch: ModelApi['dispatchWatch'] = (key: string, ...payloads: DispatchPayload[]) => {
     const item = this.schemaInstance.nodeMap[key];
     // 此dispatch用于做事件分发，对于schema节点无效
     if (item) {
       console.error('[sifo-model] dispatchWatch is invalid on schema Id');
       return;
     }
-    this.watcher.dispatchWatch({ [key]: data });
+    this.watcher.dispatchWatch([{ [key]: payloads }]);
   }
 }

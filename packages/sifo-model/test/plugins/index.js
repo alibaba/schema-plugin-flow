@@ -57,8 +57,8 @@ const pagePlugin = {
   },
   afterRender: ({ mApi }) => {
     console.log('page plugins after render');
-    const watch = (ctx, changes) => {
-      console.log('watch subject-------:', changes);
+    const watch = (ctx, changes, oldState) => {
+      console.log('watch subject-------:', changes, 'oldState: ', oldState.value);
       mApi.setAttributes('test04', {
         test: 41
       });
@@ -95,14 +95,14 @@ const pagePlugin = {
       console.log('watch5', x);
     });
     //mApi.removeWatch('subject', watch);
-    mApi.watch('setTestWatch', (c, data) => {
+    mApi.watch('setTestWatch', (c, ...payloads) => {
       console.log('mApi.watch.event.key', c.event.key);
-      console.log('自定义watch', data);
+      console.log('自定义watch: ', payloads);
     });
     setTimeout(() => {
-      console.log('sssfkldsjfldsjfldsafj5555')
+      console.log('after render setTimeout');
       mApi.dispatchWatch('setTestWatch', { watchdata: '1111' });
-      mApi.dispatchWatch('setTestWatch', 1111);
+      mApi.dispatchWatch('setTestWatch', [1111],[2222]);
       mApi.setAttributes('test04',{});
     }, 100);
   },

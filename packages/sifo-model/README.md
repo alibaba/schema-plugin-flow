@@ -124,10 +124,12 @@ const componentPlugin = {
         label:'test',
       });
       mApi.addEventListener(event.key, 'onChange', changeHandler);
+      mApi.watch(event.key,(ctx, updates, oldState)=>{
+        // updates 是触发观测的变更，oldState是变更前的状态
+      });
     },
     afterPageRender: params => {
       const { event, mApi } = params;
-      // do something...
     }
   }
 }
@@ -162,11 +164,11 @@ const pagePlugin = {
   afterRender: params => {
     const { event, mApi } = params;
     // do something...
-    mApi.watch('setTestWatch',(ctx, data)=>{
-      console.log('自定义watch', data); // { watchdata: '1111' }
+    mApi.watch('setTestWatch',(ctx, payload1, payload2)=>{
+      console.log('自定义watch', payload1, payload2); // { watchdata: '1111' }, "other"
     });
     setTimeout(() => {
-      mApi.dispatchWatch('setTestWatch', { watchdata: '1111' });
+      mApi.dispatchWatch('setTestWatch', { watchdata: '1111' }, "other");
     }, 0);
     mApi.watch('subject', watchSubject);
   },
@@ -300,7 +302,7 @@ const plugins = [
 | hasEventListener | (id: string, eventName: string) | bool      | 对指定组件事件是否有进行监听     |
 | watch | (key: string, handler: function) | ✘      | 注册观测事件，一般用于观测指定id节点(key参数)的属性变化，也可用于自定义观测，详细说明见下文 |
 | removeWatch | (key: string, handler: function) | ✘      | 注销观测     |
-| dispatchWatch | (key: string, data: any) | ✘      | 分发观测事件，只允许对自定义观测进行分发，节点属性变化由setAttributes分发     |
+| dispatchWatch | (key: string [, payload1: any, payload2: any, ...]) | ✘      | 分发观测事件，只允许对自定义观测进行分发，节点属性变化由setAttributes分发     |
 | reloadPage       | (object?: { [externals] [, schema] [, plugins] [, components] })    | ✘        | 创建新实例，重新加载页面，reloadPage 将重跑所有生命周期。               |
 | refresh          | ()                     | instanceOf(Promise) | 强制刷新页面，一般是在批量更新了节点属性后调用 |
 | getInitialSchema | ()                     | object              | 获取初始schema        |
@@ -322,7 +324,7 @@ const plugins = [
 * `watch`：
   * watch 一般用于观测指定 id 节点(即key参数)的属性变化，也可用于自定义观测。此处的观测应与 `addEventListener` 的组件事件监听相区别：组件事件触发源是相应的 `component`，而观测事件触发源是 mApi.dispatchWatch 或 mApi.setAttributes 。
   * watch 本质上是一种特殊的 EventListener，其 event handler 与 `addEventListener` 的 event handler 完全一致，相应参数说明与注意事项请参照上文。
-  * event handler 的事件原始参数，在观测属性变化时，参数是`相应id节点发生了变化的属性`对象；在自定义观测时，是 dispatchWatch 传的参数 `data` 。
+  * event handler 的事件原始参数，在观测属性变化时，参数分别是`相应id节点属性的变更`和`变更前的属性`；在自定义观测时，是 dispatchWatch 传的参数。
   * event.key 是 watch 的对象名，即观测的节点 id 或自定义观测的事件名。
   * mApi.dispatchWatch 分发观测事件，只允许对自定义观测进行分发，节点属性变化由 setAttributes 分发。在串联插件的 event handler 中引起的属性变化，是在所有 event handler 执行完成后用最终变化状态进行事件分发。
   * 在 event handler 中执行 setAttributes 时，应注意避免引起循环触发。同时也要注意不应滥用 watch，否则将增加状态维护的复杂度。

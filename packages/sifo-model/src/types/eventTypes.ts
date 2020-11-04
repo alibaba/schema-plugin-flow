@@ -58,10 +58,7 @@ interface EmitterArgs {
   eventStatus: EventStatus;
 }
 
-type DispatchWatchData = any;
+type DispatchPayload = any;
 interface DispatchWatchArgs {
-  [watchKey: string]: DispatchWatchData
+  [watchKey: string]: DispatchPayload[];
 }
-
-
-

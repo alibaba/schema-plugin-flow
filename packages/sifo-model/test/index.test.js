@@ -168,6 +168,27 @@ describe('===================model init===================', () => {
     mApi.watch({}, () => { });
     mApi.watch([], () => { });
     mApi.watch(123, () => { });
+    // watch payloads
+    let watchedFirst = false;
+    let watchedSecond = false;
+    mApi.watch('testpayloads', (ctx, first, second) => {
+      watchedFirst = first;
+      watchedSecond = second;
+    });
+    mApi.dispatchWatch('testpayloads', true, true);
+    expect(watchedFirst).to.equal(true);
+    expect(watchedSecond).to.equal(true);
+    // watch attributes and oldState
+    mApi.setAttributes('subject', { testforold: '1' });
+    let updateval = '';
+    let oldval = '';
+    mApi.watch('subject', (ctx, update, old) => {
+      updateval = update.testforold;
+      oldval = old.testforold;
+    });
+    mApi.setAttributes('subject', { testforold: '2' });
+    expect(updateval).to.equal('2');
+    expect(oldval).to.equal('1');
     // addEventListener
     mApi.addEventListener('subject', 'onChange', subjectChangeHandler);
     test_Handler_listen = false;

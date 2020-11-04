@@ -153,9 +153,9 @@ declare module '@schema-plugin-flow/sifo-model' {
     eventStatus: EventStatus;
   }
 
-  type DispatchWatchData = any;
+  type DispatchPayload = any;
   interface DispatchWatchArgs {
-    [watchKey: string]: DispatchWatchData
+    [watchKey: string]: DispatchPayload[];
   }
   interface PluginKeyMap {
     [key: string]: string;
@@ -245,7 +245,7 @@ declare module '@schema-plugin-flow/sifo-model' {
     /**
      * 分发观测事件，只允许对自定义观测进行分发，节点属性变化由setAttributes分发
      */
-    dispatchWatch: (key: string, data: DispatchWatchData) => void;
+    dispatchWatch: (key: string, ...payloads: DispatchPayload[]) => void;
     /**
      * 重新加载页面，reloadPage将重跑所有生命周期。仅在afterRender后生效。
      */

@@ -7,7 +7,9 @@ function wrapper(components) {
   const wrappedComps = { ...components };
   Object.keys(components).forEach(name => {
     const component = components[name];
-    if (component && component.render && typeof component.render === 'function') {
+    // React.forwardRef 返回带render方法的对象作为组件，增加useSifoRenderProxy标
+    if (component && component.useSifoRenderProxy &&
+      component.render && typeof component.render === 'function') {
       wrappedComps[name] = componentWrap(component);
     }
   });

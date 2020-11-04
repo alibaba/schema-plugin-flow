@@ -258,7 +258,8 @@ export default {};
 ## 非标准的组件接入
 ```javascript
 const TestComponent = {
-  name: "TestNonStandard",// 组件名
+  name: "TestNonStandard", // 组件名
+  useSifoRenderProxy: true, // 标注组件需要使用代理
   /**
    * 渲染方法
    * target: dom对象

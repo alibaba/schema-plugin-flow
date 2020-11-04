@@ -64,6 +64,7 @@ const createEventHandler = (emitter: EmitterArgs) => (...originArg: any[]) => {
     stop: () => { stopEvent(); }, // 防持久装置
     next: (...nArg: any[]) => { nextArg = nArg; },
   };
+  // tslint:disable-next-line: whitespace
   let context: SifoEventArgs | null = <SifoEventArgs>objectReadOnly({ event, mApi });
   try {
     for (let i = 0; i < handlers.length; i += 1) {

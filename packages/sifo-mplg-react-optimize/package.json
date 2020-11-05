@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-react-optimize",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "FrominXu",
   "description": "React rendering optimize for sifo-react.",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "@schema-plugin-flow/sifo-react": "^1.1.4",
+    "@schema-plugin-flow/sifo-react": "^1.1.5",
     "@types/react": "^16.9.46",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",

@@ -19,6 +19,15 @@ module.exports = function (api) {
     ]
   ];
   const plugins = [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ],
     "@babel/plugin-proposal-function-bind",
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-logical-assignment-operators",
@@ -62,8 +71,9 @@ module.exports = function (api) {
     "@babel/plugin-proposal-json-strings"
   ];
   const babelrcRoots = [
-    '.' // root 指定只使用root的babelrc文件
-  ]
+    '.', // root 指定只使用root的babelrc文件
+    "packages/*", // 同时允许使用 subpackage 的 .babelrc.json, https://babeljs.io/docs/en/config-files#monorepos
+  ];
   return {
     babelrcRoots,
     presets,

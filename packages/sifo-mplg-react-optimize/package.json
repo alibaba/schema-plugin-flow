@@ -27,6 +27,7 @@
     "test": "mocha --compilers js:@babel/register test/index.test.js "
   },
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "prop-types": "^15.x",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",

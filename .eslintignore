@@ -8,7 +8,10 @@ dist/
 lib/
 node_modules/
 /packages/*/node_modules
+babel.config.js
+es.babel.config.js
 /packages/*/lib
+/packages/*/es
 /packages/*/dist
 dist/
 mochawesome-reports/

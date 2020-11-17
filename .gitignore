@@ -15,6 +15,7 @@ node_modules/
 dist/
 mochawesome-reports/
 lib/
+es/
 package-lock.json
 packages/*/package-lock.json
 

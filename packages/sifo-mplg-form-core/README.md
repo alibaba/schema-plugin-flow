@@ -1,6 +1,6 @@
 # SifoFormCoreModelPlugin
 
-表单（内核）模型插件，对表单字段进行统一的管理，并提供了一些表单操作api。
+表单（内核）模型插件，对表单字段进行统一的管理，并提供了一系列表单操作api。
 
 ## codesandbox.io
 * sifo-react  

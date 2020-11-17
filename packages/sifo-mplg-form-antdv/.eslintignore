@@ -3,5 +3,8 @@ docs/
 demo/
 examples/
 webpack.config.js
+es.babel.config.js
 test/
 dist/
+lib/
+es/

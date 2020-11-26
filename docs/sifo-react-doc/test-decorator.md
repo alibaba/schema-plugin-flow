@@ -16,7 +16,7 @@ const customOnChange = (context, value) => {
 const pagePlugin = {
   onNodePreprocess: (node, info) => {
     const { id, component } = node;
-    if(id==='$sifo-header'){
+    if (id === '$sifo-header') {
       return {
         ...node,
         attributes: {
@@ -24,10 +24,23 @@ const pagePlugin = {
             color: "green"
           }
         },
-        children:['这是扩展的header']
+        children: ['这是扩展的header']
       }
     }
-    if(id==='$sifo-footer'){
+    if (id === '$temp_panel') {
+      // 将片段直接换成新的组件，这个组件就可以拿到getFragment的参数
+      return {
+        ...node,
+        component: 'DynamicPropsCom',
+        attributes: {
+          ...node.attributes,
+          others: {
+            ok: false
+          }
+        }
+      }
+    }
+    if (id === '$sifo-footer') {
       return {
         ...node,
         attributes: {
@@ -35,7 +48,7 @@ const pagePlugin = {
             backgroundColor: "green"
           }
         },
-        children:['这是扩展的footer']
+        children: ['这是扩展的footer']
       }
     }
     if (id === '$header') {
@@ -118,7 +131,7 @@ const componentPlugin = {
             test: 'custom set state' + va,
           });
           context.mApi.setAttributes('custom', {
-            value: `扩展插件${va}`
+            value: `扩展插件${va} `
           });
           //context.event.stop();
         }, true);
@@ -127,6 +140,16 @@ const componentPlugin = {
 };
 const singleton = new SifoSingleton('test-sifo-decorator');
 const Cinput = (props) => <input {...props} value={props.value || ''} onChange={e => props.onChange(e.target.value)} />;
+const DynamicPropsCom = (props) => {
+  const { stateValue, others } = props;
+  console.log('动态参数：', props);
+  console.log('others.ok 应该是 false: ', others.ok);
+  return (
+    <div style={{ color: 'red' }}>我是动态传参组件：
+      {stateValue}
+    </div>
+  );
+};
 singleton.registerItem('ccc', () => {
   return {
     plugins: [
@@ -136,7 +159,8 @@ singleton.registerItem('ccc', () => {
       }
     ],
     components: {
-      Cinput
+      Cinput,
+      DynamicPropsCom
     }
   }
 })
@@ -150,7 +174,7 @@ import { sifoAppDecorator } from "@schema-plugin-flow/sifo-react";
 import './test-decorator/index.css';
 //
 const IContainer = props => <div {...props} />;
-const Input = props => <div>{props.label}<input {...props} value={ props.value || '' }/></div>
+const Input = props => <div>{props.label}<input {...props} value={props.value || ''} /></div>
 const innerSchema = {
   component: "IContainer",
   id: "$test_inner",
@@ -202,7 +226,7 @@ const plugins = [{ componentPlugin }];
   components,
   plugins,
   externals: { aa: 1 },
-  fragments: ['$header', innerSchema, '$body'],
+  fragments: ['$header', innerSchema, '$temp_panel', '$body'],
   className: "decorator-test",
   openLogger: true
 })
@@ -240,7 +264,7 @@ class TestDecorator extends React.Component {
       test: new Date().getMilliseconds()
     })
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log('test-decorator unmounted!')
   }
   render() {
@@ -251,25 +275,57 @@ class TestDecorator extends React.Component {
     const headFragment = this.props.sifoApp.getFragment('$header');
     const bodyFragment = this.props.sifoApp.getFragment('$body');
     const testInnerSchema = this.props.sifoApp.getFragment('$test_inner');
+    const dynamicPanel = this.props.sifoApp.getFragment('$temp_panel', { 
+      stateValue: test, others: { ok: true } 
+    });
     return (
-    <div>
-      <div>实例值{this.instanceValue}</div>
-      <div>内部状态：{test}</div>
-      <div>外部状态：{customState}</div>
-      <button onClick={this.onClickArrow}>箭头函数式</button>
-      <button onClick={this.onClick}>函数式</button>
-      <div>header片段区
+      <div>
+        <div>实例值{this.instanceValue}</div>
+        <div>内部状态：{test}</div>
+        <div>外部状态：{customState}</div>
+        <button onClick={this.onClickArrow}>箭头函数式</button>
+        <button onClick={this.onClick}>函数式</button>
+        <div>header片段区
         {headFragment}
-      </div>
-      <div>内置 schema 片段区
+        </div>
+        <div>内置 schema 片段区
         {testInnerSchema}
-      </div>
-      <div>body片段区
+        </div>
+        <div>动态传参片段
+        {dynamicPanel}
+        </div>
+        <div>body片段区
         {bodyFragment}
+        </div>
       </div>
-    </div>
     );
   }
 }
 export default TestDecorator;
 ``` 
+
+```jsx
+import React from 'react';
+import { sifoAppDecorator } from "@schema-plugin-flow/sifo-react";
+const TestFnDecorator = props => {
+    const { sifoApp } = props;
+    console.log('render ---- mApi instance:', sifoApp.mApi.instanceId);
+    const dynamicPanel = sifoApp.getFragment('$temp_panel', { 
+      stateValue: '函数式',
+      others: { ok: true } 
+    });
+    return (
+      <div>
+      <h3>函数式组件</h3>
+        { dynamicPanel }
+      </div>
+    );
+}
+const App = sifoAppDecorator('test-sifo-decorator', {
+  externals: { aa: 1 },
+  fragments: ['$temp_panel'],
+  className: "decorator-fn-test",
+  openLogger: true
+})(TestFnDecorator);
+export default App;
+```

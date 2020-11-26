@@ -50,6 +50,7 @@ class Decorator extends React.Component {
     } = props;
     const schema = {
       component: 'SifoAppContainer',
+      fragmentId: namespace,
       id: namespace,
       attributes: {
         initProps
@@ -57,6 +58,7 @@ class Decorator extends React.Component {
       children: [
         {
           component: 'FragmentContainer',
+          fragmentId: '$sifo-header',
           id: '$sifo-header',
           attributes: {
             'data-sifo-fragment': '$sifo-header'
@@ -65,6 +67,7 @@ class Decorator extends React.Component {
         },
         {
           component: 'FragmentContainer',
+          fragmentId: '$sifo-footer',
           id: '$sifo-footer',
           attributes: {
             'data-sifo-fragment': '$sifo-footer'
@@ -76,6 +79,7 @@ class Decorator extends React.Component {
           if (typeof fragment === 'string') {
             return {
               component: 'FragmentContainer',
+              fragmentId: fragment,
               id: fragment,
               attributes: {
                 'data-sifo-fragment': fragment
@@ -141,13 +145,19 @@ class Decorator extends React.Component {
           const handler = this.mApi.getAttributes(namespace)[name];
           return handler;
         },
-        getFragment: key => {
+        // 支持动态传参
+        getFragment: (key, prps = {}) => {
           // 按节点id获取片段
-          const item = this.mApi.getSchema().children.find(child => child.id === key);
+          const item = ((this.mApi.getSchema() || {}).children || [])
+            .find(child => child.id === key);
           if (!item) return null;
-          item.attributes['data-sifo-fragment'] = key; // 防止插件覆盖
+          // 防止原 schema 的 attributes 被修改
+          const renderItem = { ...item };
+          // 插件 attributes 可以覆盖调用方的 props 参数
+          renderItem.attributes = { ...prps, ...renderItem.attributes };
+          renderItem.attributes['data-sifo-fragment'] = key; // 防止插件覆盖
           const comps = this.mApi ? this.mApi.getComponents() : {};
-          return renderFactory(item, comps);
+          return renderFactory(renderItem, comps);
         }
       };
     };

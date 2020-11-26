@@ -131,29 +131,30 @@ fragments    | 片段列表。片段可以只定义一个id，通过 getFragment
 
 ### sifoAppDecorator 示例
 下面的示例包含：
-* View 组件标注命名空间为 target_namespace；
+* View 组件标注命名空间为 main_namespace；
 * View 组件向外暴露 onSubmit、setState、onChange 事件，扩展件就可以监听与干预这些事件；
 * View 注册了 getState、setState 观测，扩展件可以发布相应观测消息来与 View 通信；
 * View 定义了 $header 片段，以使扩展件可以在页面指定位置渲染内容。
-
+完整示例请参照[这里](https://github.com/alibaba/schema-plugin-flow/blob/master/docs/sifo-react-doc/test-decorator.md)
 ```javascript
 import React from 'react';
 import { sifoAppDecorator } from '@schema-plugin-flow/sifo-react';
-@sifoAppDecorator('target_namespace', {
-  fragments: ['$testFragment', innerSchema], 
+@sifoAppDecorator('main_namespace', {
+  fragments: ['$testFragment', '$fragment2', innerSchema],
   components: {},
-  plugins: [], 
+  plugins: [],
   openLogger: true
 })
 class View extends React.Component {
   constructor(props) {
     super(props);
     const { sifoApp } = props;
-    this.state = {};
+    this.state = { value: '' };
     // 加入事件监听，这些事件实际上是挂在了以当前命名空间为id的schema节点上
     this.onSubmit = sifoApp.addEventListener('onSubmit', this.onSubmit);
     this.setState = sifoApp.addEventListener('setState', this.setState.bind(this));
-    this.onChange = sifoApp.addEventListener('onChange', this.onChange, true); // prepose传入true可使事件先于扩展件注册
+    // prepose传入true可使事件先于扩展件注册，在希望外部能够覆盖（扩展）内部方法时可使用
+    this.onChange = sifoApp.addEventListener('onChange', this.onChange, true); 
     // 注册观测任务
     sifoApp.watch('getState', (context, getter) => {
       getter(this.state);
@@ -173,13 +174,23 @@ class View extends React.Component {
   render() {
     // 将声明的片段放到指定的位置，扩展插件就可以在相应位置渲染自定义的内容了
     const testFragment = this.props.sifoApp.getFragment('$testFragment');
+    // 动态传参
+    const testFragment2 = this.props.sifoApp.getFragment('$fragment2', {
+      stateValue: this.state.value, others: {}
+    });
     return (
-      <Comp>
+      <Comp
+        onChange={this.onChange}
+        onSubmit={this.onSubmit}
+      >
         {testFragment}
+        {testFragment2}
       </Comp>
     )
   }
+}
 ```
+
 sifoAppDecorator 下的扩展示例
 
 ```javascript
@@ -190,20 +201,27 @@ const pagePlugin = {
   onNodePreprocess: (node, info) => {
     const { id, component } = node;
     // sifoAppDecorator 内置了 $sifo-header 和 $sifo-footer 两个节点
-    if(id==='$sifo-header'){
+    if (id === '$sifo-header') {
       return {
         ...node,
         attributes: {},
-        children:['this is ext-header']
+        children: ['this is ext-header']
       }
     }
-    if(id==='$sifo-footer'){
+    if (id === '$sifo-footer') {
       return {
         ...node,
-        children:['this is ext-footer']
+        children: ['this is ext-footer']
       }
     }
-    if(id==='$testFragment'){
+    if (id === '$fragment2') {
+      // 将片段直接换成新的组件，这个组件就可以拿到getFragment的参数
+      return {
+        ...node,
+        component: 'DynamicPropsCom'
+      }
+    }
+    if (id === '$testFragment') {
       return {
         ...node,
         children: [
@@ -219,7 +237,7 @@ const pagePlugin = {
 }
 const componentPlugin = {
   // 命名空间认作根节点id
-  target_namespace: {
+  main_namespace: {
     onComponentInitial: params => {
       const { event, mApi } = params;
       mApi.addEventListener(event.key, 'onSubmit', (context, e) => {
@@ -237,10 +255,10 @@ const componentPlugin = {
     }
   },
   custom: {
-     onComponentInitial: params => {}
+    onComponentInitial: params => { }
   }
 };
-const singleton = new SifoSingleton('target_namespace');
+const singleton = new SifoSingleton('main_namespace');
 singleton.registerItem('this_ext_id', () => {
   return {
     plugins: [
@@ -253,6 +271,33 @@ singleton.registerItem('this_ext_id', () => {
 });
 //
 export default {};
+```
+
+在函数式组件上使用
+```jsx
+import React from 'react';
+import { sifoAppDecorator } from "@schema-plugin-flow/sifo-react";
+const TestFnDecorator = props => {
+    const { sifoApp } = props;
+    console.log('render ---- mApi instance:', sifoApp.mApi.instanceId);
+    const dynamicPanel = sifoApp.getFragment('$temp_panel', { 
+      stateValue: '函数式',
+      others: { ok: true } 
+    });
+    return (
+      <div>
+      <h3>函数式组件</h3>
+        { dynamicPanel }
+      </div>
+    );
+}
+const App = sifoAppDecorator('test-sifo-decorator', {
+  externals: { aa: 1 },
+  fragments: ['$temp_panel'],
+  className: "decorator-fn-test",
+  openLogger: true
+})(TestFnDecorator);
+export default App;
 ```
 
 ## 非标准的组件接入

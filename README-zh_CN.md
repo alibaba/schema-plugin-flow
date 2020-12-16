@@ -11,7 +11,7 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 
 * [sifo-model](./packages/sifo-model) 是 Sifo 的内核，它使用 JSON （称为 schema）来描述页面结构，使用插件来控制逻辑。有三类插件：模型插件、页面插件和组件插件。关于 Sifo 的基础信息和使用方法请阅读此包的 README。
 * [sifo-react](./packages/sifo-react) 是封装了 sifo-model 和 sifo-singleton 的一个React 组件。sifo-react 还提供了 `sifoAppDecorator` 功能，可以使一个普通的 React 组件拥有扩展能力，详情请见 README 或在线示例。
-* [sifo-vue](./packages/sifo-vue) 是封装了 sifo-model 和 sifo-singleton 的一个 Vue 组件。
+* [sifo-vue](./packages/sifo-vue) 是封装了 sifo-model 和 sifo-singleton 的一个 Vue 组件。sifo-vue 还提供了 `sifoAppDecorator` 功能，可以使一个普通的 Vue 组件拥有扩展能力，详情请见 README 或在线示例。
 * [sifo-singleton](./packages/sifo-singleton) 是一个全局扩展容器。所有的扩展插件和扩展组件都注册到这里。
 
 ### 模型插件

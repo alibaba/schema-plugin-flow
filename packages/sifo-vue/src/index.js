@@ -1,3 +1,6 @@
+/**
+ * @author FrominXu
+ */
 import SifoModel from '@schema-plugin-flow/sifo-model';
 import SifoLogger from './modelPlugins/logger';
 import renderFactory from './utils/render-factory';
@@ -5,6 +8,7 @@ import { getRegisteredItems } from './utils/singleton-utils';
 import presetPlugins, { baseOrderPlugins } from './modelPlugins';
 import PluginResetter from './modelPlugins/PluginResetter';
 import VueOptimize from './modelPlugins/VueOptimize';
+import sifoAppDecorator from './sifoAppDecorator';
 
 /* eslint-disable func-names, object-shorthand */
 const SifoApp = {
@@ -177,4 +181,5 @@ const SifoApp = {
   }
 };
 
+export { sifoAppDecorator };
 export default SifoApp;

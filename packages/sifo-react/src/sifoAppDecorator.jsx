@@ -1,3 +1,6 @@
+/**
+ * @author FrominXu
+ */
 import React from 'react';
 import T from 'prop-types';
 import cls from 'classnames';
@@ -236,12 +239,13 @@ class Decorator extends React.Component {
 }
 
 const sifoAppDecorator = (namespace, otherProps = {}) => Target => {
-  const { components = {}, fragments = [] } = otherProps;
+  const { components = {}, fragments = [], plugins = [] } = otherProps;
   return props => (
     <Decorator
       {...otherProps}
       initProps={{ ...props }}
       namespace={namespace}
+      plugins={plugins}
       components={components}
       fragments={fragments}
     >

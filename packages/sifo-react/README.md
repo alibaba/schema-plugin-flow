@@ -191,7 +191,7 @@ class View extends React.Component {
 }
 ```
 
-sifoAppDecorator 下的扩展示例
+sifoAppDecorator 下的外部扩展示例
 
 ```javascript
 import React from 'react';

@@ -105,7 +105,7 @@ singleton.registerItem('ccc', () => {
       }
     ],
     components: {
-      Input
+      Input, Button
     },
     openLogger: true
   };

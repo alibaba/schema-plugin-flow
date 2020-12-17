@@ -45,11 +45,15 @@ const TestDecorator = {
       });
     });
     // 比扩展上的插件后执行
-    this.click = this.sifoApp.addEventListener("click", (...args) => {
+    this.clickFn = this.sifoApp.addEventListener("click", (...args) => {
       console.log("target: clicked");
     });
   },
   methods: {
+    click: function (...args) {
+      // 建议不要直接在模板上绑定clickFn，否则可能带来非预期问题
+      this.clickFn(...args);
+    },
     getDynamicFragment: function () {
       return this.sifoApp.getFragment("$dynamic_panel", {
         value: `count: ${this.count}`,

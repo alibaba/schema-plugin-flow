@@ -53,6 +53,7 @@ $ npm i @schema-plugin-flow/sifo-vue --save
 
 * sifo-vue
   * [sifo-vue-quick-start](https://codesandbox.io/s/sifo-vue-quick-start-7668x)    
+  * [sifo-vue-decorator](https://codesandbox.io/s/sifo-vue-test-decorator-4b9j4)    
   * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
   * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)    
 

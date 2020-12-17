@@ -9,6 +9,7 @@ sifo-vue 以 sifo-model 为内核，使用插件式的开发模式，为页面�
 ## codesandbox.io
 * sifo-vue
   * [sifo-vue-quick-start](https://codesandbox.io/s/sifo-vue-quick-start-7668x)    
+  * [sifo-vue-decorator](https://codesandbox.io/s/sifo-vue-test-decorator-4b9j4)    
   * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
   * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)   
 
@@ -247,11 +248,15 @@ const TestDecorator = {
       });
     });
     // prepose传入true可使事件先于扩展件注册，在希望外部能够覆盖（扩展）内部方法时可使用
-    this.click = this.sifoApp.addEventListener("click", (...args) => {
+    this.clickFn = this.sifoApp.addEventListener("click", (...args) => {
       console.log("target: clicked");
     }, true);
   },
   methods: {
+    click: function (...args) {
+      // 建议不要直接在模板上绑定clickFn，否则可能带来非预期问题
+      this.clickFn(...args);
+    },
     getDynamicFragment: function () {
       return this.sifoApp.getFragment("$dynamic_panel", {
         value: `count: ${this.count}`,
@@ -377,7 +382,7 @@ singleton.registerItem('ccc', () => {
       }
     ],
     components: {
-      Input
+      Input, Button
     },
     openLogger: true
   };

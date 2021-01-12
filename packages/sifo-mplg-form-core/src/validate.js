@@ -12,10 +12,11 @@ function getValidators(rules, triggerType) {
   return [];
 }
 /**
- * 触发校验
+ * 触发校验，返回校验结果，调用方需要处理结果展示
  * @param {*} mApi
  * @param {*} id
  * @param {*} triggerType 类型如果有传，只执行相应类型的trigger
+ * @return Promise.resolve(validateInfo)
  */
 export const validate = (id, mApi, fieldKey, triggerType) => {
   const attributes = mApi.getFormItemProps(id) || {};
@@ -34,13 +35,10 @@ export const validate = (id, mApi, fieldKey, triggerType) => {
       validators: doValidators,
       mApi
     }).then(result => {
-      // 设置校验结果, 此校验是在setValue之后进行，故需要即时刷新
-      mApi.setAttributes(id, { validateInfo: result }, true);
       return result;
     });
   }
   // 清除可能的之前保留的校验信息
-  mApi.setAttributes(id, { validateInfo: [] }, true);
   return Promise.resolve([]);
 };
 

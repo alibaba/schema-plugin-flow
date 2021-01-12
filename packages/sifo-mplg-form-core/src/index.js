@@ -78,9 +78,11 @@ class FormCoreModelPlugin {
       clearTimeout(this.validateDebounce[id]);
     }
     this.validateDebounce[id] = setTimeout(() => {
-      // 此中value一定能取到最新的值
-      validate(id, mApi, this.id2FieldKey[id], eventName);
       this.validateDebounce[id] = false; // 保持Shape
+      // 此中value一定能取到最新的值
+      validate(id, mApi, this.id2FieldKey[id], eventName).then(validateInfo => {
+        mApi.setAttributes(id, { validateInfo }, true);
+      });
     }, 300);
   }
   // 按trigger类型绑定校验器，同时记录已绑定的校验器类型
@@ -225,25 +227,34 @@ class FormCoreModelPlugin {
         console.warn(`${fieldKey} not found!`);
         return Promise.reject(new Error(`${fieldKey} not found!`));
       }
-      return validate(id, this.mApi, fieldKey);
+      return validate(id, this.mApi, fieldKey).then(validateInfo => {
+        return this.mApi.setAttributes(id, { validateInfo }, true).then(() => {
+          return validateInfo;
+        });
+      });
     };
     applyModelApiMiddleware('validate', validateMiddleware);
     const validateAllMiddleware = () => () => {
       const ids = Object.keys(this.id2FieldKey);
-      const promiseArray = ids.map(id => validate(id, this.mApi, this.id2FieldKey[id]));
+      const promiseArray = ids.map(id => validate(id, this.mApi, this.id2FieldKey[id])
+        .then(validateInfo => {
+          this.mApi.setAttributes(id, { validateInfo }, false); // 后面批量渲染
+          return { id, validateInfo };
+        }));
       return Promise.all(promiseArray).then(array => {
+        this.mApi.refresh(); // 批量执行校验结果的渲染
         const result = {
           passed: false,
           details: [],
         };
-        array.forEach((item, index) => {
-          const id = ids[index];
+        array.forEach(item => {
+          const { id, validateInfo } = item;
           // 将校验结果输出为validateInfo标准格式
           const detail = {
             id,
             fieldKey: this.id2FieldKey[id],
-            validateInfo: item,
-            passed: item.filter(i => i.passed === false).length === 0,
+            validateInfo,
+            passed: validateInfo.filter(i => i.passed === false).length === 0,
           };
           result.details.push(detail);
         });
@@ -256,7 +267,6 @@ class FormCoreModelPlugin {
       });
     };
     applyModelApiMiddleware('validateAll', validateAllMiddleware);
-    // todo: reset 方法
     const scrollIntoViewMiddleware = () => fieldKey => {
       const domNode = document.querySelector(`[data-field-key="${fieldKey}_${this.mApi.instanceId}"]`);
       if (domNode) {

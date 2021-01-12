@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-vue",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "FrominXu",
   "description": "A highly extensible JavaScript library, for Vue. 高扩展性、可二开的插件式前端开发框架",
   "license": "MIT",

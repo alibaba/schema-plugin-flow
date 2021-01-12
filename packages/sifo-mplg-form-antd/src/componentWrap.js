@@ -52,7 +52,8 @@ function renderLabel(h, props) {
   ) : null;
 }
 function renderWrapper(h, props, opts, fieldNode) {
-  const { wrapperCol, validateInfo } = props;
+  const { wrapperCol } = props;
+  const { errorMsg } = opts;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = cls({
     'sifo-antd-form-item-control-wrapper': true
@@ -63,7 +64,6 @@ function renderWrapper(h, props, opts, fieldNode) {
     key: 'control',
   };
   const extraNodes = [];
-  const errorMsg = getErrorMsg(validateInfo);
   if (errorMsg) {
     extraNodes.push(h(
       'div',
@@ -76,6 +76,7 @@ function renderWrapper(h, props, opts, fieldNode) {
   }
   const controlClassName = cls({
     'sifo-antd-form-item-control': true,
+    'ant-form-item-has-error': !!errorMsg // 使用 antd 的 Form 对 表单字段组件的样式
   });
   return h(
     Col, { ...colProps },
@@ -110,8 +111,10 @@ const componentWrap = Component => {
       rules, validators, validateDisabled, validateInfo,
       itemClassName, labelAlign, labelCol, wrapperCol, ...fieldProps
     } = rest || {};
+    const errorMsg = getErrorMsg(validateInfo);
     const itemClssName = cls({
       'sifo-antd-form-item': true,
+      'sifo-antd-form-item-with-error': !!errorMsg,
       [itemClassName]: !!itemClassName,
     });
     return createElement(
@@ -123,7 +126,7 @@ const componentWrap = Component => {
       [
         renderLabel(createElement, props, {}),
         renderWrapper(
-          createElement, props, {},
+          createElement, props, { errorMsg },
           createElement(Component, {
             ...fieldProps,
             key: __fieldKey__

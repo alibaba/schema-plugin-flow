@@ -52,7 +52,8 @@ function renderLabel(h, props) {
   ) : null;
 }
 function renderWrapper(h, props, opts, fieldNode) {
-  const { wrapperCol, validateInfo } = props;
+  const { wrapperCol } = props;
+  const { errorMsg } = opts;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = {
     'sifo-antdv-form-item-control-wrapper': true
@@ -66,7 +67,6 @@ function renderWrapper(h, props, opts, fieldNode) {
     key: 'control',
   };
   const extraNodes = [];
-  const errorMsg = getErrorMsg(validateInfo);
   if (errorMsg) {
     extraNodes.push(h(
       'div',
@@ -79,6 +79,7 @@ function renderWrapper(h, props, opts, fieldNode) {
   }
   const controlClassName = {
     'sifo-antdv-form-item-control': true,
+    'has-error': !!errorMsg, // 使用 antdv 的 Form 对 表单字段组件的样式
   };
   return h(Col, { ...colProps }, [
     h(
@@ -109,8 +110,10 @@ const componentWrap = Component => {
         rules, validators, validateDisabled, validateInfo,
         itemClassName, labelAlign, labelCol, wrapperCol, ...fieldProps
       } = props || {};// 字段的属性已经有分类
+      const errorMsg = getErrorMsg(validateInfo);
       const itemClssName = {
         'sifo-antdv-form-item': true,
+        'sifo-antdv-form-item-with-error': !!errorMsg,
         [itemClassName]: !!itemClassName,
       };
       return createElement(
@@ -125,7 +128,7 @@ const componentWrap = Component => {
         [
           renderLabel(createElement, props, {}),
           renderWrapper(
-            createElement, props, {},
+            createElement, props, { errorMsg },
             createElement(Component, {
               ...rest,
               props: fieldProps,

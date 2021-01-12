@@ -93,7 +93,7 @@ function renderWrapper(h, props, opts, fieldNode) {
   );
 }
 const defaultComponentName = 'SifoForm';
-const componentWrap = Component => {
+const componentWrap = (Component, formItemProps) => {
   const compName = Component ?
     (Component.name || Component.displayName || defaultComponentName)
     : defaultComponentName;
@@ -106,11 +106,15 @@ const componentWrap = Component => {
     if (!__isField__) {
       return createElement(Component, rest, children);
     }
+    // 对统一配置的属性进行合并
+    const mixinFormItemProps = { ...formItemProps, ...rest };
     // 字段
     const {
+      labelAlign, labelCol, wrapperCol,
       rules, validators, validateDisabled, validateInfo,
-      itemClassName, labelAlign, labelCol, wrapperCol, ...fieldProps
-    } = rest || {};
+      itemClassName,
+      ...fieldProps // 这是字段本身属性
+    } = mixinFormItemProps || {};
     const errorMsg = getErrorMsg(validateInfo);
     const itemClssName = cls({
       'sifo-antd-form-item': true,
@@ -124,9 +128,9 @@ const componentWrap = Component => {
         'data-field-key': dataFieldKey
       },
       [
-        renderLabel(createElement, props, {}),
+        renderLabel(createElement, mixinFormItemProps, {}),
         renderWrapper(
-          createElement, props, { errorMsg },
+          createElement, mixinFormItemProps, { errorMsg },
           createElement(Component, {
             ...fieldProps,
             key: __fieldKey__

@@ -83,7 +83,7 @@ class FormCoreModelPlugin {
       validate(id, mApi, this.id2FieldKey[id], eventName).then(validateInfo => {
         mApi.setAttributes(id, { validateInfo }, true);
       });
-    }, 300);
+    }, 200);
   }
   // 按trigger类型绑定校验器，同时记录已绑定的校验器类型
   // 在setAttributes和addValidator中，判断rules、validator的trigger，发现没有绑定过校验器时，增加

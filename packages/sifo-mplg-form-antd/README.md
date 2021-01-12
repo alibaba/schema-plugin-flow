@@ -10,6 +10,7 @@ codesandbox.io: [sifo-mplg-form-antd](https://codesandbox.io/s/sifo-react-form-a
 | 参数名            |  参数类型             |   描述            |   默认值     |
 | ---------------- | ---------------------| ---------------- | ------------|
 | formItemWrapper     |  (component)=>formItemWrapper    |    对传入的components进行封装。结合SifoFormCore 封装的 ant-design 下的 FormItem。可以自定义实现来满足需要的功能与特性           |    defaultFormItemWrapper   |
+| formItemProps     |  FormItemProps    |    统一设置 FormItem 的属性，比如 labelCol、wrapperCol          |    {}   |
 
 
 ## 使用示例
@@ -48,6 +49,20 @@ import AntdFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antd";
 {
   modelPlugin: AntdFormModelPlugin, // 要在SifoFormCore之后注册
 },
+/*
+* 传 formItemProps 参数用法
+  modelPlugin: {
+    plugin: AntdFormModelPlugin,
+    argsProvider: (mId, info) => {
+      return {
+        formItemProps: {
+          labelCol: { span: 8 },
+          wrapperCol: { span: 16 }
+        }
+      };
+    }
+  }
+*/
 { pagePlugin, componentPlugin }
 ]
 ```

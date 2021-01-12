@@ -45,7 +45,17 @@ const plgs = [
     },
   },
   {
-    modelPlugin: AntdFormModelPlugin,
+    modelPlugin: {
+      plugin: AntdFormModelPlugin,
+      argsProvider: (mId, info) => {
+        return {
+          formItemProps: {
+            labelCol: { span: 8 },
+            wrapperCol: { span: 16 }
+          }
+        };
+      }
+    }
   },
   ...plugins
 ];

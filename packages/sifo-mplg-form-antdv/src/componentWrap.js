@@ -94,7 +94,7 @@ function renderWrapper(h, props, opts, fieldNode) {
     )
   ]);
 }
-const componentWrap = Component => {
+const componentWrap = (Component, formItemProps) => {
   const SifoFormWrap = {
     functional: true,
     render(createElement, context) {
@@ -105,11 +105,15 @@ const componentWrap = Component => {
       if (!__isField__) {
         return createElement(Component, context.data, context.children);
       }
+      // 对统一配置的属性进行合并
+      const mixinFormItemProps = { ...formItemProps, ...props };
       // 字段
       const {
+        labelAlign, labelCol, wrapperCol,
         rules, validators, validateDisabled, validateInfo,
-        itemClassName, labelAlign, labelCol, wrapperCol, ...fieldProps
-      } = props || {};// 字段的属性已经有分类
+        itemClassName,
+        ...fieldProps // 这是字段本身属性
+      } = mixinFormItemProps || {}; // 字段的属性已经有分类
       const errorMsg = getErrorMsg(validateInfo);
       const itemClssName = {
         'sifo-antdv-form-item': true,
@@ -126,9 +130,9 @@ const componentWrap = Component => {
           props: {}
         },
         [
-          renderLabel(createElement, props, {}),
+          renderLabel(createElement, mixinFormItemProps, {}),
           renderWrapper(
-            createElement, props, { errorMsg },
+            createElement, mixinFormItemProps, { errorMsg },
             createElement(Component, {
               ...rest,
               props: fieldProps,

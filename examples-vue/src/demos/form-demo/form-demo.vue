@@ -40,6 +40,7 @@ const components = {
   Row,
   Col,
   Select,
+  DatePicker
 };
 
 export default {

@@ -1,3 +1,4 @@
+import moment from 'moment';
 const componentPlugin = {
   projectId: {
     onComponentInitial: (params) => {
@@ -55,6 +56,30 @@ const componentPlugin = {
       });
     },
   },
+  // 日期时间类型的值
+  time: {
+    onComponentInitial: (params) => {
+      const { event, mApi } = params;
+      mApi.addEventListener(event.key, "propsFormatter", (ctx, props) => {
+        if (props.value) {
+          if (props.value._isAMomentObject) {
+            return props;
+          } else {
+            return {
+              ...props,
+              value: moment(props.value)
+            };
+          }
+        }
+      });
+      mApi.addEventListener(event.key, "change", (context, date, dateString) => {
+        if (date._isAMomentObject) {
+          // 字段值只取字符格式
+          mApi.setAttributes(event.key, { value: dateString });
+        }
+      });
+    }
+  },
   submitBtn: {
     onComponentInitial: (params) => {
       const { event, mApi } = params;
@@ -78,6 +103,7 @@ const componentPlugin = {
           .setValues({
             projectId: "项目一",
             subject: "主题一",
+            time: "2021-02-22 20:22:22"
           })
           .then(() => {
             mApi.validate('projectId');

@@ -57,6 +57,21 @@
       }
     },
     {
+      "component": "DatePicker",
+      "id": "time",
+      "attributes": {
+        "name": "time",
+        "showTime": true,
+        "label": "日期时间",
+        "placeholder": "日期时间",
+        "rules": [
+          {
+            "required": true
+          }
+        ]
+      }
+    },
+    {
       "component": "Input",
       "id": "subject",
       "attributes": {

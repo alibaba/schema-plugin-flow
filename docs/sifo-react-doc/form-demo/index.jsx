@@ -17,6 +17,7 @@ const components = {
   Row,
   Col,
   Select,
+  DatePicker
 };
 const plgs = [
   {

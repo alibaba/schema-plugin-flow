@@ -112,9 +112,13 @@ const componentWrap = (Component, formItemProps) => {
     const {
       labelAlign, labelCol, wrapperCol,
       rules, validators, validateDisabled, validateInfo,
-      itemClassName,
+      itemClassName, propsFormatter, // 转换字段的属性到组件属性
       ...fieldProps // 这是字段本身属性
     } = mixinFormItemProps || {};
+    let renderProps = fieldProps;
+    if (propsFormatter) {
+      renderProps = propsFormatter(fieldProps) || fieldProps;
+    }
     const errorMsg = getErrorMsg(validateInfo);
     const itemClssName = cls({
       'sifo-antd-form-item': true,
@@ -132,7 +136,7 @@ const componentWrap = (Component, formItemProps) => {
         renderWrapper(
           createElement, mixinFormItemProps, { errorMsg },
           createElement(Component, {
-            ...fieldProps,
+            ...renderProps,
             key: __fieldKey__
           }, children)
         )

@@ -108,6 +108,23 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 }
 ```
 
+## FormItem Props
+
+| 参数                  | 说明         | 类型     | 默认值              |
+| -------------------- | ------------ | -------- | ---------------- |
+| name           | 默认的字段标识key，不一定是“name”，可以是任意自定的key   | string | - |
+| label           | 字段标签名   | string  | - |
+| rules           | 校验规则，见下文校验规则描述   | array  | - |
+| itemClassName           | FormItem 上的样式   | string  | - |
+| labelCol           | 字段标签对应的 Col 属性  | string  | { span: 8 } |
+| wrapperCol         | 字段组件对应的 Col 属性  | string  | { span: 16 } |
+
+## FormItem 事件
+
+| 参数                  | 说明         | 类型     | 默认值              |
+| -------------------- | ------------ | -------- | ---------------- |
+| propsFormatter | 转换字段的属性到组件属性 | Function: (props: any) => any | - |
+
 ## 校验规则描述
 * 内置了必填、整数、最大最小值和长度校验；
 * 规则描述的message省略时将使用内置文案；

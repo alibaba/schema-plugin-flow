@@ -114,6 +114,13 @@ const componentWrap = (Component, formItemProps) => {
         itemClassName,
         ...fieldProps // 这是字段本身属性
       } = mixinFormItemProps || {}; // 字段的属性已经有分类
+      const {
+        propsFormatter, // 转换字段的属性到组件属性
+      } = rest.on || {};
+      let renderProps = fieldProps;
+      if (propsFormatter) {
+        renderProps = propsFormatter(fieldProps) || fieldProps;
+      }
       const errorMsg = getErrorMsg(validateInfo);
       const itemClssName = {
         'sifo-antdv-form-item': true,
@@ -135,7 +142,7 @@ const componentWrap = (Component, formItemProps) => {
             createElement, mixinFormItemProps, { errorMsg },
             createElement(Component, {
               ...rest,
-              props: fieldProps,
+              props: renderProps,
               key: __fieldKey__,
             }, context.children)
           )

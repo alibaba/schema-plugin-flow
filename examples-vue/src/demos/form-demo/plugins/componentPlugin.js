@@ -73,7 +73,9 @@ const componentPlugin = {
         }
       });
       mApi.addEventListener(event.key, "change", (context, date, dateString) => {
-        if (date._isAMomentObject) {
+        if (!date) {
+          mApi.setAttributes(event.key, { value: date });
+        } else if (date._isAMomentObject) {
           // 字段值只取字符格式
           mApi.setAttributes(event.key, { value: dateString });
         }

@@ -34,7 +34,7 @@ const plgs = [
               let val = e;
               if (typeof e === "string" || typeof e === "number") {
                 val = e;
-              } else if (typeof e === "object") {
+              } else if (e && typeof e === "object") {
                 val = e.target ? e.target.value : e;
               }
               mApi.setAttributes(event.key, { value: val }, true);

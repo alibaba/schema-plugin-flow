@@ -127,7 +127,13 @@ $ npm i @schema-plugin-flow/sifo-vue --save
     ```
 
 
-## SifoApp (sifo-react/sifo-vue) 演示
-在这个演示中，有7个独立的 js 作为扩展插件。复选框用来设置哪些插件被注册。每个插件控制不同的逻辑，同时所有的注册插件一起协同工作。  
+## SifoApp (sifo-react/sifo-vue) Demo
+* form-extend-demo
+
+  [sifo-react-extends-demo](https://codesandbox.io/s/sifo-react-extends-demo-bg2py)
+
+* simple demo
+
+  In this demo, there are seven extend-plugins in seven independent js. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
 
   ![demo](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

@@ -121,6 +121,12 @@ $ npm i @schema-plugin-flow/sifo-vue --save
 
 
 ## SifoApp (sifo-react/sifo-vue) Demo
-In this demo, there are seven extend-plugins in seven independent js. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
+* form-extend-demo
+
+  [sifo-react-extends-demo](https://codesandbox.io/s/sifo-react-extends-demo-bg2py)
+
+* simple demo
+
+  In this demo, there are seven extend-plugins in seven independent js. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    
 
   ![demo](https://img.alicdn.com/tfs/TB1HOQYe6MZ7e4jSZFOXXX7epXa-1264-698.gif)

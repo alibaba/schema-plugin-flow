@@ -14,6 +14,19 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) is a sifo form with ant-design-vue, works with sifo-mplg-form-core and sifo-vue.
 * [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) is a sifo form with ant-design, works with sifo-mplg-form-core and sifo-react.
 
+## sifo family
+* `sifo-model` + `react` = `sifo-react`
+* `sifo-model` + `vue` = `sifo-vue`
+* `sifo-react` + `sifo-mplg-form-core` + `ant-design` = `sifo-mplg-form-antd`
+* `sifo-vue` + `sifo-mplg-form-core` + `ant-design-vue` = `sifo-mplg-form-antdv`
+![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-family.png)
+
+## sifo three elements
+* schema: to describe page's structures
+* components
+* plugins: logic controller
+![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-elements.png)
+
 ## Installation
 
 ```shell
@@ -105,7 +118,6 @@ $ npm i @schema-plugin-flow/sifo-vue --save
     <script src="extend.js"></script>
     <script src="app.js"></script>
     ```
-
 
 
 ## SifoApp (sifo-react/sifo-vue) Demo

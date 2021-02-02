@@ -20,7 +20,7 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) 是以 ant-design-vue 为 UI 层的表单，与 sifo-mplg-form-core 和 sifo-vue 一起使用。
 * [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) 是以 ant-design 为 UI 层的表单， 与 sifo-mplg-form-core 和 sifo-react 一起使用。
 
-## sifo family
+## Sifo 家族
 * `sifo-model` + `react` = `sifo-react`
 * `sifo-model` + `vue` = `sifo-vue`
 * `sifo-react` + `sifo-mplg-form-core` + `ant-design` = `sifo-mplg-form-antd`
@@ -28,10 +28,10 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 ![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-family.png)
 
 
-## sifo three elements
-* schema: to describe page's structures
+## Sifo 三要素
+* schema
 * components
-* plugins: logic controller
+* plugins
 ![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-elements.png)
 
 ## 安装

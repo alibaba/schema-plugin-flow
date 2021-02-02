@@ -18,7 +18,7 @@ footer: Open-source MIT Licensed
 ## Introduction
 schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible JavaScript library. This library allows developers to extend business logic and page layout without touching source code, when the source code is written in Sifo.
 
-* `sifo-model` is the core of Sifo, which using JSON (as Schema) to describe page's structures and using plugins as logic controller. There are three kinds of plugin: modelPlugin、pagePlugin and componentPluign. You can learn about Sifo's basic information and usage through this package's README.
+* `sifo-model` is the core of Sifo, which using JSON (as Schema) to describe page's structures and using plugins as logic controller. There are three kinds of plugin: modelPlugin、pagePlugin and componentPluign. You can learn about Sifo's basic information and the usage patterns by reading this package's README.
 * `sifo-react` is a React Component encapsulates sifo-model and sifo-singleton. sifo-react also support `sifoAppDecorator`, with which a normal React Commponent will has extension ability. You can learn about that via package's README or online demos.
 * `sifo-vue` is a Vue Component encapsulates sifo-model and sifo-singleton. sifo-vue also support `sifoAppDecorator`, with which a normal Vue Commponent will has extension ability. You can learn about that via package's README or online demos.
 * `sifo-singleton` is a global extensions holder. All kinds of extend-plugins and extend-components are registered to it.

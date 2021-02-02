@@ -3,7 +3,7 @@
 ## Introduction
 schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible JavaScript library. This library allows developers to extend business logic and page layout without touching source code, when the source code is written in Sifo.
 
-* [sifo-model](./packages/sifo-model) is the core of Sifo, which using JSON (as Schema) to describe page's structures and using plugins as logic controller. There are three kinds of plugin: modelPlugin、pagePlugin and componentPluign. You can learn about Sifo's basic information and usage through this package's README.
+* [sifo-model](./packages/sifo-model) is the core of Sifo, which using JSON (as Schema) to describe page's structures and using plugins as logic controller. There are three kinds of plugin: modelPlugin、pagePlugin and componentPluign. You can learn about Sifo's basic information and the usage patterns by reading this package's README.
 * [sifo-react](./packages/sifo-react) is a React Component encapsulates sifo-model and sifo-singleton. sifo-react also support `sifoAppDecorator`, with which a normal React Commponent will has extension ability. You can learn about that via package's README or online demos.
 * [sifo-vue](./packages/sifo-vue) is a Vue Component encapsulates sifo-model and sifo-singleton. sifo-vue also support `sifoAppDecorator`, with which a normal Vue Commponent will has extension ability. You can learn about that via package's README or online demos.
 * [sifo-singleton](./packages/sifo-singleton) is a global extensions holder. All kinds of extend-plugins and extend-components are registered to it.
@@ -14,14 +14,14 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) is a sifo form with ant-design-vue, works with sifo-mplg-form-core and sifo-vue.
 * [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) is a sifo form with ant-design, works with sifo-mplg-form-core and sifo-react.
 
-## sifo family
+## Sifo family
 * `sifo-model` + `react` = `sifo-react`
 * `sifo-model` + `vue` = `sifo-vue`
 * `sifo-react` + `sifo-mplg-form-core` + `ant-design` = `sifo-mplg-form-antd`
 * `sifo-vue` + `sifo-mplg-form-core` + `ant-design-vue` = `sifo-mplg-form-antdv`
 ![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-family.png)
 
-## sifo three elements
+## Three elements of Sifo
 * schema: to describe page's structures
 * components
 * plugins: logic controller

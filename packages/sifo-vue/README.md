@@ -42,6 +42,58 @@ class | 样式类 | vue.class规范 | 否 |  |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
 | muteRenderOptimizeMark     | bool            |       false        |    当节点上此属性为true时，该节点不受渲染优化标记的控制，按照普通渲染模式渲染，但仍然受父组件的渲染与否影响   |
 
+## 如何使用
+* 项目
+
+  * extend.js
+    ```javascript
+    import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
+    const singleton = new SifoSingleton('quick-start'); // target namespace
+    singleton.registerItem('testExtendId', () => {
+      return {
+        plugins,
+        components
+      }
+    });
+    ```
+
+  * app.js
+    ```javascript
+    const App = {
+      template: `
+        <sifo-app
+          :namespace="namespace"
+          class="quick-start-demo"
+          :plugins="plugins"
+          :components="components"
+          :schema="schema"
+          :openLogger="openLogger"
+        />
+      `
+    };
+    new Vue({
+      render: (h) => h(App,
+      {
+        props: {
+          namespace: 'quick-start'
+        }
+      }
+      )
+    }).$mount("#app");
+    ```
+
+* runtime
+  * load extend js
+  * load app js
+
+    你应该在 sifoApp 渲染前加载扩展 js 资源
+
+    ```html
+    <script src="extend.js"></script>
+    <script src="app.js"></script>
+    ```
+
+
 ## QuickStart
 下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
 ```javascript

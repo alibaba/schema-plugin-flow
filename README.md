@@ -57,6 +57,56 @@ $ npm i @schema-plugin-flow/sifo-vue --save
   * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
   * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)    
 
+## How to use
+* project
+
+  * extend.js
+    ```javascript
+    import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
+    const singleton = new SifoSingleton('quick-start'); // target namespace
+    singleton.registerItem('testExtendId', () => {
+      return {
+        plugins,
+        components
+      }
+    });
+    ```
+
+  * app.js
+    ```javascript
+    import React from 'react';
+    import ReactDOM from "react-dom";
+    import SifoApp from '@schema-plugin-flow/sifo-react';
+    class App extends React.Component {
+      render() {
+        return (
+          <SifoApp
+            namespace='quick-start'
+            components={components}
+            schema={schema}
+            plugins={plugins}
+          />
+        );
+      }
+    }
+    ReactDOM.render(
+      <App />
+      rootElement
+    );
+    ```
+
+* runtime
+  * load extend js
+  * load app js
+
+    you should load the extend js before sifoApp rendered.
+
+    ```html
+    <script src="extend.js"></script>
+    <script src="app.js"></script>
+    ```
+
+
 
 ## SifoApp (sifo-react/sifo-vue) Demo
 In this demo, there are seven extend-plugins in seven independent js. The checkbox set which plugin should be registered. Each plugin control different logic and all registered plugins make up a integrated page.    

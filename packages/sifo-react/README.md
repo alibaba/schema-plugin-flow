@@ -27,6 +27,57 @@ openLogger | 是否在控制台打印出执行日志，不建议在生产环境�
 getModelPluginArgs | 获取模型插件实例化时的构造函数参数 | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | | - |
 className | 样式类 |string | 否 |  |
 
+
+## 如何使用
+* 项目
+
+  * extend.js
+    ```javascript
+    import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
+    const singleton = new SifoSingleton('quick-start'); // target namespace
+    singleton.registerItem('testExtendId', () => {
+      return {
+        plugins,
+        components
+      }
+    });
+    ```
+
+  * app.js
+    ```javascript
+    import React from 'react';
+    import ReactDOM from "react-dom";
+    import SifoApp from '@schema-plugin-flow/sifo-react';
+    class App extends React.Component {
+      render() {
+        return (
+          <SifoApp
+            namespace='quick-start'
+            components={components}
+            schema={schema}
+            plugins={plugins}
+          />
+        );
+      }
+    }
+    ReactDOM.render(
+      <App />
+      rootElement
+    );
+    ```
+
+* runtime
+  * load extend js
+  * load app js
+
+    你应该在 sifoApp 渲染前加载扩展 js 资源
+
+    ```html
+    <script src="extend.js"></script>
+    <script src="app.js"></script>
+    ```
+
+
 ## QuickStart
 下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
 ```javascript

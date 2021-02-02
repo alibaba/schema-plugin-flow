@@ -63,6 +63,55 @@ $ npm i @schema-plugin-flow/sifo-vue --save
   * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
   * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)    
 
+## 如何使用
+* 项目
+
+  * extend.js
+    ```javascript
+    import SifoSingleton from '@schema-plugin-flow/sifo-singleton';
+    const singleton = new SifoSingleton('quick-start'); // target namespace
+    singleton.registerItem('testExtendId', () => {
+      return {
+        plugins,
+        components
+      }
+    });
+    ```
+
+  * app.js
+    ```javascript
+    import React from 'react';
+    import ReactDOM from "react-dom";
+    import SifoApp from '@schema-plugin-flow/sifo-react';
+    class App extends React.Component {
+      render() {
+        return (
+          <SifoApp
+            namespace='quick-start'
+            components={components}
+            schema={schema}
+            plugins={plugins}
+          />
+        );
+      }
+    }
+    ReactDOM.render(
+      <App />
+      rootElement
+    );
+    ```
+
+* runtime
+  * load extend js
+  * load app js
+
+    你应该在 sifoApp 渲染前加载扩展 js 资源
+
+    ```html
+    <script src="extend.js"></script>
+    <script src="app.js"></script>
+    ```
+
 
 ## SifoApp (sifo-react/sifo-vue) 演示
 在这个演示中，有7个独立的 js 作为扩展插件。复选框用来设置哪些插件被注册。每个插件控制不同的逻辑，同时所有的注册插件一起协同工作。  

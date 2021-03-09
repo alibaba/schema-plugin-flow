@@ -65,6 +65,7 @@ export default class Model {
   initialComponents: object;
   components: ModelOptions['components'];
   mApi: ModelApi | null;
+  schemaReadied: boolean;
   targetSchema: SchemaNode;
   rendered: boolean;
   modelApiRef: ModelOptions['modelApiRef'];
@@ -100,6 +101,7 @@ export default class Model {
     this.initialComponents = objectReadOnly(components || {}); // 不能改原始组件映射关系
     this.components = {};
     this.mApi = null; // 模型接口
+    this.schemaReadied = false;
     this.targetSchema = {}; // 经过处理的schema,用来创建树实例
     this.rendered = false; // 标识是否已经渲染
     this.modelApiRef = modelApiRef || noop; // 对外暴露modelApi
@@ -137,6 +139,7 @@ export default class Model {
     this.componentPlugins = []; // 组件插件
     // 如果有上层需要管理多个model，必然是有个地方存储了这个model，应用modelApiRef来接model方法
     this.mApi = null;
+    this.schemaReadied = false;
     // 使用modelApiRef方式向外暴露mApi，此处调用是防止内存泄漏
     if (this.modelApiRef) {
       this.modelApiRef(null);
@@ -170,6 +173,7 @@ export default class Model {
         this.onComponentInitial,
         this.beforeRender,
         this.onReadyToRender,
+        this.openSchema,
         this.render
       ]
     ).run();
@@ -385,7 +389,13 @@ export default class Model {
     const refApi = objectReadOnly({
       ...this.mApi,
       // ref 的 mApi.getSchema 是频繁方法，不适合频繁clone
-      getSchema: () => this.schemaInstance.parsedTree,
+      getSchema: () => {
+        // 在插件未执行完之前，不返回渲染 schema，因为这时候 schema 还处在半加工状态
+        if (!this.schemaReadied) {
+          return {};
+        }
+        return this.schemaInstance.parsedTree;
+      },
     }) as ModelApi;
     objectReadOnly(this.mApi);
     if (this.modelApiRef) {
@@ -439,6 +449,12 @@ export default class Model {
       eventType: MODEL_HANDLER.onReadyToRender,
     };
     this.reducer(handlers, event);
+  }
+  /**
+   * 放开渲染 schema，在此之前 refApi 的 getSchema 方法不会返回
+   */
+  openSchema = () => {
+    this.schemaReadied = true;
   }
   /**
    * 渲染

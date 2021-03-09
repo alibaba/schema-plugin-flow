@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "prepare": "npm run build",
-    "test": "mocha --compilers js:@babel/register test/index.test.js ",
+    "test": "mocha --require register.js  --compilers js:@babel/register test/index.test.js ",
     "lint-back": "eslint --ext .jsx,.js,.ts src/",
     "lint": "tslint \"src/**/*.ts\" -e \"src/types/*.ts\" --force",
     "precommit": "npm run lint",

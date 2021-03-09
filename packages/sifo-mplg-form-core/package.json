@@ -24,7 +24,7 @@
     "lint": "eslint --ext .jsx,.js,.tsx src/",
     "precommit": "npm run lint",
     "prepare": "npm run lint && npm run build",
-    "test": "mocha --compilers js:@babel/register test/index.test.js "
+    "test-back": "mocha --compilers js:@babel/register test/index.test.js "
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",

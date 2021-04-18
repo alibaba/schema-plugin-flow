@@ -7,14 +7,6 @@ const componentPlugin = {
           c.mApi.setAttributes(id, { value: e.target.value })
         });
       });
-      mApi.setAttributes(event.key, {
-        scopedSlots: {
-          testslot: ({ prpa, prpb }) => {
-            console.log('testslot', prpa, prpb);
-            return 'aaa'
-          }
-        }
-      })
     }
   },
   tableId: {
@@ -90,6 +82,7 @@ const componentPlugin = {
     onComponentInitial: params => {
       const { event, mApi } = params;
       mApi.addEventListener(event.key, 'onCellChange', (c, key, dataIndex, event) => {
+        console.log('notes onCellChange', dataIndex);
         const { 'data-source': listData = [] } = mApi.getAttributes('tableId').props;
         const newdata = listData.map(row => {
           if (row.key === key) {

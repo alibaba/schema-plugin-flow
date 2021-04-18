@@ -36,13 +36,13 @@ class VueModelPlugin {
       return this.createElement(...args);
     };
     applyModelApiMiddleware('createElement', createElement);
-    const renderSlot = () => (id, prps) => {
+    const renderSlot = () => (id, prps = {}) => {
       const item = this.schemaInstance.nodeMap[id];
       if (item && item.attributes.slot) {
         // 防止原 schema 的 attributes 被修改
         const renderItem = { ...item };
         // attributes 合并处理，先对prps分类
-        const classifyProps = classifyAttributes({}, prps);
+        const classifyProps = classifyAttributes({}, { ...prps });
         renderItem.attributes = {
           // classifyAttributes 不会返回newAttrs中的on参数，所以要进行一次合并
           ...renderItem.attributes,

@@ -3,6 +3,7 @@
     <div>{{label}}</div>
     <input v-model="value"/>
     <slot></slot>
+    <slot name="testslot" prpa="val1" prpb="val2">testslot</slot>
   </div>
 </template>
 

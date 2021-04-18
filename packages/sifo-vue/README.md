@@ -35,6 +35,8 @@ class | 样式类 | vue.class规范 | 否 |  |
 | 方法名            | 参数/类型               | 返回值类型             | 描述       |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
 | getSifoVueInstance     | ✘                      |   VueComponent            |   获取 sifo-vue 的组件实例   |
+| createElement     | (component, attribute, children)                      |   VueComponent            |   vue 的 createElement 方法   |
+| renderSlot     | (nodeId, props)                      |   VueComponent            |   将带slot标的指定schema节点（参数nodeId即节点id）渲染成 scopedSlots 中的节点对象   |
 
 ## attributes
 
@@ -94,6 +96,47 @@ class | 样式类 | vue.class规范 | 否 |  |
     ```
 
 
+### renderSlot 使用示例
+```js
+    const CompA = {
+      template: `
+        <div>
+          <slot name="toslot" propa="val1" propb="val2">
+        </div>
+      `
+    };
+    const CompSlotItem = {
+      template: `
+        <div>
+          {{ propa }}
+          {{ propb }}
+        </div>
+      `,
+      props: ['propa','propb']
+    };
+```
+```js
+const schema = {
+  component: 'CompA',
+  id: 'compa-id',
+  children:[
+    {
+      component: 'CompSlotItem',
+      id: 't-slot-id',
+      attributes: {
+        slot: 'toslot'
+      }
+    }
+  ]
+};
+mApi.setAttributes('compa-id', {
+  scopedSlots: {
+    toslot: function ({ propa, propb }) {
+      return mApi.renderSlot('t-slot-id', { propa, propb });
+    }
+  }
+})
+```
 ## QuickStart
 下面的例子演示了如何监听一个按钮组件的点击事件，并在点击事件中修改其它组件的属性，同时也演示了多个插件的情形。想了解更多的功能请参考`sifo-model`
 ```javascript
@@ -440,5 +483,5 @@ singleton.registerItem('ccc', () => {
   };
 });
 //
-export default {};
+export default singleton;
 ```

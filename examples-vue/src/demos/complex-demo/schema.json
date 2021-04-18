@@ -6,6 +6,36 @@
   },
   "children": [
     {
+      "component": "a-table",
+      "id": "tableId",
+      "attributes": {
+
+      },
+      "children":[
+        {
+          "component": "s-textcell",
+          "id": "t-name",
+          "attributes":{
+            "slot": "name"
+          }
+        },
+        {
+          "component": "span",
+          "attributes":{
+            "slot": "customTitle"
+          },
+          "children":["Name Title"]
+        },
+        {
+          "component": "s-inputcell",
+          "id": "t-notes",
+          "attributes":{
+            "slot": "notes"
+          }
+        }
+      ]
+    },
+    {
       "component": "a-button",
       "id": "btn_change_id",
       "attributes": {

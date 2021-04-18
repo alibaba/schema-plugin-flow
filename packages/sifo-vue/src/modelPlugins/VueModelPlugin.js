@@ -1,4 +1,5 @@
 import { classifyAttributes } from './utils';
+import renderFactory from '../utils/render-factory';
 
 class VueModelPlugin {
   static ID = 'sifo_vue_model_plugin';
@@ -6,6 +7,7 @@ class VueModelPlugin {
     const { sifoVueInstance } = props;
     this.mApi = null;
     this.sifoVueInstance = sifoVueInstance;
+    this.createElement = sifoVueInstance && sifoVueInstance.$createElement;
   }
   onNodePreprocess = node => {
     const { attributes } = node;
@@ -27,6 +29,41 @@ class VueModelPlugin {
       return next(this.sifoVueInstance);
     };
     applyModelApiMiddleware('getSifoVueInstance', getSifoVueInstance);
+    const createElement = () => (...args) => {
+      if (!this.createElement) {
+        throw new Error('[sifo-vue] createElement not found.');
+      }
+      return this.createElement(...args);
+    };
+    applyModelApiMiddleware('createElement', createElement);
+    const renderSlot = () => (id, prps) => {
+      const item = this.schemaInstance.nodeMap[id];
+      if (item && item.attributes.slot) {
+        // 防止原 schema 的 attributes 被修改
+        const renderItem = { ...item };
+        // attributes 合并处理，先对prps分类
+        const classifyProps = classifyAttributes({}, prps);
+        renderItem.attributes = {
+          // classifyAttributes 不会返回newAttrs中的on参数，所以要进行一次合并
+          ...renderItem.attributes,
+          ...classifyProps,
+          // 插件 attributes 可以覆盖调用方的 props 参数，所以是作为newAttrs
+          ...classifyAttributes(classifyProps, renderItem.attributes, true)
+        };
+        // 去除slot标
+        delete renderItem.attributes.slot;
+        const comps = this.mApi ? this.mApi.getComponents() : {};
+        return renderFactory(
+          renderItem,
+          this.createElement,
+          comps,
+          {},
+          false
+        );
+      }
+      return null;
+    };
+    applyModelApiMiddleware('renderSlot', renderSlot);
     // 定义setAttributes中间件
     const setAttrsMiddleware = next => (id, attributes, ...args) => {
       const oldAttrs = mApi.getAttributes(id) || {};

@@ -171,6 +171,7 @@ const Decorator = {
           renderItem.attributes = {
             // classifyAttributes 不会返回newAttrs中的on参数，所以要进行一次合并
             ...renderItem.attributes,
+            ...classifyProps,
             // 插件 attributes 可以覆盖调用方的 props 参数，所以是作为newAttrs
             ...classifyAttributes(classifyProps, renderItem.attributes, true)
           };

@@ -296,7 +296,7 @@ declare module '@schema-plugin-flow/sifo-model' {
     /**
      * 页面渲染后, 这时组件一般（不能保证）已经渲染
      */
-    afterPageRender?: PluginHandler; // 15
+    afterPageRender?: PluginHandler; // 14
   }
   /**
    * 组件插件集

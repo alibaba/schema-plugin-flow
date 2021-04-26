@@ -98,7 +98,7 @@ sifoModel.destroy();
 #### componentPlugin 组件插件
   *type: object*
   * `onComponentInitial`:【8】说明：组件初始化
-  * `afterPageRender`: 【13】说明：页面渲染后, 这时组件一般（不能保证）已经渲染
+  * `afterPageRender`: 【14】说明：页面渲染后, 这时组件一般（不能保证）已经渲染
 
 > 代码示例
 ```javascript
@@ -140,8 +140,8 @@ const componentPlugin = {
   * `onNodePreprocess`:【2】说明： 对节点动态修改
   * `onPageInitial`:【7】说明：页面初始化
   * `beforeRender`:【9】说明：渲染前
-  * `afterRender`:【12】说明：渲染后
-  * `onDestroy`: 【14】 说明：`destroy` 被调用时触发
+  * `afterRender`:【13】说明：渲染后
+  * `onDestroy`: 【16】 说明：`destroy` 被调用时触发
 
 > 代码示例
 ```javascript
@@ -186,7 +186,8 @@ const pagePlugin = {
   * `onSchemaInstantiated`:【5】 说明：schema实例化
   * `onModelApiCreated`: 【6】说明：模型接口创建，仅在此周期内能够修改mApi接口
   * `onReadyToRender`:【10】 说明：即将进行渲染
-  * `onDestroy`: 【15】 说明：`destroy` 被调用时触发
+  * `afterRender`:【12】说明：渲染后
+  * `onDestroy`: 【17】 说明：`destroy` 被调用时触发
 
 > 代码示例
 ```javascript
@@ -253,6 +254,7 @@ class modelPlugin {
   onReadyToRender = params => {
     const { mApi, event } = params;
   }
+  afterRender: params => {}
   onDestroy = parmas => {
     // do something
   }

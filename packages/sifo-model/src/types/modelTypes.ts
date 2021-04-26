@@ -140,7 +140,7 @@ interface ComponentPluginItem {
   /**
    * 页面渲染后
    */
-  afterPageRender?: PluginHandler; // 15
+  afterPageRender?: PluginHandler; // 14
 }
 /**
  * 组件插件集

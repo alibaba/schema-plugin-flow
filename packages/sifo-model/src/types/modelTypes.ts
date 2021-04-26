@@ -140,7 +140,7 @@ interface ComponentPluginItem {
   /**
    * 页面渲染后
    */
-  afterPageRender?: PluginHandler; // 13
+  afterPageRender?: PluginHandler; // 15
 }
 /**
  * 组件插件集
@@ -168,11 +168,11 @@ interface PagePlugin {
   /**
    * 渲染后
    */
-  afterRender?: PluginHandler; // 12
+  afterRender?: PluginHandler; // 13
   /**
    * 销毁
    */
-  onDestroy?: PluginHandler; // 13
+  onDestroy?: PluginHandler; // 16
 }
 
 // render: 'render', 11
@@ -204,9 +204,13 @@ interface ModelPlugin {
    */
   onReadyToRender?: PluginHandler; // 10 即将进行渲染
   /**
+   * 渲染后
+   */
+  afterRender?: PluginHandler; // 12
+  /**
    * 销毁
    */
-  onDestroy?: PluginHandler; // 13
+  onDestroy?: PluginHandler; // 17
 }
 /**
  * 模型实例化可选参数

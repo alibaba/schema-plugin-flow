@@ -14,7 +14,8 @@ import TaskQueue from './TaskQueue';
  */
 enum COMP_HANDLER {
   onComponentInitial = 'onComponentInitial', // 8
-  afterPageRender = 'afterPageRender', // 13 这时组件一般（不能保证）已经渲染
+  afterPageRender = 'afterPageRender', // 14 这时组件一般（不能保证）已经渲染
+  // onDestroy = 'onDestroy', // 15
 }
 /**
  * 页面插件生命周期方法
@@ -23,8 +24,8 @@ enum PAGE_HANDLER {
   onNodePreprocess = 'onNodePreprocess', // 2 对节点有动态修改
   onPageInitial = 'onPageInitial', // 7
   beforeRender = 'beforeRender', // 9
-  afterRender = 'afterRender', // 12
-  onDestroy = 'onDestroy', // 14
+  afterRender = 'afterRender', // 13
+  onDestroy = 'onDestroy', // 16
 }
 // render: 'render', 11
 /**
@@ -37,7 +38,8 @@ enum MODEL_HANDLER {
   onSchemaInstantiated = 'onSchemaInstantiated', // 5 schema实例化
   onModelApiCreated = 'onModelApiCreated', // 6 模型接口创建
   onReadyToRender = 'onReadyToRender', // 10 即将进行渲染
-  onDestroy = 'onDestroy', // 15
+  afterRender = 'afterRender', // 12
+  onDestroy = 'onDestroy', // 17
 }
 
 // 三类插件在plugins参数的项中的键名
@@ -481,6 +483,9 @@ export default class Model {
      * 此时的 response 可能在第一个 task 后，也可能在第二个 task 后注入 microtask queue 中(不兼容时可能是个task)
      */
     // setTimeout(() => {
+    const mHandlers = this.getModelHandlers(MODEL_HANDLER.afterRender);
+    const mEvent = { eventType: MODEL_HANDLER.afterRender };
+    this.reducer(mHandlers, mEvent);
     const handlers = this.getPageHandlers(PAGE_HANDLER.afterRender);
     const event = { eventType: PAGE_HANDLER.afterRender };
     this.reducer(handlers, event);

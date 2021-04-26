@@ -292,11 +292,11 @@ declare module '@schema-plugin-flow/sifo-model' {
     /**
      * 组件初始化
      */
-    onComponentInitial?: PluginHandler;
+    onComponentInitial?: PluginHandler; // 8
     /**
      * 页面渲染后, 这时组件一般（不能保证）已经渲染
      */
-    afterPageRender?: PluginHandler;
+    afterPageRender?: PluginHandler; // 15
   }
   /**
    * 组件插件集
@@ -324,11 +324,11 @@ declare module '@schema-plugin-flow/sifo-model' {
     /**
      * 渲染后
      */
-    afterRender?: PluginHandler; // 12
+    afterRender?: PluginHandler; // 13
     /**
      * 销毁
      */
-    onDestroy?: PluginHandler; // 13
+    onDestroy?: PluginHandler; // 16
   }
   /**
    * 模型插件
@@ -358,9 +358,13 @@ declare module '@schema-plugin-flow/sifo-model' {
      */
     onReadyToRender?: PluginHandler; // 10 即将进行渲染
     /**
+     * 渲染后
+     */
+    afterRender?: PluginHandler; // 12
+    /**
      * 销毁
      */
-    onDestroy?: PluginHandler; // 13
+    onDestroy?: PluginHandler; // 17
   }
   /**
    * 模型实例化可选参数

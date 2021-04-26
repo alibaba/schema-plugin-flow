@@ -14,8 +14,10 @@ function renderFactory(node, createElement, components, sifoAppNodesMap, needOpt
     __renderOptimizeMark__,
     children = []
   } = node;
+  const { props = {} } = attributes;
   const RComponent = components[component] || component;
   const { muteRenderOptimizeMark = false, ...otherAttrs } = attributes;// eslint-disable-line
+  const id = node.id || attributes.id || props.id;
   // 对属性 进行分类
   /*
   const { scopedSlots, slot, key, ref, refInFor, style = {},
@@ -41,7 +43,7 @@ function renderFactory(node, createElement, components, sifoAppNodesMap, needOpt
       });
       nodeInstance = createElement(
         RComponent,
-        otherAttrs,
+        { key: id, ...otherAttrs },
         childrenNodes
       );
       sifoAppNodesMap[optimizeId] = {
@@ -56,7 +58,7 @@ function renderFactory(node, createElement, components, sifoAppNodesMap, needOpt
     });
     nodeInstance = createElement(
       RComponent,
-      otherAttrs,
+      { key: id, ...otherAttrs },
       childrenNodes
     );
   }

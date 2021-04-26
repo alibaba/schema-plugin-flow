@@ -67,7 +67,7 @@ export default class SifoModel {
       externals, schema, plugins, components = {}, getModelPluginArgs
     } = params;
     const newSchema = schema || this.initialSchema;
-    const newExternals = externals || this.externals;
+    const newExternals = externals || this.externals || {};
     const newPlugins = plugins || this.plugins;
     const newGetModelPluginArgs = getModelPluginArgs || this.getModelPluginArgs;
     const newInitialComponents = objectReadOnly({ ...this.initialComponents, ...components });

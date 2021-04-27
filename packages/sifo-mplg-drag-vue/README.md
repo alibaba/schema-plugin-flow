@@ -66,8 +66,14 @@ const componentList = [
         }
       }
     },
-    propsRender: (id, node, api) => {
-      return <PropsEditorComp id={id} node={node} api={api}/>
+    propsRender: (id, node, api) {
+      const dynamicComp = {
+        functional: true,
+        render(createElement) {
+          return createElement(PropsRender, { props: { id, node, api } });
+        }
+      };
+      return dynamicComp;
     }
   }
 ];

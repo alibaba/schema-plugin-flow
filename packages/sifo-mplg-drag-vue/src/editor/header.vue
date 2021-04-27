@@ -23,6 +23,6 @@ export default {
       }
     },
   },
-  props: ["deleteNode", "selectedId", "getSchema"],
+  props: ["selectedId", "getSchema"],
 };
 </script>

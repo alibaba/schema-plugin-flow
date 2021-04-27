@@ -13,6 +13,9 @@ schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible Java
 * [sifo-mplg-form-core](./packages/sifo-mplg-form-core) is a sifo form-core model plugin. This model plugin, basing on simple schema setting, realized the form fields' control and supplied form operations with a serial of api.
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) is a sifo form with ant-design-vue, works with sifo-mplg-form-core and sifo-vue.
 * [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) is a sifo form with ant-design, works with sifo-mplg-form-core and sifo-react.
+* [sifo-mplg-drag](./packages/sifo-mplg-drag) Sifo drag model plugin. Basing on custom Components and Schema rendering, you can drag and drop component instantaneously and reconstruct a Schema. Please refer to sifo-mplg-drag-react and sifo-mplg-drag-vue.
+* [sifo-mplg-drag-react](./packages/sifo-mplg-drag-react) Sifo drag model plugin for React components.
+* [sifo-mplg-drag-vue](./packages/sifo-mplg-drag-vue) Sifo drag model plugin for Vue components.
 
 ## Sifo family
 * `sifo-model` + `react` = `sifo-react`

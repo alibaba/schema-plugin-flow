@@ -27,6 +27,12 @@ import "./index.less";
 
 const { TextArea } = Input;
 const components = {
+  Header: {
+    functional: true,
+    render: function (h, ctx) {
+      return h('h3', ctx.data, [ctx.data.props.title]);
+    }
+  },
   Container: {
     template: `
     <div :style='{ border: "1px solid #f5f5f5" }'>

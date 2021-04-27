@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 const Header = props => {
-  const { deleteNode, selectedId, getSchema, onSave } = props;
+  const {
+    deleteNode, selectedId, getSchema, onSave
+  } = props;
   const save = () => {
     const schema = getSchema();
     onSave && onSave(schema);
@@ -30,7 +33,7 @@ Header.propTypes = {
 };
 Header.defaultProps = {
   selectedId: '',
-  onSave: (e) => { console.log('onSave', e);}
+  onSave: e => { console.log('onSave', e); }
 };
 
 export default Header;

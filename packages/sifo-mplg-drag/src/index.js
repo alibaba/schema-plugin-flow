@@ -451,7 +451,7 @@ class DragModelPlugin {
     const { applyModelApiMiddleware } = event;
     this.mApi = mApi;
     this.mApi.sifoDragEditorId = this.wrappedEditorId;
-    const getEditedSchema = next => () => {
+    const getEditedSchema = () => () => {
       const sch = JSON.stringify(this.buildApi.renderSchema);
       return JSON.parse(sch);
     };
@@ -466,7 +466,7 @@ class DragModelPlugin {
       externals.__initRawSchema__ = initRawSchema;
     }
     // 先取得渲染schema，再覆盖getInitialSchema方法
-    const getInitialSchema = next => () => {
+    const getInitialSchema = () => () => {
       return JSON.parse(initRawSchema);
     };
     applyModelApiMiddleware('getInitialSchema', getInitialSchema);

@@ -106,7 +106,7 @@ const FormDemo = (props) => {
       components={components}
       plugins={plgs}
       schema={schema}
-      openLogger={props.openLogger}
+      openLogger={true}
     />
   );
 };

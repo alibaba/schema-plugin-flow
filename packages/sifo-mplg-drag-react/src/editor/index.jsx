@@ -25,7 +25,7 @@ class SifoDragEidtor extends React.PureComponent {
   handleDragStart = (item, e) => {
     const { type, init, component } = item;
     if (!init) {
-      console.error("init not found");
+      console.error('init not found');
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -62,7 +62,7 @@ class SifoDragEidtor extends React.PureComponent {
     const {
       node: sNode,
       id: selectedId
-    } = selectedNode;
+    } = selectedNode || {};
     const typeItem = this.findTypeItem(sNode);
     const activeType = typeItem?.type;
     return (
@@ -126,9 +126,11 @@ SifoDragEidtor.propTypes = {
   updateId: PropTypes.func.isRequired,
   onDragStart: PropTypes.func.isRequired,
   onDragEnd: PropTypes.func.isRequired,
+  onSave: PropTypes.func,
 };
 SifoDragEidtor.defaultProps = {
-  deleteNode: null
-}
+  selectedNode: {},
+  onSave: e => { console.log('onSave', e); }
+};
 
 export default SifoDragEidtor;

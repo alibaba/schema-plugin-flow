@@ -1,0 +1,34 @@
+.sifo-drag {
+  border: 1px dashed #1da921;
+  box-shadow: none !important;
+}
+.sifo-drop-insert{
+  box-shadow: 0 0 3px 1px #f78651;
+}
+.sifo-drag-selected.sifo-drop-insert{
+  box-shadow: 0 0 3px 1px #f78651;
+}
+.sifo-drop-pre-insert {
+  border-top: 1px solid #f78651 !important;
+  box-shadow: 0 0 2px 1px #c3f3ff;
+}
+.sifo-drop-pre-insert::before{
+  content: '';
+}
+.sifo-drop-sub-insert {
+  border-bottom: 1px solid #f78651 !important;
+  box-shadow: 0 0 2px 1px #c3f3ff;
+}
+.sifo-drop-sub-insert::after{
+  content: '';
+}
+.sifo-drag-selected {
+  box-shadow: 0 0 0px 1px #1da921;
+  &:hover{
+    cursor: grab;
+  }
+  &:active{
+    cursor: grabbing;
+  }  
+}
+

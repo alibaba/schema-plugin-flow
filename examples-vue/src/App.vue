@@ -13,7 +13,10 @@
       <a-tab-pane key="4" tab="Form Demo">
         <form-demo />
       </a-tab-pane>
-      <a-tab-pane key="5" tab="Decorator Demo">
+      <a-tab-pane key="5" tab="Drag Demo">
+        <drag-demo />
+      </a-tab-pane>
+      <a-tab-pane key="6" tab="Decorator Demo">
         <test-decorator class="eeee" test="333" :ddd="ddd"/>
       </a-tab-pane>
     </a-tabs>
@@ -28,6 +31,7 @@ import complexDemo from "./demos/complex-demo/Complex.vue";
 import quickStart from "./demos/quick-start.vue";
 import optimze from './demos/optimize.vue';
 import form from './demos/form-demo/form-demo.vue';
+import drag from './demos/drag-editor/index.vue';
 import decorator from './demos/test-decorator';
 export default {
   name: "test-root",
@@ -41,6 +45,7 @@ export default {
     "quick-start": quickStart,
     'optimze-test': optimze,
     'form-demo': form,
+    'drag-demo': drag,
     'test-decorator': decorator
   }
 };

@@ -1,0 +1,107 @@
+.sifo-mplg-drag{
+  width: 100%;
+  height: 100vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  .sifo-mplg-drag-header {
+    padding: 4px 32px;
+    height: 48px;
+    border-bottom: 1px solid #ccc;
+    .sifo-mplg-drag-title{
+      display: inline-block;
+      font-size: 20px;
+      line-height: 37px;
+      height: 100%;
+      color: #0095ff;
+    }
+    .sifo-mplg-drag-tool{
+      float: right;
+      height: 100%;
+      padding: 4px 0;
+      .sifo-mplg-drag-btn{
+        margin-right: 16px;
+        line-height: 1.5715;
+        position: relative;
+        display: inline-block;
+        font-weight: 400;
+        white-space: nowrap;
+        text-align: center;
+        background-image: none;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        user-select: none;
+        touch-action: manipulation;
+        height: 32px;
+        padding: 4px 15px;
+        font-size: 14px;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.85);
+        background: #fff;
+        border-color: #d9d9d9;
+      }
+      .sifo-mplg-drag-btn.primary {
+        color: #fff;
+    background: #1890ff;
+    border-color: #1890ff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+      }
+    }
+  }
+  .sifo-mplg-drag-editor {
+    height: calc(100% - 48px);
+    .sifo-mplg-drag-panel-header {
+      height: 32px;
+      line-height: 32px;
+      background-color: #ecedee;
+      font-size: 16px;
+      text-align: center;
+      font-weight: 400;
+    }
+    .sifo-mplg-drag-panel-content {
+      height: calc(100% - 32px);
+      padding: 4px 8px;
+      overflow: scroll;
+    }
+    .sifo-mplg-drag-components{
+      height: 100%;
+      width: 200px;
+      display: inline-block;
+      border-right: 1px dashed #bbbbbb;
+      .sifo-mplg-drag-panel-content {
+        padding: 4px 8px;
+        .sifo-component-item{
+          height: 32px;
+          line-height: 28px;
+          text-align: center;
+          border: 1px solid #ccc;
+          margin: 4px 0;
+          &-active{
+            border-color: seagreen;
+          }
+          &:hover{
+            cursor: grab;
+            color: #06c9fa;
+            border-style: dashed;
+            border-color: #3ed7fe;
+          }
+          &:active{
+            cursor: grabbing;
+          }        
+        }
+      }
+    }
+    .sifo-mplg-drag-render-plate{
+      height: 100%;
+      width: calc(100% - 400px);
+      display: inline-block;
+    }
+    .sifo-mplg-drag-props{
+      height: 100%;
+      width: 200px;
+      display: inline-block;
+      border-left: 1px dashed #bbbbbb;
+    }
+  }
+}

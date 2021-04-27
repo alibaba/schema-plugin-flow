@@ -1,0 +1,113 @@
+{
+  "component": "Container",
+  "id": "main_id",
+  "attributes": {
+    "class": "form-demo-main"
+  },
+  "children": [
+    {
+      "component": "Header",
+      "id": "header",
+      "attributes":{
+        "class": "header-title",
+        "title": "货物入库"
+      }
+    },
+    {
+      "component": "Container",
+      "id": "field_panel",
+      "attributes":{
+        "class": "field-panel"
+      },
+      "children":[
+        {
+          "id": "goodsType",
+          "component": "Select",
+          "attributes": {
+            "class": "",
+            "fieldKey": "goodsType",
+            "label": "货物品类",
+            "placeholder": "请选择货物品类",
+            "rules": [
+              {
+                "required": true,
+                "message": "请选择货物品类"
+              }
+            ]
+          }
+        },
+        {
+          "component": "Select",
+          "id": "goodsId",
+          "attributes": {
+            "fieldKey": "goodsId",
+            "label": "货物名称",
+            "placeholder": "请选择货物",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "component": "Select",
+          "id": "warehouse",
+          "attributes": {
+            "fieldKey": "warehouse",
+            "label": "入库仓库",
+            "placeholder": "请选择仓库",
+            "rules": [
+              {
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "component": "Input",
+          "id": "quantity",
+          "attributes": {
+            "fieldKey": "quantity",
+            "label": "入库数量",
+            "placeholder": "货物数量",
+            "rules": [
+              {
+                "required": true
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        {
+          "component": "TextArea",
+          "id": "notes",
+          "attributes":{
+            "fieldKey": "notes",
+            "label": "备注",
+            "placeholder": "备注"
+          }
+        }
+      ]
+    },
+    {
+      "component": "Container",
+      "id": "footerBar",
+      "children": [
+        {
+          "component": "Button",
+          "id": "submitBtn",
+          "attributes": {
+            "type": "primary",
+            "label": "提交并生成入库单"
+          }
+        }
+      ],
+      "attributes": {
+        "class": "footer-opt"
+      }
+    }
+  ]
+}

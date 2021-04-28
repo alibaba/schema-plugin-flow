@@ -19,7 +19,7 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 * [sifo-mplg-form-core](./packages/sifo-mplg-form-core) 是表单内核模型插件，通过简单的 schema 配置，实现了对表单字段的统一管理，并提供了一系列表单操作 api。
 * [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) 是以 ant-design-vue 为 UI 层的表单，与 sifo-mplg-form-core 和 sifo-vue 一起使用。
 * [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) 是以 ant-design 为 UI 层的表单， 与 sifo-mplg-form-core 和 sifo-react 一起使用。
-* [sifo-mplg-drag](./packages/sifo-mplg-drag) Sifo 拖拽模型插件，在以任意组件与初始 Schema 渲染的基础上，支持对组件进行即时拖拽，构建出新的 Schema。具体请参照 sifo-mplg-drag-react 和 sifo-mplg-drag-vue。
+* [sifo-mplg-drag](./packages/sifo-mplg-drag) Sifo 拖拽模型插件，在以自定义组件与初始 Schema 渲染的基础上，支持对组件进行即时拖拽，构建出新的 Schema。具体请参照 sifo-mplg-drag-react 和 sifo-mplg-drag-vue。
 * [sifo-mplg-drag-react](./packages/sifo-mplg-drag-react) 对 React 支持的Sifo 拖拽模型插件。
 * [sifo-mplg-drag-vue](./packages/sifo-mplg-drag-vue) 对 Vue 支持的Sifo 拖拽模型插件。
 
@@ -72,13 +72,15 @@ $ npm i @schema-plugin-flow/sifo-vue --save
   * [sifo-react-quick-start](https://codesandbox.io/s/sifo-react-quick-start-lhmyu)    
   * [sifo-react-decorator](https://codesandbox.io/s/sifo-react-test-decorator-sef79)    
   * [sifo-mplg-form-antd](https://codesandbox.io/s/sifo-react-form-antd-o0hoq)     
-  * [sifo-react-mplg-optimize](https://codesandbox.io/s/sifo-react-mplg-optimize-sfmts)    
+  * [sifo-react-mplg-optimize](https://codesandbox.io/s/sifo-react-mplg-optimize-sfmts) 
+  * [sifo-mplg-drag-react](https://codesandbox.io/s/sifo-drag-react-yr3t4)      
 
 * sifo-vue
   * [sifo-vue-quick-start](https://codesandbox.io/s/sifo-vue-quick-start-7668x)    
   * [sifo-vue-decorator](https://codesandbox.io/s/sifo-vue-test-decorator-4b9j4)    
   * [sifo-vue-use-optimize](https://codesandbox.io/s/sifo-vue-use-optimize-4n6nz)    
-  * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)    
+  * [sifo-mplg-form-antdv](https://codesandbox.io/s/sifo-vue-form-antdv-q4yc4)   
+  * [sifo-mplg-drag-vue](https://codesandbox.io/s/sifo-drag-vue-6q5oz) 
 
 ## 如何使用
 * 项目

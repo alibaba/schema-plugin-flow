@@ -8,14 +8,15 @@ Sifo 拖拽模型插件，在以任意组件与初始 Schema 渲染的基础上�
 | getDraggable     |  func: node => bool    |      节点是否可拖拽         |    () => true   |
 | getDropable     |  func: node => bool    |      节点是否可拖入         |    () => true   |
 | dropFilter     |  func: args => bool    |      拖拽过滤方法         |    () => true   |
-| SifoDragEidtor     |  Vue.Component    |      拖拽工作面板组件，可以自定义拖拽工作面板，方法请参考内置的组件         |    DefaultSifoDragEidtor   |
+| SifoDragEditor     |  React.Component    |      拖拽工作面板组件，可使用内置的SifoDragEditor，也可以自定义拖拽工作面板，方法请参考内置的组件         |   null    |
 
 
 ## 使用示例
 
 ```javascript
 import SifoApp from "@schema-plugin-flow/sifo-vue";
-import DragModelPlugin from '@schema-plugin-flow/sifo-mplg-drag-vue';
+import DragModelPlugin, { SifoDragEditor } from "@schema-plugin-flow/sifo-mplg-drag-vue";
+import "@schema-plugin-flow/sifo-mplg-drag-vue/index.less";
 const components = { Container, Input, Select };
 const schema = {
   id: 'root',
@@ -23,17 +24,26 @@ const schema = {
   children:[]
 };
 const plgs = [
-  modelPlugin: DragModelPlugin,
-  componentPlugin: {
-    sifo_mplg_drag_editor_id: {
-      onComponentInitial: (params) => {
-        const { event, mApi } = params;
-        mApi.setAttributes(event.key, {
-          componentList
-        });
-        mApi.addEventListener(event.key, 'onSave', (ctx, schema) => {
-          console.log('this is edited schema:', schema);
-        });
+  {
+    modelPlugin: {
+      plugin: DragModelPlugin,
+      argsProvider: () => {
+        return {
+          SifoDragEditor,
+        }
+      }
+    },
+    componentPlugin: {
+      sifo_mplg_drag_editor_id: {
+        onComponentInitial: (params) => {
+          const { event, mApi } = params;
+          mApi.setAttributes(event.key, {
+            componentList
+          });
+          mApi.addEventListener(event.key, 'onSave', (ctx, schema) => {
+            console.log('this is edited schema:', schema);
+          });
+        }
       }
     }
   }

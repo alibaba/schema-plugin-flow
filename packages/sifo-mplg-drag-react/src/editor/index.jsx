@@ -2,9 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './header';
-import './index.less';
 
-class SifoDragEidtor extends React.PureComponent {
+class SifoDragEditor extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -117,7 +116,7 @@ class SifoDragEidtor extends React.PureComponent {
     );
   }
 }
-SifoDragEidtor.propTypes = {
+SifoDragEditor.propTypes = {
   componentList: PropTypes.array.isRequired,
   selectedNode: PropTypes.object,
   deleteNode: PropTypes.func.isRequired,
@@ -128,9 +127,9 @@ SifoDragEidtor.propTypes = {
   onDragEnd: PropTypes.func.isRequired,
   onSave: PropTypes.func,
 };
-SifoDragEidtor.defaultProps = {
+SifoDragEditor.defaultProps = {
   selectedNode: {},
   onSave: e => { console.log('onSave', e); }
 };
 
-export default SifoDragEidtor;
+export default SifoDragEditor;

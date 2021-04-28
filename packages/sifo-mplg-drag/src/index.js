@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 import { buildSchema, modifyCss, calcDropPosition } from './utils';
-import './index.less';
+import './index.css';
 
 function preventDefault(e) {
   e.preventDefault();
@@ -26,13 +26,13 @@ class DragModelPlugin {
       getDropable = defaultDropable,
       dropFilter = defaultDropFilter,
       dragWrapper = e => e,
-      SifoDragEidtor = () => null,
+      SifoDragEditor = () => null,
     } = props || {};
     this.getDraggable = getDraggable;
     this.getDropable = getDropable;
     this.dropFilter = dropFilter;
     this.dragWrapper = dragWrapper;
-    this.SifoDragEidtor = SifoDragEidtor;
+    this.SifoDragEditor = SifoDragEditor;
     this.mApi = null;
     this.schemaInstance = null;
     this.dragDomRef = {};
@@ -424,7 +424,7 @@ class DragModelPlugin {
       getNodeInfo: id => this.buildApi.getNodeInfo(id),
     };
     return {
-      component: 'SifoDragEidtor',
+      component: 'SifoDragEditor',
       id: this.wrappedEditorId,
       attributes,
       children: [node]
@@ -437,7 +437,7 @@ class DragModelPlugin {
       const comp = rComp[key];
       wrappedComps[key] = this.dragWrapper(comp, this.bindDragProps);
     });
-    wrappedComps.SifoDragEidtor = this.SifoDragEidtor;
+    wrappedComps.SifoDragEditor = this.SifoDragEditor;
     return wrappedComps;
   }
   onSchemaInstantiated = params => {

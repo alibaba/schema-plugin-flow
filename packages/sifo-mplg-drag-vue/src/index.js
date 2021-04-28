@@ -1,15 +1,20 @@
 import SifoDragModelPlugin from '@schema-plugin-flow/sifo-mplg-drag';
 import dragWrapper from './componentWrap';
-import SifoDragEidtor from './editor/index.vue';
-import './index.less';
 
+export { default as SifoDragEditor } from './editor/index.vue';
+
+const EmptyEditor = {
+  render() {
+    return null;
+  }
+};
 class DragModelPlugin {
   static ID = 'sifo_drag_vue_model_plugin';
   constructor(props = {}) {
     const injectArgs = {
       ...props,
       dragWrapper,
-      SifoDragEidtor: props.SifoDragEidtor || SifoDragEidtor,
+      SifoDragEditor: props.SifoDragEditor || EmptyEditor,
     };
     this.dragModel = new SifoDragModelPlugin(injectArgs);
   }

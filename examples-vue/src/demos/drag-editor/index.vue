@@ -17,13 +17,13 @@ import SifoApp from "@schema-plugin-flow/sifo-vue";
 import { DatePicker, Button, Input, Select, Row, Col } from "ant-design-vue";
 import SifoFormCore from "@schema-plugin-flow/sifo-mplg-form-core";
 import AntdVueFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antdv";
-import DragModelPlugin from "@schema-plugin-flow/sifo-mplg-drag-vue";
+import DragModelPlugin, { SifoDragEditor } from "@schema-plugin-flow/sifo-mplg-drag-vue";
 import componentList from "./components/componentConfig";
 import schema from "./schema.json";
-import "@schema-plugin-flow/sifo-mplg-form-antdv/lib/index.less";
+import "@schema-plugin-flow/sifo-mplg-form-antdv/index.less";
+import "@schema-plugin-flow/sifo-mplg-drag-vue/index.less";
 import "ant-design-vue/dist/antd.css";
 import "./index.less";
-//import GridPanel from './components/gridPanel';
 
 const { TextArea } = Input;
 const components = {
@@ -105,6 +105,7 @@ export default {
           plugin: DragModelPlugin,
           argsProvider: () => {
             return {
+              SifoDragEditor,
               dropFilter: (args) => {
                 console.log("dropFilter", args);
                 return true;

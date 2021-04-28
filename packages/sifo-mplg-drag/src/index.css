@@ -24,11 +24,10 @@
 }
 .sifo-drag-selected {
   box-shadow: 0 0 0px 1px #1da921;
-  &:hover{
-    cursor: grab;
-  }
-  &:active{
-    cursor: grabbing;
-  }  
 }
-
+.sifo-drag-selected:hover{
+  cursor: grab;
+}
+.sifo-drag-selected:active{
+  cursor: grabbing;
+}

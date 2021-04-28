@@ -1,15 +1,16 @@
 import SifoDragModelPlugin from '@schema-plugin-flow/sifo-mplg-drag';
 import dragWrapper from './componentWrap';
-import SifoDragEidtor from './editor';
-import './index.less';
 
+export { default as SifoDragEditor } from './editor';
+
+const EmptyEditor = () => null;
 class DragModelPlugin {
   static ID = 'sifo_drag_react_model_plugin';
   constructor(props = {}) {
     const injectArgs = {
       ...props,
       dragWrapper,
-      SifoDragEidtor: props.SifoDragEidtor || SifoDragEidtor,
+      SifoDragEditor: props.SifoDragEditor || EmptyEditor,
     };
     this.dragModel = new SifoDragModelPlugin(injectArgs);
   }

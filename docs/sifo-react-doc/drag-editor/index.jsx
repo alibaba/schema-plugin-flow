@@ -3,10 +3,11 @@ import SifoApp from "@schema-plugin-flow/sifo-react";
 import { DatePicker, Button as AButton, Input, Select, Col, Row } from "antd";
 import SifoFormCore from "@schema-plugin-flow/sifo-mplg-form-core";
 import AntdFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antd";
-import DragModelPlugin from '@schema-plugin-flow/sifo-mplg-drag-react';
+import DragModelPlugin, { SifoDragEditor } from '@schema-plugin-flow/sifo-mplg-drag-react';
 import schema from "./schema.json";
 import "antd/dist/antd.css";
-import "@schema-plugin-flow/sifo-mplg-form-antd/lib/index.less";
+import "@schema-plugin-flow/sifo-mplg-form-antd/index.less";
+import "@schema-plugin-flow/sifo-mplg-drag-react/index.less";
 import "./index.less";
 import GridPanel from './components/gridPanel';
 import componentList from './components/componentConfig';
@@ -76,6 +77,7 @@ const FormDemo = (props) => {
       modelPlugin: {
         plugin: DragModelPlugin, argsProvider: () => {
           return {
+            SifoDragEditor,
             dropFilter: (args) => {
               console.log('dropFilter', args);
               return true;

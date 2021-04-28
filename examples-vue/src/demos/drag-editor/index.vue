@@ -20,9 +20,9 @@ import AntdVueFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-antdv";
 import DragModelPlugin, { SifoDragEditor } from "@schema-plugin-flow/sifo-mplg-drag-vue";
 import componentList from "./components/componentConfig";
 import schema from "./schema.json";
+import "ant-design-vue/dist/antd.css";
 import "@schema-plugin-flow/sifo-mplg-form-antdv/index.less";
 import "@schema-plugin-flow/sifo-mplg-drag-vue/index.less";
-import "ant-design-vue/dist/antd.css";
 import "./index.less";
 
 const { TextArea } = Input;

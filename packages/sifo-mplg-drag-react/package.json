@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-drag-react",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "FrominXu",
   "description": "sifo drag model plugin for React. 拖拽搭建模型插件",
   "license": "MIT",

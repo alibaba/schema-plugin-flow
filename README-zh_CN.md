@@ -102,6 +102,7 @@ $ npm i @schema-plugin-flow/sifo-vue --save
     import React from 'react';
     import ReactDOM from "react-dom";
     import SifoApp from '@schema-plugin-flow/sifo-react';
+    const plugins = [{ modelPlugin, componentPlugin, pagePlugin }];
     class App extends React.Component {
       render() {
         return (

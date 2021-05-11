@@ -1,5 +1,7 @@
 # schema-plugin-flow 
-[中文文档](./README-zh_CN.md)
+
+English | [简体中文](./README-zh_CN.md)
+
 ## Introduction
 schema-plugin-flow, abbreviated as Sifo ([sɪfɔ])，is a highly extensible JavaScript library. This library allows developers to extend business logic and page layout without touching source code, when the source code is written in Sifo.
 
@@ -95,6 +97,7 @@ $ npm i @schema-plugin-flow/sifo-vue --save
     import React from 'react';
     import ReactDOM from "react-dom";
     import SifoApp from '@schema-plugin-flow/sifo-react';
+    const plugins = [{ modelPlugin, componentPlugin, pagePlugin }];
     class App extends React.Component {
       render() {
         return (

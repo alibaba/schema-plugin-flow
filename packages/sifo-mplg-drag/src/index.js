@@ -179,6 +179,11 @@ class DragModelPlugin {
     }
   }
   updateId = (id, newId) => {
+    if (this.buildApi.getNodeInfo(newId)) {
+      console.error('[sifo-mplg-drag] update node id already existed:', newId);
+      this.dragType = '';
+      return;
+    }
     const schema = this.buildApi.updateId(id, newId);
     this.doReloadPage(schema, newId);
   }
@@ -364,14 +369,14 @@ class DragModelPlugin {
    * @param {*} node 节点数据
    * @param {*} e
    */
-  onAddNode = newNode => {
+  onDragAddNode = newNode => {
     if (!newNode) return;
     if (!newNode.id) {
       console.error('[sifo-mplg-drag] add node need a id');
       this.dragType = '';
       return;
     } else if (this.buildApi.getNodeInfo(newNode.id)) {
-      console.error('[sifo-mplg-drag] add node id already existed', newNode.id);
+      console.error('[sifo-mplg-drag] add node id already existed:', newNode.id);
       this.dragType = '';
       return;
     }
@@ -396,7 +401,7 @@ class DragModelPlugin {
     modifyCss(targetDom, ['sifo-drag-selected'], [], '');
     const info = this.buildApi.getNodeInfo(id);
     if (!info) {
-      console.warn('不是初始schema节点');
+      console.warn('not init schema node');
       return;
     }
     this.mApi.setAttributes(this.wrappedEditorId, {
@@ -412,7 +417,7 @@ class DragModelPlugin {
     this.wrappedEditorId = 'sifo_mplg_drag_editor_id';
     const attributes = {
       instanceId,
-      onDragStart: this.onAddNode,
+      onDragStart: this.onDragAddNode,
       onDragEnd: e => {
         preventDefault(e);
         this.reset();

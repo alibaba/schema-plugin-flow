@@ -1,4 +1,8 @@
 # schema-plugin-flow 
+
+<p align="center"><img src="https://github.com/alibaba/schema-plugin-flow/blob/master/image/logo.png?raw=true" width="60px" height="60px"></img></p>
+
+简体中文 | [English](./README.md)
 ## 介绍
 schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开的插件式前端开发框架。     
 

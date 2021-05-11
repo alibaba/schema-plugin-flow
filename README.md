@@ -1,5 +1,7 @@
 # schema-plugin-flow 
 
+<p align="center"><img src="https://github.com/alibaba/schema-plugin-flow/blob/master/image/logo.png?raw=true" width="60px" height="60px"></img></p>
+
 English | [简体中文](./README-zh_CN.md)
 
 ## Introduction

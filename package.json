@@ -20,7 +20,9 @@
     "build-vue": "node examples-vue/server.js build",
     "start-vue": "cd examples-vue && npm run serve",
     "start": "npm run build && npm run dev",
-    "dev": "npx dumi dev"
+    "dev": "npx dumi dev",
+    "i-web": "cd web-app && npm i",
+    "start-web": "cd web-app && npm run start"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

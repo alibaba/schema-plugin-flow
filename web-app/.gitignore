@@ -1,0 +1,42 @@
+.DS_Store
+Thumbs.db
+.build
+npm-debug.log
+npm-debug.log.*
+node_modules/
+/packages/*/node_modules
+/packages/*/lib
+/packages/*/dist
+/examples/*/node_modules
+/examples/*/lib
+/examples/*/dist
+/examples/*/package-lock.json
+/**/.umi/
+dist/
+mochawesome-reports/
+lib/
+es/
+package-lock.json
+packages/*/package-lock.json
+
+.idea
+.vscode
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

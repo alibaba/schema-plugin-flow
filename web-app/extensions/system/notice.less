@@ -1,0 +1,36 @@
+.cosultation-wrap {
+  background-color: #f9d4a5;
+  color: #1890ff;
+  border: 1px solid #eee;
+  margin-bottom: 32px;
+  a {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    .cosulation-news {
+      position: relative;
+      padding: 0 16px;
+      top: 0;
+      font-size: 13px;
+      line-height: 32px;
+      flex-grow: 1;
+      height: 32px; 
+      overflow: hidden;
+      > div {
+        position: absolute;
+        top: 0;
+        .consulation-news-item {
+          width: 100%;
+          line-height: 32px;
+          height: 32px;
+        }
+      }
+      .anim {
+        transition: all 0.5s;
+        margin-top: -32px; // 向上移动32px
+      }
+    }
+  }
+}

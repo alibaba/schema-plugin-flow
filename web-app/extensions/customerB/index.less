@@ -1,0 +1,27 @@
+.capacity {
+  display: inline-block;
+  width: 100px;
+}
+.capacity-select{
+  display: inline-block;
+    .capacity-item{
+      padding: 4px;
+      border: 1px solid #bbb;
+      margin: 0 8px;
+      border-radius: 4px;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    .capacity-item.selected{
+      border-color: #1890ff;
+      background-color: rgba(24, 144, 255, 0.5);
+    }
+}
+.capacity-refresh{
+  margin-right: 8px;
+  &:hover{
+    color: #1890ff;
+    font-size: 15px;
+  }
+}

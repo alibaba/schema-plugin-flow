@@ -1,0 +1,62 @@
+[
+  {
+    "id": "numberPlate",
+    "component": "Input",
+    "attributes": {
+      "className": "",
+      "fieldKey": "numberPlate",
+      "label": "货车牌照",
+      "placeholder": "请输入货车牌照",
+      "rules": [
+        {
+          "required": true,
+          "message": "请输入货车牌照"
+        }
+      ]
+    }
+  },
+  {
+    "component": "Input",
+    "id": "driver",
+    "attributes": {
+      "fieldKey": "driver",
+      "label": "司机姓名",
+      "placeholder": "司机姓名",
+      "rules": [
+        {
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "component": "Input",
+    "id": "phone",
+    "attributes": {
+      "fieldKey": "phone",
+      "label": "司机联系方式",
+      "placeholder": "司机联系方式",
+      "rules": [
+        {
+          "required": true
+        }
+      ]
+    }
+  },
+  {
+    "component": "DatePicker",
+    "id": "time",
+    "attributes": {
+      "fieldKey": "time",
+      "showTime": true,
+      "label": "到达时间",
+      "placeholder": "到达时间",
+      "style": { "width": "100%" },
+      "rules": [
+        {
+          "required": true
+        }
+      ]
+    }
+  }
+]

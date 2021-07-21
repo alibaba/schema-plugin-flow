@@ -78,11 +78,13 @@ export default class SifoModel {
       components: newInitialComponents
     };
     const discardedModel = this.model;
+    // 替换原实例的refreshApi
+    if (discardedModel) {
+      discardedModel.refreshApi = (callback: Function) => { if (callback) callback(); };
+    }
     const controller = {
       reloadPage: this.reloadPage,
     };
-    // 替换原实例的refreshApi
-    discardedModel.refreshApi = (callback: Function) => { if (callback) callback(); };
     this.model = new Model(this.namespace, this.refreshApi, newSchema, newPlugins, newModelOptions, controller);
     this.bindModelProps(this.model);
     // 执行新实例，放到下个eventloop执行

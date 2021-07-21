@@ -46,6 +46,8 @@ export default class SifoModel {
     this.model = new Model(namespace, refreshApi, schema, plugins, modelOptions, controller);
     this.bindModelProps(this.model);
     this.modelOptions = modelOptions;
+    this.timer = null;
+    this.destroyed = false;
   }
   bindModelProps = (model: Model) => {
     this.namespace = model.namespace;
@@ -66,6 +68,10 @@ export default class SifoModel {
     const {
       externals, schema, plugins, components = {}, getModelPluginArgs
     } = params;
+    if (this.destroyed) {
+      console.warn(`[sifo-model] you called mApi.reloadPage after SifoModel has been destroyed.`);
+      return;
+    }
     const newSchema = schema || this.initialSchema;
     const newExternals = externals || this.externals || {};
     const newPlugins = plugins || this.plugins;
@@ -82,13 +88,13 @@ export default class SifoModel {
     if (discardedModel) {
       discardedModel.refreshApi = (callback: Function) => { if (callback) callback(); };
     }
-    const controller = {
-      reloadPage: this.reloadPage,
-    };
-    this.model = new Model(this.namespace, this.refreshApi, newSchema, newPlugins, newModelOptions, controller);
-    this.bindModelProps(this.model);
     // 执行新实例，放到下个eventloop执行
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
+      const controller = {
+        reloadPage: this.reloadPage,
+      };
+      this.model = new Model(this.namespace, this.refreshApi, newSchema, newPlugins, newModelOptions, controller);
+      this.bindModelProps(this.model);
       this.model.run();
     }, 0); // tslint:disable-line: align
   }
@@ -96,6 +102,8 @@ export default class SifoModel {
    * 销毁，由外部触发，以进行相关销毁操作
    */
   destroy = () => {
+    clearTimeout(this.timer);
+    this.destroyed = true;
     this.model.destroy();
     // 阻断刷新
     this.model.refreshApi = (callback: Function) => { if (callback) callback(); };

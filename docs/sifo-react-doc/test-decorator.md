@@ -169,7 +169,7 @@ export default () => <>This is a extension for test-decorator in another js, it 
 ```
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { sifoAppDecorator } from "@schema-plugin-flow/sifo-react";
 import './test-decorator/index.css';
 //
@@ -211,6 +211,8 @@ const componentPlugin = {
         label: '内置插件'
       });
       mApi.addEventListener(event.key, 'onChange', (ctx, e) => {
+        const extProps = mApi.getSifoExtProps();
+        console.log('getSifoExtProps: ', extProps);
         mApi.setAttributes(event.key, {
           value: e.target.value
         })
@@ -301,7 +303,19 @@ class TestDecorator extends React.Component {
     );
   }
 }
-export default TestDecorator;
+const App = props => {
+  const [val, setVal] =  useState(Math.random().toString().substr(3,8));
+  return (
+    <div>
+      <button onClick={()=>{
+        setVal(Math.random().toString().substr(3,8))
+      }}>点击更新extProps</button>
+      <p>value:{ val }</p>
+      <TestDecorator sifoExtProps={{val}}/>
+    </div>
+  );
+}
+export default App;
 ``` 
 
 ```jsx

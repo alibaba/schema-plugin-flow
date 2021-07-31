@@ -29,6 +29,10 @@ declare module '@schema-plugin-flow/sifo-react' {
      */
     openLogger?: boolean;
     getModelPluginArgs?: SifoModelTypes.ModelOptions['getModelPluginArgs'];
+    /**
+     * 任意对象，mApi.getSifoExtProps 可以取到即时的值，这点与 externals 相区别
+     */
+    sifoExtProps?: SifoModelTypes.DynamicObject;
   }
 
   interface SifoAppState {

@@ -22,6 +22,8 @@ class SifoApp extends PureComponent {
     modelApiRef: T.func,
     getModelPluginArgs: T.func,
     openLogger: T.bool,
+    // eslint-disable-next-line react/no-unused-prop-types
+    sifoExtProps: T.object
   };
 
   static defaultProps = {
@@ -30,6 +32,7 @@ class SifoApp extends PureComponent {
     modelApiRef: () => { },
     openLogger: false,
     getModelPluginArgs: () => ([]),
+    sifoExtProps: {}
   };
 
   constructor(props) {
@@ -70,6 +73,9 @@ class SifoApp extends PureComponent {
       },
       externals,
       getModelPluginArgs: (id, info) => {
+        if (id === 'sifo_react_model_plugin') {
+          return { sifoReactInstance: this };
+        }
         if (getModelPluginArgs) {
           return getModelPluginArgs(id, info);
         }

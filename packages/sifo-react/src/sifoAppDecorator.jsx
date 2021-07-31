@@ -169,6 +169,9 @@ class Decorator extends React.Component {
       modelApiRef: mApiRef,
       externals: { ...externals, initProps, fragments },
       getModelPluginArgs: (id, info) => {
+        if (id === 'sifo_react_model_plugin') {
+          return { sifoReactInstance: this };
+        }
         if (getModelPluginArgs) {
           return getModelPluginArgs(id, info);
         }
@@ -248,6 +251,8 @@ const sifoAppDecorator = (namespace, otherProps = {}) => Target => {
       plugins={plugins}
       components={components}
       fragments={fragments}
+      // eslint-disable-next-line react/prop-types
+      sifoExtProps={props.sifoExtProps || {}}
     >
       <Target {...props} />
     </Decorator>

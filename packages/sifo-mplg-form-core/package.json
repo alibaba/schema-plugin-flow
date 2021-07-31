@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-form-core",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "FrominXu",
   "description": "sifo form-core model plugin. 表单内核模型插件",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "@schema-plugin-flow/sifo-model": "^1.4.1",
+    "@schema-plugin-flow/sifo-model": "^1.4.2",
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",
     "eslint": "^7.6.0",

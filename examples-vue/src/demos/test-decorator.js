@@ -8,6 +8,8 @@ const componentPlugin = {
       const { event, mApi } = params;
       mApi.addEventListener(event.key, 'click', (ctx, ...arg) => {
         console.log('decorator: clicked', ctx, arg);
+        const extProps = mApi.getSifoExtProps();
+        console.log("getSifoExtProps in : ", extProps);
       });
     }
   }

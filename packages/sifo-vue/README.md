@@ -22,6 +22,7 @@ schema       | schema，描述了页面结构      | object | 是 | - |
 components | 组件，引入局部组件时传入，全局组件不需传 | object | 否 | {} |
 plugins      | 插件，分为模型插件、页面插件和组件插件         | array：[{ componentPlugin, pagePlugin, modelPlugin }, { modelPlugin: otherModelPlugin }] | 否 | [] |
 externals | 任意其它信息 | object | 否 | {} |
+sifoExtProps | 任意对象，mApi.getSifoExtProps 可以取到即时的值，这点与 externals 相区别 | object | 否 |{}|
 modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function | 否 |
 openLogger | 是否在控制台打印出执行日志，不建议在生产环境使用 | bool | 否 | false |
 optimize | 是否进行渲染优化，sifo-vue 是 top-down 的渲染模式，在复杂页面可以启用此参数 | bool | 否 | false |
@@ -35,6 +36,7 @@ class | 样式类 | vue.class规范 | 否 |  |
 | 方法名            | 参数/类型               | 返回值类型             | 描述       |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
 | getSifoVueInstance     | ✘                      |   VueComponent            |   获取 sifo-vue 的组件实例   |
+| getSifoExtProps  | ✘                    |   任意对象            |   获取 SifoApp.sifoExtProps 即时的值   |
 | createElement     | (component, attribute, children)                      |   VueComponent            |   vue 的 createElement 方法   |
 | renderSlot     | (nodeId, props)                      |   VueComponent            |   渲染作用域插槽的方法 ，将带slot标的指定schema节点（参数nodeId即节点id）渲染成 scopedSlots 中的节点对象，使用方法见后文   |
 

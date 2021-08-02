@@ -22,8 +22,8 @@ schema       | schema，描述了页面结构      | object | 是 | - |
 components | 组件 | object | 是 | {} |
 plugins      | 插件，分为模型插件、页面插件和组件插件         | array：[{ componentPlugin, pagePlugin, modelPlugin }, { modelPlugin: otherModelPlugin }] | 否 | [] |
 externals | 任意其它信息 | object | 否 | {} |
+sifoExtProps | 任意对象，mApi.getSifoExtProps 可以取到即时的值，这点与 externals 相区别 | object | 否 |{}|
 modelApiRef | 模型接口外传方法，调用参数为 mApi（接口构建完成时） 或 null（模型销毁时） | function | 否 |
-sifoExtProps | 任意对象，mApi.getSifoExtProps 可以取到即时的值，这点与 externals 相区别 | function | 否 |
 openLogger | 是否在控制台打印出执行日志，不建议在生产环境使用 | bool | 否 | false |
 getModelPluginArgs | 获取模型插件实例化时的构造函数参数 | function:(modelPluginId, info) => ([arg1, arg2, ...]) | 否 | | - |
 className | 样式类 |string | 否 |  |
@@ -34,7 +34,7 @@ className | 样式类 |string | 否 |  |
 
 | 方法名            | 参数/类型               | 返回值类型             | 描述       |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
-| getSifoExtProps  | ✘                    |   任意对象            |   SifoApp.sifoExtProps 即时的值   |
+| getSifoExtProps  | ✘                    |   任意对象            |   获取 SifoApp.sifoExtProps 即时的值   |
 
 ## 如何使用
 * 项目

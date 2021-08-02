@@ -29,6 +29,11 @@ class VueModelPlugin {
       return next(this.sifoVueInstance);
     };
     applyModelApiMiddleware('getSifoVueInstance', getSifoVueInstance);
+    const getSifoExtProps = next => () => {
+      const { sifoExtProps = {} } = this.sifoVueInstance || {};
+      return next(sifoExtProps);
+    };
+    applyModelApiMiddleware('getSifoExtProps', getSifoExtProps);
     const createElement = () => (...args) => {
       if (!this.createElement) {
         throw new Error('[sifo-vue] createElement not found.');

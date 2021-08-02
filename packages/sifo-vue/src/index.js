@@ -177,6 +177,9 @@ const SifoApp = {
     },
     optimize: {
       type: Boolean
+    },
+    sifoExtProps: {
+      type: Object,
     }
   }
 };

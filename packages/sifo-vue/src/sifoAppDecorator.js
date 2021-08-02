@@ -340,6 +340,9 @@ const Decorator = {
     },
     className: {
       type: String
+    },
+    sifoExtProps: {
+      type: Object,
     }
   }
 };
@@ -378,7 +381,8 @@ const sifoAppDecorator = (namespace, otherProps = {}) => Target => {
             components,
             fragments,
             className,
-            renderChildren
+            renderChildren,
+            sifoExtProps: props.sifoExtProps || {}
           }
         }
       );

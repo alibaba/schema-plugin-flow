@@ -19,6 +19,9 @@
       <a-tab-pane key="6" tab="Decorator Demo">
         <test-decorator class="eeee" test="333" :ddd="ddd"/>
       </a-tab-pane>
+      <a-tab-pane key="7" tab="getExtProps Demo">
+        <get-ext-props class="eeee" test="333" :ddd="ddd"/>
+      </a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -33,6 +36,7 @@ import optimze from './demos/optimize.vue';
 import form from './demos/form-demo/form-demo.vue';
 import drag from './demos/drag-editor/index.vue';
 import decorator from './demos/test-decorator';
+import getExtProps from './demos/get-ext-props.vue';
 export default {
   name: "test-root",
   data(){
@@ -46,7 +50,8 @@ export default {
     'optimze-test': optimze,
     'form-demo': form,
     'drag-demo': drag,
-    'test-decorator': decorator
+    'test-decorator': decorator,
+    'get-ext-props': getExtProps
   }
 };
 </script>

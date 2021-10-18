@@ -1,6 +1,6 @@
 <template>
   <div class="sifo-mplg-drag-header">
-    <div class="sifo-mplg-drag-title">Sifo拖拽插件</div>
+    <div class="sifo-mplg-drag-title">{{title || 'Sifo拖拽插件'}}</div>
     <div class="sifo-mplg-drag-tool">
       <button class="sifo-mplg-drag-btn" @click="delSelectedNode">
         删除选中节点
@@ -23,6 +23,6 @@ export default {
       }
     },
   },
-  props: ["selectedId", "getSchema"],
+  props: ["title", "selectedId", "getSchema"],
 };
 </script>

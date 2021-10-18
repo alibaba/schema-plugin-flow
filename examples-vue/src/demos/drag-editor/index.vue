@@ -64,6 +64,7 @@ export default {
           const { event, mApi } = params;
           mApi.setAttributes(event.key, {
             componentList,
+            title: "测试拖拽-vue"
           });
           mApi.addEventListener(event.key, "onSave", (ctx, schema) => {
             console.log("this is edited schema:", schema);
@@ -106,6 +107,16 @@ export default {
           argsProvider: () => {
             return {
               SifoDragEditor,
+              deleteChecker: (id, opts) => {
+              const { nodeInfo } = opts;
+              console.log('delete:', id, nodeInfo);
+              const { node } = nodeInfo;
+              if (node.canNotDelete !== undefined) {
+                return !node.canNotDelete
+              } else {
+                return true;
+              }
+            },
               dropFilter: (args) => {
                 console.log("dropFilter", args);
                 return true;

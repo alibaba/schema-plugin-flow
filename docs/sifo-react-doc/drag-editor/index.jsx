@@ -35,7 +35,8 @@ const dragPluin = {
     onComponentInitial: (params) => {
       const { event, mApi } = params;
       mApi.setAttributes(event.key, {
-        componentList
+        componentList,
+        title: "测试拖拽"
       });
       mApi.addEventListener(event.key, 'onSave', (ctx, schema) => {
         console.log('this is edited schema:', schema);
@@ -78,6 +79,16 @@ const FormDemo = (props) => {
         plugin: DragModelPlugin, argsProvider: () => {
           return {
             SifoDragEditor,
+            deleteChecker: (id, opts) => {
+              const { nodeInfo } = opts;
+              console.log('delete:', id, nodeInfo);
+              const { node } = nodeInfo;
+              if (node.canNotDelete !== undefined) {
+                return !node.canNotDelete
+              } else {
+                return true;
+              }
+            },
             dropFilter: (args) => {
               console.log('dropFilter', args);
               return true;

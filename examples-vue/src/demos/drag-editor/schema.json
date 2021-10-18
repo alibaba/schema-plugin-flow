@@ -23,6 +23,7 @@
         {
           "id": "goodsType",
           "component": "Select",
+          "canNotDelete": true,
           "attributes": {
             "class": "",
             "fieldKey": "goodsType",

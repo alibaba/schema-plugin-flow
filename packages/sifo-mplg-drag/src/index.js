@@ -18,6 +18,9 @@ function defaultDropable() {
 function defaultDropFilter() {
   return true;
 }
+function defaultDeleteChecker() {
+  return true;
+}
 class DragModelPlugin {
   static ID = 'sifo_drag_model_plugin';
   constructor(props) {
@@ -25,12 +28,14 @@ class DragModelPlugin {
       getDraggable = defaultDraggable,
       getDropable = defaultDropable,
       dropFilter = defaultDropFilter,
+      deleteChecker = defaultDeleteChecker,
       dragWrapper = e => e,
       SifoDragEditor = () => null,
     } = props || {};
     this.getDraggable = getDraggable;
     this.getDropable = getDropable;
     this.dropFilter = dropFilter;
+    this.deleteChecker = deleteChecker;
     this.dragWrapper = dragWrapper;
     this.SifoDragEditor = SifoDragEditor;
     this.mApi = null;
@@ -179,9 +184,16 @@ class DragModelPlugin {
     }
   }
   updateId = (id, newId) => {
+    if (!newId) {
+      console.error('[sifo-mplg-drag] update node id should not empty');
+      this.dragType = '';
+      this.mApi.refresh();
+      return;
+    }
     if (this.buildApi.getNodeInfo(newId)) {
       console.error('[sifo-mplg-drag] update node id already existed:', newId);
       this.dragType = '';
+      this.mApi.refresh();
       return;
     }
     const schema = this.buildApi.updateId(id, newId);
@@ -217,9 +229,17 @@ class DragModelPlugin {
   }
   doDeleteNode = id => {
     if (!id) return;
-    let schema = this.buildApi.renderSchema;
-    schema = this.buildApi.deleteNode(id);
-    this.doReloadPage(schema, schema.id);
+    const nodeInfo = this.buildApi.getNodeInfo(id);
+    if (this.deleteChecker(id, {
+      nodeInfo,
+      getNodeInfo: this.buildApi.getNodeInfo
+    })) {
+      let schema = this.buildApi.renderSchema;
+      schema = this.buildApi.deleteNode(id);
+      this.doReloadPage(schema, schema.id);
+    } else {
+      console.info(`[sifo-mplg-drag] delete node ${id} check failed.`);
+    }
   }
   onDragStart = (id, e) => {
     // console.log('onDragStart', id, e);
@@ -343,7 +363,8 @@ class DragModelPlugin {
         const filter = this.dropFilter({
           dragType: this.dragType,
           dropTarget,
-          dragTarget
+          dragTarget,
+          getNodeInfo: this.buildApi.getNodeInfo
         });
         if (filter === false) {
           this.dropType = 'cancel';

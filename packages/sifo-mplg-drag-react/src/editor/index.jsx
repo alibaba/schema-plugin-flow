@@ -56,7 +56,13 @@ class SifoDragEditor extends React.PureComponent {
   }
   render() {
     const {
-      componentList = [], children, selectedNode = {}, deleteNode, getSchema, onSave
+      componentList = [],
+      children,
+      selectedNode = {},
+      deleteNode,
+      getSchema,
+      onSave,
+      title = 'Sifo拖拽插件'
     } = this.props;
     const {
       node: sNode,
@@ -67,6 +73,7 @@ class SifoDragEditor extends React.PureComponent {
     return (
       <div className="sifo-mplg-drag">
         <Header
+          title={title}
           deleteNode={deleteNode}
           selectedId={selectedId}
           getSchema={getSchema}
@@ -126,10 +133,12 @@ SifoDragEditor.propTypes = {
   onDragStart: PropTypes.func.isRequired,
   onDragEnd: PropTypes.func.isRequired,
   onSave: PropTypes.func,
+  title: PropTypes.string,
 };
 SifoDragEditor.defaultProps = {
   selectedNode: {},
-  onSave: e => { console.log('onSave', e); }
+  onSave: e => { console.log('onSave', e); },
+  title: 'Sifo拖拽插件'
 };
 
 export default SifoDragEditor;

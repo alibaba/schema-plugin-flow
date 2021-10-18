@@ -5,6 +5,7 @@
       :selectedId="selectedId"
       :getSchema="getSchema"
       @onSave="save"
+      :title="title"
     />
     <div class="sifo-mplg-drag-editor">
       <div span="{4}" class="sifo-mplg-drag-components">
@@ -134,6 +135,7 @@ export default {
     "onDragStart",
     "onDragEnd",
     "onSave",
+    "title"
   ],
 };
 </script>

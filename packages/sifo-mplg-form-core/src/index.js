@@ -151,6 +151,7 @@ class FormCoreModelPlugin {
     };
     applyModelApiMiddleware('setValue', setValueMiddleware);
     const setValuesMiddleware = () => values => {
+      if (!values) return Promise.reject(new Error('values is empty.'));
       const { fieldKey2Id } = this;
       Object.keys(values).forEach(fieldKey => {
         const id = fieldKey2Id[fieldKey];

@@ -149,6 +149,14 @@
           }
         },
         {
+          "component": "Input",
+          "attributes": {
+            "id": "tt",
+            "name": "tt",
+            "label": "无校验"
+          }
+        },
+        {
           "id": "innerComp",
           "component": "Container",
           "attributes": {

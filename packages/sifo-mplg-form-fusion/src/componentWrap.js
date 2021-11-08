@@ -128,6 +128,10 @@ const componentWrap = (Component, formItemProps) => {
       'sifo-fusion-form-item-with-error': !!errorMsg,
       [itemClassName]: !!itemClassName,
     });
+    const compProps = {};
+    if (errorMsg) {
+      compProps.state = 'error';
+    }
     return createElement(
       Row,
       {
@@ -140,7 +144,7 @@ const componentWrap = (Component, formItemProps) => {
           createElement, mixinFormItemProps, { errorMsg },
           createElement(Component, {
             ...renderProps,
-            state: errorMsg ? 'error' : '',
+            ...compProps,
             key: __fieldKey__
           }, children)
         )

@@ -1,6 +1,6 @@
 {
 	"name": "@schema-plugin-flow/sifo-mplg-form-fusion",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"author": "FrominXu",
 	"description": "sifo Form with Fusion.",
 	"license": "MIT",
@@ -22,14 +22,14 @@
 		"form"
 	],
 	"scripts": {
-    "build": "npm run build:cjs && npm run build:es",
-    "build:cjs": "babel --root-mode upward src --out-dir lib --copy-files --extensions \".ts,.tsx,.js,.jsx\"",
-    "build:es": "babel --no-babelrc --config-file ./es.babel.config.js src --out-dir es --copy-files",
-    "lint": "eslint --ext .jsx,.js,.tsx src/",
-    "precommit": "npm run lint",
-    "prepare": "npm run lint && npm run build",
-    "test-back": "mocha --compilers js:@babel/register test/index.test.js "
-  },
+		"build": "npm run build:cjs && npm run build:es",
+		"build:cjs": "babel --root-mode upward src --out-dir lib --copy-files --extensions \".ts,.tsx,.js,.jsx\"",
+		"build:es": "babel --no-babelrc --config-file ./es.babel.config.js src --out-dir es --copy-files",
+		"lint": "eslint --ext .jsx,.js,.tsx src/",
+		"precommit": "npm run lint",
+		"prepare": "npm run lint && npm run build",
+		"test-back": "mocha --compilers js:@babel/register test/index.test.js "
+	},
 	"dependencies": {
 		"@alifd/next": "^1.24.14",
 		"@babel/runtime": "^7.12.5",

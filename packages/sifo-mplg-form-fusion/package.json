@@ -1,56 +1,46 @@
 {
-  "name": "@schema-plugin-flow/sifo-mplg-form-fusion",
-  "version": "0.0.0",
-  "author": "FrominXu",
-  "description": "sifo form with Fusion.",
-  "license": "MIT",
-  "main": "index.js",
-  "module": "es/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/schema-plugin-flow.git",
-    "directory": "packages/sifo-mplg-form-fusion"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "keywords": [
-    "schema-plugin-flow",
-    "sifo",
-    "sifo-mplg",
-    "fusion",
-    "form"
-  ],
-  "scripts": {
-    "build": "npm run build:cjs && npm run build:es",
-    "build:cjs": "babel --root-mode upward src --out-dir lib --copy-files --extensions \".ts,.tsx,.js,.jsx\"",
-    "build:es": "babel --no-babelrc --config-file ./es.babel.config.js src --out-dir es --copy-files",
-    "lint": "eslint --ext .jsx,.js,.tsx src/",
-    "precommit": "npm run lint",
-    "prepare": "npm run lint && npm run build",
-    "test-back": "mocha --compilers js:@babel/register test/index.test.js "
-  },
-  "dependencies": {
-    "@alifd/next": "^1.24.14",
-    "@babel/runtime": "^7.12.5",
-    "classnames": "^2.2.6",
-    "prop-types": "15.x",
-    "react": "16.x",
-    "react-dom": "16.x"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.1",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "@babel/preset-typescript": "^7.1.0",
-    "@babel/register": "^7.0.0",
-    "@schema-plugin-flow/sifo-react": "^1.5.1",
-    "chai": "^4.1.2",
-    "chai-enzyme": "^1.0.0-beta.1",
-    "eslint": "^7.6.0",
-    "husky": "^0.14.3",
-    "mocha": "^5.2.0"
-  }
+	"name": "@schema-plugin-flow/sifo-mplg-form-fusion",
+	"version": "0.0.0",
+	"author": "FrominXu",
+	"description": "sifo Form with Fusion.",
+	"license": "MIT",
+	"main": "index.js",
+	"module": "es/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:alibaba/schema-plugin-flow.git",
+		"directory": "packages/sifo-mplg-form-fusion"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"keywords": [
+		"schema-plugin-flow",
+		"sifo",
+		"sifo-mplg",
+		"fusion",
+		"form"
+	],
+	"dependencies": {
+		"@alifd/next": "^1.24.14",
+		"@babel/runtime": "^7.12.5",
+		"classnames": "^2.2.6",
+		"prop-types": "15.x",
+		"react": "16.x",
+		"react-dom": "16.x"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.2.0",
+		"@babel/core": "^7.2.2",
+		"@babel/plugin-proposal-class-properties": "^7.2.1",
+		"@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+		"@babel/preset-env": "^7.2.0",
+		"@babel/preset-typescript": "^7.1.0",
+		"@babel/register": "^7.0.0",
+		"chai": "^4.1.2",
+		"chai-enzyme": "^1.0.0-beta.1",
+		"eslint": "^7.6.0",
+		"husky": "^0.14.3",
+		"mocha": "^5.2.0"
+	}
 }

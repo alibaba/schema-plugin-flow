@@ -1,6 +1,6 @@
 # AntdFormModelPlugin
 
-sifo form with ant-design.
+sifo Form with ant-design.
 
 AntdFormModelPlugin 是在 SifoFormCore (@schema-plugin-flow/sifo-mplg-form-core) 基础上封装的UI层. mApi 同 SifoFormCore。
 

@@ -2,7 +2,7 @@
   "name": "@schema-plugin-flow/sifo-mplg-form-antdv",
   "version": "1.5.3",
   "author": "FrominXu",
-  "description": "sifo form with ant-design-vue.",
+  "description": "sifo Form with ant-design-vue.",
   "license": "MIT",
   "main": "index.js",
   "module": "es/index.js",

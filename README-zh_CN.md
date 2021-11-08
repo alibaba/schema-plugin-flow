@@ -21,8 +21,9 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 ### 模型插件
 * [sifo-mplg-react-optimize](./packages/sifo-mplg-react-optimize) 是一个对 sifo-react 进行渲染优化的模型插件。
 * [sifo-mplg-form-core](./packages/sifo-mplg-form-core) 是表单内核模型插件，通过简单的 schema 配置，实现了对表单字段的统一管理，并提供了一系列表单操作 api。
-* [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) 是以 ant-design-vue 为 UI 层的表单，与 sifo-mplg-form-core 和 sifo-vue 一起使用。
-* [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) 是以 ant-design 为 UI 层的表单， 与 sifo-mplg-form-core 和 sifo-react 一起使用。
+* [sifo-mplg-form-antdv](./packages/sifo-mplg-form-antdv) 是以 Ant-Design-Vue 为 UI 层的表单，与 sifo-mplg-form-core 和 sifo-vue 一起使用。
+* [sifo-mplg-form-antd](./packages/sifo-mplg-form-antd) 是以 Ant-Design 为 UI 层的表单， 与 sifo-mplg-form-core 和 sifo-react 一起使用。
+* [sifo-mplg-form-fusion](./packages/sifo-mplg-form-fusion) 是以 Fusion 为 UI 层的表单， 与 sifo-mplg-form-core 和 sifo-react 一起使用。
 * [sifo-mplg-drag](./packages/sifo-mplg-drag) Sifo 拖拽模型插件，在以自定义组件与初始 Schema 渲染的基础上，支持对组件进行即时拖拽，构建出新的 Schema。具体请参照 sifo-mplg-drag-react 和 sifo-mplg-drag-vue。
 * [sifo-mplg-drag-react](./packages/sifo-mplg-drag-react) 对 React 支持的Sifo 拖拽模型插件。
 * [sifo-mplg-drag-vue](./packages/sifo-mplg-drag-vue) 对 Vue 支持的Sifo 拖拽模型插件。
@@ -31,6 +32,7 @@ schema-plugin-flow，简称 Sifo ([sɪfɔ])，是一个高扩展性、可二开�
 * `sifo-model` + `react` = `sifo-react`
 * `sifo-model` + `vue` = `sifo-vue`
 * `sifo-react` + `sifo-mplg-form-core` + `ant-design` = `sifo-mplg-form-antd`
+* `sifo-react` + `sifo-mplg-form-core` + `fusion` = `sifo-mplg-form-fusion`
 * `sifo-vue` + `sifo-mplg-form-core` + `ant-design-vue` = `sifo-mplg-form-antdv`
 ![](https://raw.githubusercontent.com/alibaba/schema-plugin-flow/master/image/sifo-family.png)
 

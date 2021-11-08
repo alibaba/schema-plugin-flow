@@ -1,0 +1,45 @@
+.sifo-fusion-form-item {
+  margin-bottom: 16px;
+  &-label{
+    display: inline-block;
+    padding-right: 12px;
+    overflow: hidden;
+    // line-height: 32px;
+    color: #585d66;
+    white-space: nowrap;
+    text-align: right;
+    vertical-align: top;
+    >label{
+        color: #000000d9;
+    }
+    &-left {
+      text-align: left;
+    }
+  }
+  &-required:before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #ff3b30;
+    font-size: 14px;
+    line-height: 1;
+    content: "*";
+  }
+  &-control{
+    position: relative;
+    font-size: 14px;
+    //line-height: 32px;
+    .next-input,.next-input-group,.next-date-picker,.next-month-picker,.next-range-picker,.next-select,.next-time-picker,.next-year-picker{
+      width: 100%;
+    }
+  }
+
+  &-has-error {
+    color: #ff3b30;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+.sifo-fusion-form-item-with-error {
+  // margin-bottom: 0; fusion 校验会影响布局
+}

@@ -89,11 +89,16 @@ class FormCoreModelPlugin {
   // 在setAttributes和addValidator中，判断rules、validator的trigger，发现没有绑定过校验器时，增加
   // 移除校验时，不需要移除校验器监听，因为是在校验器内部动态去取的校验配置，没有就不会执行
   bindValidateHandler = (id, rules) => {
-    if (!Array.isArray(rules) || rules.length < 0) return;
+    if (!Array.isArray(rules) || rules.length < 0) {
+      console.error(`[sifo-mplg-form-core]: rules should be a array. node.id: ${id}`);
+      return;
+    }
     rules.forEach(rule => {
       let validateTrigger = [];
-      const { trigger } = rule;
-      if (!Array.isArray(trigger) || trigger.length === 0) {
+      const { trigger, notAutoTrigger = false } = rule;
+      if (notAutoTrigger) {
+        validateTrigger = [];// 只在调用validate时触发
+      } else if (!Array.isArray(trigger) || trigger.length === 0) {
         validateTrigger = [this.onChangeEventName]; // 默认使用onChange
       } else {
         validateTrigger = [...trigger];

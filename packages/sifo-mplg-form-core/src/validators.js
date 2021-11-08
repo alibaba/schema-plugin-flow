@@ -2,12 +2,13 @@ import { isNumber, hasOwnProperty } from './utils';
 
 function typeValidate(rule, value, addInvalidate) {
   const { type, message } = rule;
+  if (!value) return; // 只对有值的情况进行校验
   if (isNumber(value)) {
     const num = Number(value);
     if (type === 'integer' && (num < 0 || (`${value}`).indexOf('.') >= 0)) {
       addInvalidate({ passed: false, status: 'error', message: message || '请输入非负整数' });
     }
-  } else if (value !== undefined && value !== null) {
+  } else {
     addInvalidate({ passed: false, status: 'error', message: message || '请输入数字' });
   }
 }
@@ -26,6 +27,7 @@ const requireValidate = (rule, value, addInvalidate) => {
 // 数字 max min
 const numberValidate = (rule, value, addInvalidate) => {
   const { message } = rule;
+  if (!value) return; // 只对有值的情况进行校验
   if (hasOwnProperty(rule, 'max') || hasOwnProperty(rule, 'min')) {
     if (isNumber(value)) {
       const num = Number(value);
@@ -35,7 +37,7 @@ const numberValidate = (rule, value, addInvalidate) => {
       if (hasOwnProperty(rule, 'min') && num < rule.min) {
         addInvalidate({ passed: false, status: 'error', message: message || `不能小于${rule.min}` });
       }
-    } else if (value !== undefined && value !== null) {
+    } else {
       addInvalidate({ passed: false, status: 'error', message: '请输入数字' });
     }
   }

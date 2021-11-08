@@ -1,6 +1,6 @@
 ---
 title: getExtProps
-order: 6
+order: 8
 ---
 # getExtProps
 

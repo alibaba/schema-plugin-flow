@@ -2,7 +2,7 @@
   "component": "Container",
   "id": "main_id",
   "attributes":{
-    "className": "form-demo-main"
+    "className": "fusion-form-demo-main"
   },
   "children": [
     {
@@ -49,6 +49,21 @@
         "name": "typeDesc",
         "label": "类型描述",
         "placeholder": "类型描述",
+        "rules": [
+          {
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "component": "DatePicker",
+      "id": "date",
+      "attributes": {
+        "name": "date",
+        "showTime": false,
+        "label": "日期",
+        "placeholder": "日期",
         "rules": [
           {
             "required": true
@@ -124,10 +139,11 @@
           "attributes": {
             "id": "lentest",
             "name": "lentest",
-            "label": "长度校验",
+            "label": "仅提交时长度校验",
             "rules": [
               {
-                "maxLength": 9
+                "maxLength": 9,
+                "notAutoTrigger": true
               }
             ]
           }

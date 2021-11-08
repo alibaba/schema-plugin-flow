@@ -89,8 +89,8 @@ import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
 
 ## 校验规则描述
 * 内置了必填、整数、最大最小值和长度校验；
-* 规则描述的message省略时将使用内置文案；
-* trigger省略时将使用类实例参数 fieldChange 的 eventName；
+* 规则描述的 message 省略时将使用内置文案；
+* trigger 省略时将使用类实例参数 fieldChange 的 eventName，除非设置 notAutoTrigger = true，此时只在调用 validate、validateAll 时触发；
 * 调用validate、validateAll 时不区分 trigger；
 
 ```json
@@ -105,7 +105,8 @@ import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
       ]
     },
     {
-      "type": "integer"
+      "type": "integer",
+      "notAutoTrigger": false
     },
     {
       "max": 99.9

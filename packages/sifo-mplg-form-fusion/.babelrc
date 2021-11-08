@@ -1,0 +1,13 @@
+{
+  "presets": [],
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "@alifd/next",
+        "libraryDirectory": "lib",
+        "style": "css"
+      }
+    ] // `style: true` 会加载 less 文件
+  ]
+}

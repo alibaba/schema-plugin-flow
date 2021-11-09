@@ -127,6 +127,10 @@ class FormCoreModelPlugin {
       return this.mApi.getAttributes(...args);
     };
     applyModelApiMiddleware('getFormItemProps', getFormItemPropsMiddleware);
+    const setFormItemPropsMiddleware = () => (...args) => {
+      return this.mApi.setAttributes(...args);
+    };
+    applyModelApiMiddleware('setFormItemProps', setFormItemPropsMiddleware);
     const setAttrsMiddleware = next => (id, attributes, refresh) => {
       // 不在此处进行校验，由相应的trigger注册校验事件，使用者可用watch自定义校验时机
       // if (this.autoValidate && this.id2FieldKey[id] && hasOwnProperty(attributes, 'value')) {
@@ -155,11 +159,13 @@ class FormCoreModelPlugin {
       const { fieldKey2Id } = this;
       Object.keys(values).forEach(fieldKey => {
         const id = fieldKey2Id[fieldKey];
+        if (!id) return;
         this.mApi.setAttributes(id, { value: values[fieldKey] }, false);
       });
       return this.mApi.refresh();
     };
     applyModelApiMiddleware('setValues', setValuesMiddleware);
+    // todo: setRules
     const getValueMiddleware = () => fieldKey => {
       const id = this.fieldKey2Id[fieldKey];
       const attr = this.mApi.getFormItemProps(id) || {};
@@ -294,7 +300,12 @@ class FormCoreModelPlugin {
     // 绑定统一的校验器，在这个周期绑定可以使用最终的mApi接口
     const ids = Object.keys(this.id2FieldKey);
     ids.forEach(id => {
-      const { rules, validators } = mApi.getFormItemProps(id) || {};
+      const {
+        rules, validators, value, defaultValue
+      } = mApi.getFormItemProps(id) || {};
+      if (defaultValue !== undefined && value === undefined) {
+        this.mApi.setAttributes(id, { value: defaultValue }, false);
+      }
       this.bindValidateHandler(id, rules);
       this.bindValidateHandler(id, validators);
     });

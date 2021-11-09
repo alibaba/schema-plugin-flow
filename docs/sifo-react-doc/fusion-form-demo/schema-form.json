@@ -12,6 +12,7 @@
         "className": "test-projectId",
         "name": "projectId",
         "label": "项目名称",
+        "defaultValue": "d",
         "placeholder": "项目名称，包含校验规则与校验函数",
         "rules": [
           {

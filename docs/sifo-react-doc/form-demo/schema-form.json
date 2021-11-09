@@ -13,6 +13,7 @@
         "name": "projectId",
         "label": "项目名称",
         "placeholder": "项目名称，包含校验规则与校验函数",
+        "defaultValue": "d",
         "rules": [
           {
             "required": true,

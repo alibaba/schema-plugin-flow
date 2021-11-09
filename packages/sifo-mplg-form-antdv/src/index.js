@@ -41,11 +41,21 @@ class AntdVueFormModelPlugin {
       return {
         rules: props.rules,
         value: props.value,
+        defaultValue: props.defaultValue,
         validators: props.validators,
         validateDisabled: props.validateDisabled
       };
     };
     applyModelApiMiddleware('getFormItemProps', getFormItemPropsMiddleware);
+    const setFormItemPropsMiddleware = () => (id, props, refreshImmediately) => {
+      const attr = this.mApi.getAttributes(id);
+      if (!attr) return Promise.reject(new Error(`[sifo-mplg-form-antdv] field not found: ${id}`));
+      const prps = attr.props || {};
+      return this.mApi.setAttributes(id, {
+        props: { ...prps, ...props }
+      }, refreshImmediately);
+    };
+    applyModelApiMiddleware('setFormItemProps', setFormItemPropsMiddleware);
   }
 }
 export default AntdVueFormModelPlugin;

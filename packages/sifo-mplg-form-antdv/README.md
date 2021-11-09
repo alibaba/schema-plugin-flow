@@ -160,7 +160,7 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 
 | 方法名            | 参数/类型               | 返回值类型             | 描述       |
 | ---------------- | -----------------------| --------------------- | ---------------------------------------------------------------------------------------------------|
-| getFormItemProps     |     id                  |   { value, validators, rules, validateDisabled, validateInfo }            |    此方法应返回FormItem的属性，包含：value, validators, rules, validateDisabled, validateInfo 等，默认在attributes中取(即使用 getAttributes 方法)。后面的模型插件可覆盖此方法来适配相应情形。   |
+| getFormItemProps     |     id                  |   { value, validators, defaultValue, rules, validateDisabled, validateInfo }            |    此方法应返回FormItem的属性，包含：value, validators, rules, validateDisabled, validateInfo 等，默认在attributes中取(即使用 getAttributes 方法)。后面的模型插件可覆盖此方法来适配相应情形。   |
 | setValue     | (fieldKey, value)              |   -     |    设置指定字段的值   |
 | setValues     | { [fieldKey]: value }         |   -     |    设置多个字段值   |
 | getValue     | fieldKey                      |   any      |   获取指定字段值    |

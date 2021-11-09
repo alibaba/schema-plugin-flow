@@ -115,6 +115,7 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 | name           | 默认的字段标识key，不一定是“name”，可以是任意自定的key   | string | - |
 | label           | 字段标签名   | string  | - |
 | rules           | 校验规则，见下文校验规则描述   | array  | - |
+| itemVisible     | 字段是否可见，即 display: none   | bool  | true |
 | itemClassName           | FormItem 上的样式   | string  | - |
 | labelCol           | 字段标签对应的 Col 属性  | string  | { span: 8 } |
 | wrapperCol         | 字段组件对应的 Col 属性  | string  | { span: 16 } |

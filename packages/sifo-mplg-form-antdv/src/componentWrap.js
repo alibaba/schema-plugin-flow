@@ -109,7 +109,7 @@ const componentWrap = (Component, formItemProps) => {
       const mixinFormItemProps = { ...formItemProps, ...props };
       // 字段
       const {
-        labelAlign, labelCol, wrapperCol,
+        labelAlign, labelCol, wrapperCol, itemVisible,
         rules, validators, validateDisabled, validateInfo,
         itemClassName,
         ...fieldProps // 这是字段本身属性
@@ -127,6 +127,12 @@ const componentWrap = (Component, formItemProps) => {
         'sifo-antdv-form-item-with-error': !!errorMsg,
         [itemClassName]: !!itemClassName,
       };
+      const itemProps = {};
+      if (itemVisible === false) {
+        itemProps.style = {
+          display: 'none'
+        };
+      }
       return createElement(
         Row,
         {
@@ -134,6 +140,7 @@ const componentWrap = (Component, formItemProps) => {
           attrs: {
             'data-field-key': dataFieldKey
           },
+          ...itemProps,
           props: {}
         },
         [

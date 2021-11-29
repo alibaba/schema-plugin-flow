@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import { validate } from './validate';
-import { hasOwnProperty } from './utils';
+import { hasOwnProperty, mergeRules } from './utils';
 
 // 默认handler
 const defaultChangeHandler = (context, value) => {
@@ -122,6 +122,7 @@ class FormCoreModelPlugin {
     const { mApi, event } = params;
     const { applyModelApiMiddleware } = event;
     this.mApi = mApi;
+    const originSetAttributes = this.mApi.setAttributes;
     // 此方法应返回FormItem的属性，包含：value, validators, rules, validateDisabled 等，默认在attributes中
     const getFormItemPropsMiddleware = () => (...args) => {
       return this.mApi.getAttributes(...args);
@@ -131,18 +132,51 @@ class FormCoreModelPlugin {
       return this.mApi.setAttributes(...args);
     };
     applyModelApiMiddleware('setFormItemProps', setFormItemPropsMiddleware);
+    const dealRules = (id, rules, setType) => {
+      let targetRules = rules;
+      if (!Array.isArray(rules)) {
+        targetRules = [rules];
+      }
+      const { rules: oldRules = {} } = this.mApi.getFormItemProps(id);
+      const newRules = setType === 'replace' ? targetRules : mergeRules(oldRules, targetRules);
+      return newRules;
+    };
+    /**
+     * 设置校验规则
+     * @param {*} next
+     * @returns (id: string, rules:[], setType:'merge'|'replace', refresh)
+     */
+    const setRulesMiddleware = next => (id, rules, setType = 'merge', refresh) => {
+      if (this.id2FieldKey[id]) {
+        if (!rules) return Promise.reject(new Error('[sifo-mplg-form-core]: set rules should be a array.'));
+        const newRules = dealRules(id, rules, setType);
+        setTimeout(() => {
+          const { rules: nRules } = this.mApi.getFormItemProps(id) || {};
+          this.bindValidateHandler(id, nRules);
+        }, 0);
+        return originSetAttributes(id, {
+          rules: newRules
+        }, refresh);
+      }
+      return this.mApi.setAttributes(id, {}, refresh);
+    };
+    applyModelApiMiddleware('setRules', setRulesMiddleware);
     const setAttrsMiddleware = next => (id, attributes, refresh) => {
       // 不在此处进行校验，由相应的trigger注册校验事件，使用者可用watch自定义校验时机
       // if (this.autoValidate && this.id2FieldKey[id] && hasOwnProperty(attributes, 'value')) {
       //   doValidate(id);
       // }
-      if (attributes.__isField__ && this.id2FieldKey[id] && hasOwnProperty(attributes, 'rules')) {
+      const attrs = { ...attributes };
+      if (this.id2FieldKey[id] && hasOwnProperty(attributes, 'rules')) {
+        // 直接用setAttributes都走merge模式
+        const newRules = dealRules(id, attrs.rules, 'merge');
+        attrs.rules = newRules;
         setTimeout(() => {
           const { rules } = this.mApi.getFormItemProps(id) || {};
           this.bindValidateHandler(id, rules);
         }, 0);
       }
-      return next(id, attributes, refresh);
+      return next(id, attrs, refresh);
     };
     // 对mApi的setAttributes方法进行再组装
     applyModelApiMiddleware('setAttributes', setAttrsMiddleware);

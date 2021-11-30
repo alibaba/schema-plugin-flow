@@ -146,7 +146,7 @@ class FormCoreModelPlugin {
      * @param {*} next
      * @returns (id: string, rules:[], setType:'merge'|'replace', refresh)
      */
-    const setRulesMiddleware = next => (id, rules, setType = 'merge', refresh) => {
+    const setRulesMiddleware = () => (id, rules, setType = 'merge', refresh) => {
       if (this.id2FieldKey[id]) {
         if (!rules) return Promise.reject(new Error('[sifo-mplg-form-core]: set rules should be a array.'));
         const newRules = dealRules(id, rules, setType);

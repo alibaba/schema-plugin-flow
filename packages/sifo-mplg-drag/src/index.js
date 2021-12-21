@@ -12,7 +12,7 @@ function preventDefault(e) {
 function defaultDraggable() {
   return true;
 }
-function defaultDropable() {
+function defaultDroppable() {
   return true;
 }
 function defaultDropFilter() {
@@ -26,14 +26,15 @@ class DragModelPlugin {
   constructor(props) {
     const {
       getDraggable = defaultDraggable,
-      getDropable = defaultDropable,
+      getDropable = defaultDroppable, // 兼容旧属性名
+      getDroppable = defaultDroppable,
       dropFilter = defaultDropFilter,
       deleteChecker = defaultDeleteChecker,
       dragWrapper = e => e,
       SifoDragEditor = () => null,
     } = props || {};
     this.getDraggable = getDraggable;
-    this.getDropable = getDropable;
+    this.getDroppable = getDroppable || getDropable;
     this.dropFilter = dropFilter;
     this.deleteChecker = deleteChecker;
     this.dragWrapper = dragWrapper;
@@ -113,7 +114,7 @@ class DragModelPlugin {
   bindDragProps = (id, refDom) => {
     const item = this.schemaInstance.nodeMap[id];
     if (item) {
-      const { __dragNodeId__, __draggable__, __dropable__ } = item;
+      const { __dragNodeId__, __draggable__, __droppable__ } = item;
       if (!__dragNodeId__) return;
       if (this.dragDomRef[__dragNodeId__] && this.dragDomRef[__dragNodeId__] !== refDom) {
         this.triggerRefDomResets(__dragNodeId__);
@@ -144,7 +145,7 @@ class DragModelPlugin {
         refDom.ondragstart = e => this.onDragStart(__dragNodeId__, e);
         refDom.ondragend = e => this.onDragEnd(__dragNodeId__, e);
       }
-      if (__dropable__ && (force || !refDom.dataset.dropKey)) {
+      if (__droppable__ && (force || !refDom.dataset.dropKey)) {
         refDom.dataset.dropKey = __dragNodeId__;
         refDom.ondragenter = e => this.onDragEnter(__dragNodeId__, e);
         refDom.ondragleave = e => this.onDragLeave(__dragNodeId__, e);
@@ -265,7 +266,7 @@ class DragModelPlugin {
     preventDefault(e);
     // 不允许拖入或拖入自身节点，直接返回
     const item = this.schemaInstance.nodeMap[id];
-    if (!item || !item.__dropable__ || this.currentDragId === id) {
+    if (!item || !item.__droppable__ || this.currentDragId === id) {
       this.dropType = 'cancel';
       return;
     }
@@ -437,6 +438,7 @@ class DragModelPlugin {
     if (this.wrappedEditorId) return node;
     this.wrappedEditorId = 'sifo_mplg_drag_editor_id';
     const attributes = {
+      id: this.wrappedEditorId,
       instanceId,
       onDragStart: this.onDragAddNode,
       onDragEnd: e => {
@@ -508,8 +510,8 @@ class DragModelPlugin {
         node.attributes.__dragNodeId__ = id;
         node.__draggable__ = this.getDraggable(node);
         // 用__canAddChild__来标识是否可加子节点，因为有可以前后插入
-        node.__canAddChild__ = this.getDropable(node);
-        node.__dropable__ = true;
+        node.__canAddChild__ = this.getDroppable(node);
+        node.__droppable__ = true;
       }
     });
   }

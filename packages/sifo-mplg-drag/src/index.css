@@ -1,33 +1,40 @@
+.sifo-mplg-drag-editor .sifo-mplg-drag-render-plate *[draggable]:hover{
+  outline: 1px dotted #4b90f9;
+}
 .sifo-drag {
-  border: 1px dashed #1da921;
+  outline: 2px dashed #4b90f9 !important;
   box-shadow: none !important;
 }
-.sifo-drop-insert{
-  box-shadow: 0 0 3px 1px #f78651;
-}
-.sifo-drag-selected.sifo-drop-insert{
-  box-shadow: 0 0 3px 1px #f78651;
-}
-.sifo-drop-pre-insert {
-  border-top: 1px solid #f78651 !important;
-  box-shadow: 0 0 2px 1px #c3f3ff;
-}
-.sifo-drop-pre-insert::before{
-  content: '';
-}
-.sifo-drop-sub-insert {
-  border-bottom: 1px solid #f78651 !important;
-  box-shadow: 0 0 2px 1px #c3f3ff;
-}
-.sifo-drop-sub-insert::after{
-  content: '';
-}
 .sifo-drag-selected {
-  box-shadow: 0 0 0px 1px #1da921;
+  box-shadow: 0 0 0px 1px #4b90f9;
 }
 .sifo-drag-selected:hover{
   cursor: grab;
 }
 .sifo-drag-selected:active{
   cursor: grabbing;
+}
+.sifo-drop-insert{
+  box-shadow: 0 0 4px 1px #f9814a;
+}
+.sifo-drag-selected.sifo-drop-insert {
+  box-shadow: 0 0 4px 1px #f9814a;
+}
+.sifo-drop-pre-insert {
+  box-shadow: -1px -1px 4px 1px #36d3fa;
+}
+.sifo-drag-selected.sifo-drop-pre-insert {
+  box-shadow: -1px -1px 4px 1px #36d3fa;
+}
+.sifo-drop-pre-insert::before{
+  content: '';
+}
+.sifo-drop-sub-insert {
+  box-shadow: 1px 1px 4px 1px #42d542;
+}
+.sifo-drag-selected.sifo-drop-sub-insert {
+  box-shadow: 1px 1px 4px 1px #42d542;
+}
+.sifo-drop-sub-insert::after{
+  content: '';
 }

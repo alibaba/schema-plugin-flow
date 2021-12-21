@@ -97,7 +97,7 @@ const FormDemo = (props) => {
               // 所有节点都可拖拽
               return true;
             },
-            getDropable: (node) => {
+            getDroppable: (node) => {
               if (node.acceptable !== undefined) return !!node.acceptable;
               // 字段不可拖入子节点
               if (node?.attribute?.fieldKey) return false;

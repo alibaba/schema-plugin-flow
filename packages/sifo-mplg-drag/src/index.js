@@ -57,7 +57,7 @@ class DragModelPlugin {
     if (this.currentTargetId) {
       const targetDom = this.dragDomRef[this.currentTargetId];
       if (targetDom) {
-        modifyCss(targetDom, [], ['insert', 'pre-insert', 'sub-insert']);
+        modifyCss(targetDom, [], ['insert', 'pre-insert', 'sub-insert', 'forbidden']);
       }
     }
     // dropType 为 cancel 时，说明不可拖拽，此时事件不重置
@@ -279,7 +279,7 @@ class DragModelPlugin {
     if (this.currentTargetId) {
       const oldTargetDom = this.dragDomRef[this.currentTargetId];
       if (oldTargetDom) {
-        modifyCss(oldTargetDom, [], ['insert', 'pre-insert', 'sub-insert']);
+        modifyCss(oldTargetDom, [], ['insert', 'pre-insert', 'sub-insert', 'forbidden']);
       }
     }
     this.currentTargetId = id;
@@ -303,27 +303,33 @@ class DragModelPlugin {
             dropType = 'cancel';
           }
         }
-        let onlyInsert = false;
+        let canNotAddChild = false;
         const node = this.schemaInstance.nodeMap[this.currentTargetId] || {};
         if (!node.__canAddChild__) {
-          onlyInsert = true;
+          canNotAddChild = true;
         }
         // 'preInsert/subInsert/addChild'/'cancel'
         if (dropType === 'preInsert') {
-          modifyCss(targetDom, ['pre-insert'], ['insert', 'sub-insert']);
+          modifyCss(targetDom, ['pre-insert'], ['insert', 'sub-insert', 'forbidden']);
         } else if (dropType === 'subInsert') {
-          modifyCss(targetDom, ['sub-insert'], ['insert', 'pre-insert']);
+          modifyCss(targetDom, ['sub-insert'], ['insert', 'pre-insert', 'forbidden']);
         } else if (dropType === 'addChild') {
           const add = [];
-          if (!onlyInsert) {
+          if (!canNotAddChild) {
             add.push('insert');
+            modifyCss(targetDom, add, ['sub-insert', 'pre-insert', 'forbidden']);
+          } else {
+            add.push('forbidden');
+            modifyCss(targetDom, add, ['sub-insert', 'pre-insert', 'insert']);
           }
-          modifyCss(targetDom, add, ['sub-insert', 'pre-insert']);
+        } else if (dropType === 'cancel') {
+          // modifyCss(targetDom, ['forbidden'], ['insert', 'pre-insert', 'sub-insert']);
         }
-        if (onlyInsert) {
+        if (canNotAddChild) {
           modifyCss(targetDom, [], ['insert']);
         }
         this.dropType = dropType;
+        // console.log('dropType', dropType, 'canNotAddChild:', canNotAddChild);
       }
     }
     // console.log('onDragOver', id, e);

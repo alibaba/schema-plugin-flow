@@ -1,3 +1,4 @@
+/* eslint-disable operator-assignment */
 /* eslint-disable max-len */
 function getNodeMap(node, index = 0, nodeMap, parentId) {
   if (!node) return {};
@@ -204,21 +205,25 @@ export function modifyCss(dom, addList = [], removeList = [], prefix = 'sifo-dro
 export function calcDropPosition(point, targetRect) {
   let dropType = 'cancel';
   const { clientX, clientY } = point;
-  const {
+  let {
     top, left, height, width
   } = targetRect;
+  top = top - 1;
+  height = height + 2;
+  left = left - 1;
+  width = width + 2;
   // 四分之一区
   const quarterH = Math.floor(height / 4) || 3;
   const quarterW = Math.floor(width / 4) || 3;
   const spanH = Math.min(quarterH, 20);// 最大20px的边
   const spanW = Math.min(quarterW, 20);
   // 上四分之一区
-  if ((clientY > top && clientY < top + spanH) && (clientX > left && clientX < left + width - spanW)) {
+  if ((clientY >= top && clientY < top + spanH) && (clientX >= left && clientX < left + width - spanW)) {
     // 前置
     dropType = 'preInsert';
   } else if ((clientY > top + spanH && clientY < top + height) && clientX > left && clientX < left + spanW) {
     dropType = 'preInsert';
-  } else if ((clientY < top + height && clientY > top + height - spanH) && (clientX > left - spanW && clientX < left + width)) {
+  } else if ((clientY <= top + height && clientY > top + height - spanH) && (clientX > left - spanW && clientX <= left + width)) {
     // 后置
     dropType = 'subInsert';
   } else if ((clientY > top && clientY < top + height - spanH) && (clientX > left + width - spanW && clientX < left + width)) {

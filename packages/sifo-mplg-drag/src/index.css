@@ -27,7 +27,10 @@
   box-shadow: -1px -1px 4px 1px #36d3fa;
 }
 .sifo-drop-pre-insert::before{
-  content: '';
+  content: 'insertBefore';
+  color: #36d3fa;
+  font-size: 12px;
+  position: absolute;
 }
 .sifo-drop-sub-insert {
   box-shadow: 1px 1px 4px 1px #42d542;
@@ -36,5 +39,21 @@
   box-shadow: 1px 1px 4px 1px #42d542;
 }
 .sifo-drop-sub-insert::after{
-  content: '';
+  content: 'insertBehind';
+  color: #42d542;
+  font-size: 12px;
+  position: absolute;
+}
+.sifo-drop-forbidden {
+  outline: 1px solid #ff0000 !important;
+}
+.sifo-drop-forbidden::before{
+  /* content: "\25CD"; */
+  content: "notAllow!";
+  color:crimson;
+  font-size: 12px;
+  position: absolute;
+}
+.sifo-drop-forbidden:active{
+  cursor: wait !important;
 }

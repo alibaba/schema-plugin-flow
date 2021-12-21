@@ -137,7 +137,7 @@ class FormCoreModelPlugin {
       if (!Array.isArray(rules)) {
         targetRules = [rules];
       }
-      const { rules: oldRules = {} } = this.mApi.getFormItemProps(id);
+      const { rules: oldRules = [] } = this.mApi.getFormItemProps(id);
       const newRules = setType === 'replace' ? targetRules : mergeRules(oldRules, targetRules);
       return newRules;
     };

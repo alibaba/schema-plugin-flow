@@ -15,10 +15,10 @@
   cursor: grabbing;
 }
 .sifo-drop-insert{
-  box-shadow: 0 0 4px 1px #f9814a;
+  box-shadow: 0 0 4px 1px #038e13;
 }
 .sifo-drag-selected.sifo-drop-insert {
-  box-shadow: 0 0 4px 1px #f9814a;
+  box-shadow: 0 0 4px 1px #038e13;
 }
 .sifo-drop-pre-insert {
   box-shadow: -1px -1px 4px 1px #36d3fa;
@@ -27,32 +27,22 @@
   box-shadow: -1px -1px 4px 1px #36d3fa;
 }
 .sifo-drop-pre-insert::before{
-  content: 'insertBefore';
-  color: #36d3fa;
-  font-size: 12px;
-  position: absolute;
+  content: '';
 }
 .sifo-drop-sub-insert {
-  box-shadow: 1px 1px 4px 1px #42d542;
+  box-shadow: 1px 1px 4px 1px #42d54e;
 }
 .sifo-drag-selected.sifo-drop-sub-insert {
-  box-shadow: 1px 1px 4px 1px #42d542;
+  box-shadow: 1px 1px 4px 1px #42d54e;
 }
 .sifo-drop-sub-insert::after{
-  content: 'insertBehind';
-  color: #42d542;
-  font-size: 12px;
-  position: absolute;
+  content: '';
 }
 .sifo-drop-forbidden {
-  outline: 1px solid #ff0000 !important;
+  box-shadow: 0px 0px 4px 1px #ff0000 !important;
 }
 .sifo-drop-forbidden::before{
-  /* content: "\25CD"; */
-  content: "notAllow!";
-  color:crimson;
-  font-size: 12px;
-  position: absolute;
+  content: "";
 }
 .sifo-drop-forbidden:active{
   cursor: wait !important;

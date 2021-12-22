@@ -26,15 +26,15 @@ class DragModelPlugin {
   constructor(props) {
     const {
       getDraggable = defaultDraggable,
-      getDropable = defaultDroppable, // 兼容旧属性名
-      getDroppable = defaultDroppable,
+      getDropable = null, // 兼容旧属性名
+      getDroppable = null,
       dropFilter = defaultDropFilter,
       deleteChecker = defaultDeleteChecker,
       dragWrapper = e => e,
       SifoDragEditor = () => null,
     } = props || {};
     this.getDraggable = getDraggable;
-    this.getDroppable = getDroppable || getDropable;
+    this.getDroppable = getDroppable || getDropable || defaultDroppable;
     this.dropFilter = dropFilter;
     this.deleteChecker = deleteChecker;
     this.dragWrapper = dragWrapper;

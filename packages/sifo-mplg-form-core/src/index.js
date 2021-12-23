@@ -211,7 +211,7 @@ class FormCoreModelPlugin {
       const values = {};
       Object.keys(this.fieldKey2Id).forEach(fieldKey => {
         if (usefilter) {
-          if (fieldKeys.indexof(fieldKey) >= 0) {
+          if (fieldKeys.indexOf(fieldKey) >= 0) {
             values[fieldKey] = mApi.getValue(fieldKey);
           }
         } else {

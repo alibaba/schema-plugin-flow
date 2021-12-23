@@ -126,7 +126,7 @@ import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
 | setValue     | (fieldKey, value)              |   -     |    设置指定字段的值   |
 | setValues     | { [fieldKey]: value }         |   -     |    设置多个字段值   |
 | getValue     | fieldKey                      |   any      |   获取指定字段值    |
-| getValues     | ✘                      |   { [fieldKey]: value }   |   获取所有字段值   |
+| getValues     | ([ fieldKeys: string[] ])                      |   { [fieldKey]: value }   |   获取所有字段值   |
 | setRules     | (id, rules, setType = 'merge', refresh)                      |   Promise   |   设置校验规则，默认用 merge 模式，用 replace 模式时，会完全替换成设置的规则   |
 | addValidator     | (fieldKey, validatorItem)       |   -            |    为指定字段增加函数式校验器，要注意校验器的使用方法，见下面的validatorItem示例   |
 | removeValidator     |  (fieldKey, validatorItem)      |   -            |    移除函数式校验器   |

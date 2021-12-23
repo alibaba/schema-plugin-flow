@@ -264,13 +264,19 @@ class DragModelPlugin {
   }
   onDragEnter = (id, e) => {
     preventDefault(e);
-    // 不允许拖入或拖入自身节点，直接返回
+    // 阻止外部的 Dom 元素拖入
+    if (!this.currentDragId && !this.currentAddNode) {
+      this.dropType = 'cancel';
+      return;
+    }
     const item = this.schemaInstance.nodeMap[id];
+    // 当前目标不允许拖入，或拖入自身节点，直接返回
     if (!item || !item.__droppable__ || this.currentDragId === id) {
       this.dropType = 'cancel';
       return;
     }
-    const node = this.schemaInstance.nodeMap[id] || {};
+    // 当前目标不允许增加子节点，直接返回
+    const node = item || {};
     const pNode = this.schemaInstance.nodeMap[node.__parentId__];
     if (!pNode || (!node.__canAddChild__ && !pNode.__canAddChild__)) {
       this.dropType = 'cancel';

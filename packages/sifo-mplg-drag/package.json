@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-drag",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "author": "FrominXu",
   "description": "sifo drag model plugin. 拖拽搭建模型插件",
   "license": "MIT",

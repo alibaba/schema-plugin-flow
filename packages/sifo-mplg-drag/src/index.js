@@ -3,6 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 import { buildSchema, modifyCss, calcDropPosition } from './utils';
+import dragImgs from './dragImgs';
 import './index.css';
 
 function preventDefault(e) {
@@ -244,6 +245,7 @@ class DragModelPlugin {
   }
   onDragStart = (id, e) => {
     // console.log('onDragStart', id, e);
+    e.dataTransfer.setDragImage(dragImgs.moveImg, -30, 50);
     const item = this.schemaInstance.nodeMap[id];
     // 不允许拖拽时，不处理且阻止事件往下执行
     if (!item || !item.__draggable__) {

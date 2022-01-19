@@ -17,6 +17,7 @@ const getErrorMsg = validateInfo => {
 function renderLabel(h, props) {
   const {
     label,
+    hideLabel = false,
     labelAlign,
     labelCol,
     rules = [],
@@ -36,7 +37,7 @@ function renderLabel(h, props) {
     className: labelColClassName,
     key: 'label',
   };
-  return label ? (
+  return (label && hideLabel !== true) ? (
     h(
       Col,
       { ...colProps },

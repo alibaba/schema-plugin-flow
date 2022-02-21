@@ -100,7 +100,7 @@ const componentWrap = (Component, formItemProps) => {
     functional: true,
     render(createElement, context) {
       const {
-        props, __isField__, __fieldKey__, 'data-field-key': dataFieldKey, ...rest
+        props, __isField__, __fieldKey__, 'data-field-id': dataFieldId, ...rest
       } = context.data; // 一般的属性都在props中
       if (!Component) return null;
       if (!__isField__) {
@@ -139,7 +139,8 @@ const componentWrap = (Component, formItemProps) => {
         {
           class: itemClssName,
           attrs: {
-            'data-field-key': dataFieldKey
+            'data-field-id': dataFieldId,
+            'data-field-key': __fieldKey__,
           },
           ...itemProps,
           props: {}

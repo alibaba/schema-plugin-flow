@@ -103,7 +103,7 @@ const componentWrap = (Component, formItemProps) => {
   const wrapName = `${compName}ItemWrap`;
   const SifoFormWrap = props => {
     const {
-      __isField__, __fieldKey__, 'data-field-key': dataFieldKey, children, ...rest
+      __isField__, __fieldKey__, 'data-field-id': dataFieldId, children, ...rest
     } = props;
     if (!Component) return null;
     if (!__isField__) {
@@ -143,7 +143,8 @@ const componentWrap = (Component, formItemProps) => {
       Row,
       {
         className: itemClssName,
-        'data-field-key': dataFieldKey,
+        'data-field-id': dataFieldId,
+        'data-field-key': __fieldKey__,
         ...itemProps
       },
       [
@@ -162,12 +163,12 @@ const componentWrap = (Component, formItemProps) => {
   SifoFormWrap.propTypes = {
     __isField__: PropTypes.bool,
     __fieldKey__: PropTypes.string,
-    'data-field-key': PropTypes.string,
+    'data-field-id': PropTypes.string,
   };
   SifoFormWrap.defaultProps = {
     __isField__: false,
     __fieldKey__: '',
-    'data-field-key': ''
+    'data-field-id': ''
   };
   SifoFormWrap.displayName = wrapName;
   return SifoFormWrap;

@@ -58,7 +58,7 @@ class FormCoreModelPlugin {
           {
             __isField__: true,
             __fieldKey__: fieldKey,
-            'data-field-key': `${fieldKey}_${instanceId}`
+            'data-field-id': `${fieldKey}_${instanceId}`
           }
         );
         node.__isField__ = true;
@@ -317,7 +317,7 @@ class FormCoreModelPlugin {
     };
     applyModelApiMiddleware('validateAll', validateAllMiddleware);
     const scrollIntoViewMiddleware = () => fieldKey => {
-      const domNode = document.querySelector(`[data-field-key="${fieldKey}_${this.mApi.instanceId}"]`);
+      const domNode = document.querySelector(`[data-field-id="${fieldKey}_${this.mApi.instanceId}"]`);
       if (domNode) {
         domNode.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       }

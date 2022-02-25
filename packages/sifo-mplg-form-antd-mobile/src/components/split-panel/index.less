@@ -1,0 +1,22 @@
+.split-panel {
+  display: flex;
+  .split-item {
+    display: flex;
+    flex-grow: 0;
+    .sifo-adm-form-item {
+      width: 100%;
+    }
+  }
+  > :not(:last-child){
+    border-right: 1px solid #eeeeee;
+  }
+  >:not(:first-child){
+    // 修复样式
+    .sifo-adm-form-item{
+      border-top: 1px solid #eeeeee;
+      .adm-list-item-content{
+        border: none;
+      }
+    }
+  }
+}

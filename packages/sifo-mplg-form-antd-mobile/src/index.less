@@ -1,0 +1,88 @@
+@fieldFontSize: 14px;
+@fieldFontWeight: 900;
+.sifo-adm-form {
+  .sifo-adm-form-item {
+    overflow: hidden;
+    padding-left: 16px;
+    // border-bottom: 1px solid #E3E4E6;
+    .sifo-adm-form-item-label {
+      display: block;
+      position: relative;
+      height: 100%;
+      line-height: 1.5;
+      box-sizing: border-box;
+      font-size: 14px;
+      // font-weight: 800;
+      color: #53545e;
+      // overflow: hidden; 必填标要absolute定位，overflow hidden会创建新的层叠上下文
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 4px;
+      &-required{
+        position: absolute;
+        left: -0.6em;
+        top: 0;
+        color: #ff3b30;;
+        font-family: SimSun, sans-serif;
+        user-select: none;
+      }
+      &-help{
+        position: relative;
+        top: 1px;
+        margin-left: 4px;
+      }
+    }
+    .sifo-adm-form-item-error-msg{
+      height: 16px;
+      font-size: 12px;
+      color:#FB602D;
+      margin-top: 4px;
+      // background: #FDEAE4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      // padding: 0px 16px;
+    }
+    .sifo-adm-form-item-content{
+      font-size: @fieldFontSize;
+      font-weight: @fieldFontWeight;
+      color: #11142d;
+      .adm-input .adm-input-element {
+        font-size: @fieldFontSize;
+        font-weight: @fieldFontWeight;
+      }
+      .adm-text-area .adm-text-area-element{
+        font-size: @fieldFontSize;
+        font-weight: @fieldFontWeight;
+      }
+      .adm-image-uploader {
+        padding: 4px 0;
+      }
+      .adm-checkbox {
+        font-size: @fieldFontSize;
+        font-weight: @fieldFontWeight;
+        .adm-checkbox-icon {
+          width: 16px;
+          height: 16px;
+        }
+        .adm-checkbox-content{
+          font-size: @fieldFontSize;
+          font-weight: @fieldFontWeight;
+        }
+      }
+      .adm-radio{
+        .adm-radio-icon{
+          width: 16px;
+          height: 16px;
+        }
+        .adm-radio-content{
+          font-size: @fieldFontSize;
+          font-weight: @fieldFontWeight;
+        }
+      }
+    }
+  }
+  .sifo-adm-form-item + .sifo-adm-form-item {
+    border-top: none;
+  }
+}

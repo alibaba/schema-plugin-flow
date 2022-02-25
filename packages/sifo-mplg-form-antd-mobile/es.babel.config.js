@@ -8,7 +8,14 @@ module.exports = function (api) {
         modules: false
       }
     ],
-    "@babel/preset-react"
+    "@babel/preset-react",
+    [
+      "@babel/preset-typescript",
+      {
+        "happyPackMode": true,
+        "transpileOnly": true
+      }
+    ]
   ];
   const plugins = [
     [

@@ -24,7 +24,7 @@
   "scripts": {
     "build": "npm run build:cjs && npm run build:es",
     "build:cjs": "babel --root-mode upward src --out-dir lib --copy-files --extensions \".ts,.tsx,.js,.jsx\"",
-    "build:es": "babel --no-babelrc --config-file ./es.babel.config.js src --out-dir es --copy-files  --extensions \".ts,.tsx,.js,.jsx\"",
+    "build:es": "babel --no-babelrc --config-file ./es.babel.config.js src --out-dir es --extensions \".ts,.tsx,.js,.jsx\" --copy-files ",
     "lint": "eslint --ext .jsx,.js,.tsx src/",
     "precommit": "npm run lint",
     "prepare": "npm run lint && npm run build",

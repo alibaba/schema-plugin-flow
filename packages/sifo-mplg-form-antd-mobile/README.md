@@ -16,6 +16,7 @@ AdmFormModelPlugin 是在 SifoFormCore (@schema-plugin-flow/sifo-mplg-form-core)
 ```javascript
 import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
 import AdmFormModelPlugin, { baseComponents }  from "@schema-plugin-flow/sifo-mplg-form-antd-mobile";
+// 样式 @import 'antd-mobile/cjs/global/global.css';
 // 样式： @import "~@schema-plugin-flow/sifo-mplg-form-antd-mobile/index.less";
 // sifo plugins
 [{

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Modal } from 'antd'
 const componentPlugin = {
   projectId: {
     onComponentInitial: (params) => {
@@ -90,6 +91,12 @@ const componentPlugin = {
           if (e.passed) {
             const values = mApi.getValues();
             console.log("表单数据：", values);
+            Modal.info({
+              content: <div>{ JSON.stringify(values, null, '\t')}</div>,
+              onConfirm: () => {
+                console.log('Confirmed')
+              },
+            })
           } else {
             console.error("表单校验未通过", e);
           }

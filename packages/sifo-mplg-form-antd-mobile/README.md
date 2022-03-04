@@ -10,14 +10,30 @@ AdmFormModelPlugin 是在 SifoFormCore (@schema-plugin-flow/sifo-mplg-form-core)
 | formItemWrapper     |  (component)=>formItemWrapper    |    对传入的components进行封装。结合SifoFormCore 封装的 ant-design 下的 FormItem。可以自定义实现来满足需要的功能与特性           |    defaultFormItemWrapper   |
 | formItemProps     |  FormItemProps    |    统一设置 FormItem 的属性         |    {}   |
 
+## 内置组件
+* Cascader 级联
+* CascaderPicker 异步级联
+* Button 按钮
+* List
+* ListItem
+* Container 普通容器
+* Picker 选择器
+* ImageUploader 图片上传
+* Input 输入框
+* TextArea 多行文本
+* DatePicker 日期时间选择
+* DateRangePicker 日期范围选择
+* Checkbox 复选框
+* SplitPanel 分栏组件
+* Radio 单选框
+* NumberInput 数字输入框
 
 ## 使用示例
 详细示例与代码请参照github -> docs/sifo-react-doc/form-demo
 ```javascript
 import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
 import AdmFormModelPlugin, { baseComponents }  from "@schema-plugin-flow/sifo-mplg-form-antd-mobile";
-// 样式 @import 'antd-mobile/cjs/global/global.css';
-// 样式： @import "~@schema-plugin-flow/sifo-mplg-form-antd-mobile/index.less";
+import "@schema-plugin-flow/sifo-mplg-form-antd-mobile/index.less";
 // sifo plugins
 [{
   modelPlugin: {
@@ -54,7 +70,7 @@ import AdmFormModelPlugin, { baseComponents }  from "@schema-plugin-flow/sifo-mp
     plugin: AdmFormModelPlugin,
     argsProvider: (mId, info) => {
       return {
-        formItemProps: {}
+        formItemProps: { labelAlign: 'left' }, // 使用左右布局
       };
     }
   }
@@ -75,31 +91,34 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 * labelCol 控制FormItem标签; wrapperCol 控制FormItem字段组件;
 ```json
 {
-  "id": "fieldKey01",
-  "component": "Input",
+  "component": "Form",
+  "id": "$form",
   "attributes": {
-    "name": "fieldKey01",
-    "label": "字段名",
-    "rules": [
-      {
-        "required": true,
-        "message": "你需要填写项目的名称",
-        "trigger": [
-          "onPressEnter",
-          "onChange"
-        ]
+    "className": "stage-form-mobile-demo"
+  },
+  "children": [
+    {
+      "id": "fieldKey01",
+      "component": "Input",
+      "attributes": {
+        "name": "fieldKey01",
+        "label": "字段名",
+        "rules": [
+          {
+            "required": true,
+            "message": "你需要填写项目的名称",
+            "trigger": [
+              "onPressEnter",
+              "onChange"
+            ]
+          }
+        ],
+        "className": "test-control-class",
+        "itemClassName": "test-form-item-class",
+        "labelAlign": "left",
       }
-    ],
-    "className": "test-control-class",
-    "itemClassName": "test-form-item-class",
-    "labelCol": {
-      "span": 8
-    },
-    "wrapperCol": {
-      "span": 16,
-      "offset": 0
     }
-  }
+  ]
 }
 ```
 
@@ -111,6 +130,7 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 | label           | 字段标签名   | string  | - |
 | hideLabel           | 隐藏字段标签   | bool  | false |
 | rules           | 校验规则，见下文校验规则描述   | array  | - |
+| labelAlign           | 标签对齐方式，默认上下对齐   | top/left  | top |
 | itemVisible     | 字段是否可见，即 display: none   | bool  | true |
 | itemClassName           | FormItem 上的样式   | string  | - |
 

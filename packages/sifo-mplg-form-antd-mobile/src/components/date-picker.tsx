@@ -27,7 +27,7 @@ const DatePickerX = (props) => {
   const [visible, setVisible] = React.useState(false);
   return (
     <DatePicker
-      value={value ? new Date(value) : ''}
+      value={value ? new Date(value) : null}
       precision={dataType === 'dateTime' ? 'second' : 'day'}
       onConfirm={change}
       onClose={() => {

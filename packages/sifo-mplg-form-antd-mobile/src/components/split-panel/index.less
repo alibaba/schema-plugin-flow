@@ -8,12 +8,13 @@
     }
   }
   > :not(:last-child){
-    border-right: 1px solid #eeeeee;
+    // --border-bottom: solid 1px var(--adm-border-color);
+    border-right: 1px solid var(--adm-border-color);
   }
   >:not(:first-child){
     // 修复样式
     .sifo-adm-form-item{
-      border-top: 1px solid #eeeeee;
+      border-top: 1px solid  var(--adm-border-color);
       .adm-list-item-content{
         border: none;
       }

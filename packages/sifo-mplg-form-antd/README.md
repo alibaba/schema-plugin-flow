@@ -10,7 +10,7 @@ codesandbox.io: [sifo-mplg-form-antd](https://codesandbox.io/s/sifo-react-form-a
 | 参数名            |  参数类型             |   描述            |   默认值     |
 | ---------------- | ---------------------| ---------------- | ------------|
 | formItemWrapper     |  (component)=>formItemWrapper    |    对传入的components进行封装。结合SifoFormCore 封装的 ant-design 下的 FormItem。可以自定义实现来满足需要的功能与特性           |    defaultFormItemWrapper   |
-| formItemProps     |  FormItemProps    |    统一设置 FormItem 的属性，比如 labelCol、wrapperCol          |    {}   |
+| formItemProps     |  FormItemProps    |    统一设置 FormItem 的属性，比如 labelAlign、labelCol、wrapperCol          |    { labelAlign: 'left', labelCol: { span: 8 }, wrapperCol: { span: 16 } }   |
 
 
 ## 使用示例
@@ -117,6 +117,7 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 | rules           | 校验规则，见下文校验规则描述   | array  | - |
 | itemVisible     | 字段是否可见，即 display: none   | bool  | true |
 | itemClassName           | FormItem 上的样式   | string  | - |
+| labelAlign         | 标签对齐方式: 上下（top）、左右（left）  | 'left'/'top'  | 'left' |
 | labelCol           | 字段标签对应的 Col 属性  | string  | { span: 8 } |
 | wrapperCol         | 字段组件对应的 Col 属性  | string  | { span: 16 } |
 

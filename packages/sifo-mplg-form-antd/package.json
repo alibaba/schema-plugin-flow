@@ -19,6 +19,7 @@
     "sifo",
     "sifo-mplg",
     "ant-design",
+    "antd-form",
     "form"
   ],
   "scripts": {

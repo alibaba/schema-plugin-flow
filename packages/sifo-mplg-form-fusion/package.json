@@ -19,6 +19,7 @@
 		"sifo",
 		"sifo-mplg",
 		"fusion",
+		"fusion-form",
 		"form"
 	],
 	"scripts": {

@@ -33,6 +33,7 @@
         "name": "type",
         "label": "类型",
         "placeholder": "请选择类型",
+        "labelAlign": "top",
         "style": {
           "width": "100%"
         },
@@ -50,6 +51,7 @@
         "name": "typeDesc",
         "label": "类型描述",
         "placeholder": "类型描述",
+        "labelAlign": "top",
         "rules": [
           {
             "required": true

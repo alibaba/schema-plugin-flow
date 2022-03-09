@@ -64,6 +64,7 @@
         "name": "date",
         "showTime": false,
         "label": "日期",
+        "labelAlign": "left",
         "placeholder": "日期",
         "rules": [
           {
@@ -80,6 +81,7 @@
         "showTime": true,
         "label": "日期时间",
         "placeholder": "日期时间",
+        "labelAlign": "top",
         "rules": [
           {
             "required": true
@@ -115,6 +117,7 @@
             "id": "numbertest",
             "name": "numbertest",
             "label": "整数校验",
+            "labelAlign": "top",
             "rules": [
               {
                 "type": "integer"

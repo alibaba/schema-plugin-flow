@@ -18,7 +18,7 @@ codesandbox.io: [sifo-mplg-form-fusion](https://codesandbox.io/s/sifo-react-form
 ```javascript
 import SifoFormCore from '@schema-plugin-flow/sifo-mplg-form-core';
 import FusionFormModelPlugin from "@schema-plugin-flow/sifo-mplg-form-fusion";
-// 样式： @import "~@schema-plugin-flow/sifo-mplg-form-fusion/index.less";
+// 样式： @import "~@schema-plugin-flow/sifo-mplg-form-fusion/index.scss";
 // sifo plugins
 [{
   modelPlugin: {

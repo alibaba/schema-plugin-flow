@@ -25,10 +25,12 @@ function renderLabel(h, props) {
   } = props;
   const required = rules.some(rule => rule.required === true);
   const mergedLabelCol = labelCol || { span: 8 };
-  const labelColClassName = cls({
-    'sifo-antd-form-item-label': true,
-    'sifo-antd-form-item-label-left': labelAlign === 'left'
-  });
+  const labelColClassName = cls(
+    {
+      'sifo-antd-form-item-label': true
+    },
+    `sifo-antd-form-item-label-${labelAlign || 'left'}`
+  );
   const labelClassName = cls({
     'sifo-antd-form-item-required': required && validateDisabled !== true
   });
@@ -37,9 +39,10 @@ function renderLabel(h, props) {
     className: labelColClassName,
     key: 'label',
   };
+  const LabelItem = labelAlign === 'top' ? 'div' : Col;
   return (label && hideLabel !== true) ? (
     h(
-      Col,
+      LabelItem,
       { ...colProps },
       h(
         'label',
@@ -53,7 +56,7 @@ function renderLabel(h, props) {
   ) : null;
 }
 function renderWrapper(h, props, opts, fieldNode) {
-  const { wrapperCol } = props;
+  const { wrapperCol, labelAlign } = props;
   const { errorMsg } = opts;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = cls({
@@ -79,8 +82,9 @@ function renderWrapper(h, props, opts, fieldNode) {
     'sifo-antd-form-item-control': true,
     'ant-form-item-has-error': !!errorMsg // 使用 antd 的 Form 对 表单字段组件的样式
   });
+  const WrapperItem = labelAlign === 'top' ? 'div' : Col;
   return h(
-    Col, { ...colProps },
+    WrapperItem, { ...colProps },
     h(
       'div',
       {
@@ -111,7 +115,7 @@ const componentWrap = (Component, formItemProps) => {
     const mixinFormItemProps = { ...formItemProps, ...rest };
     // 字段
     const {
-      labelAlign, labelCol, wrapperCol, itemVisible,
+      labelAlign = 'left', labelCol, wrapperCol, itemVisible,
       rules, validators, validateDisabled, validateInfo,
       itemClassName, propsFormatter, // 转换字段的属性到组件属性
       ...fieldProps // 这是字段本身属性
@@ -121,19 +125,23 @@ const componentWrap = (Component, formItemProps) => {
       renderProps = propsFormatter(fieldProps) || fieldProps;
     }
     const errorMsg = getErrorMsg(validateInfo);
-    const itemClssName = cls({
-      'sifo-antd-form-item': true,
-      'sifo-antd-form-item-with-error': !!errorMsg,
-      [itemClassName]: !!itemClassName,
-    });
+    const itemClssName = cls(
+      {
+        'sifo-antd-form-item': true,
+        'sifo-antd-form-item-with-error': !!errorMsg,
+        [itemClassName]: !!itemClassName,
+      },
+      `sifo-antd-form-item-${labelAlign || 'left'}`
+    );
     const itemProps = {};
     if (itemVisible === false) {
       itemProps.style = {
         display: 'none'
       };
     }
+    const ItemContainer = labelAlign === 'top' ? 'div' : Row;
     return createElement(
-      Row,
+      ItemContainer,
       {
         className: itemClssName,
         'data-field-id': dataFieldId,

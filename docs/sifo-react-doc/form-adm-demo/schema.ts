@@ -67,6 +67,7 @@ export default {
           "name": "productFeature",
           "label": "详细要求",
           "maxLength": 30,
+          "showCount": true,
           "autoHeight": true,
           "placeholder": "请详述您的需求"
         }

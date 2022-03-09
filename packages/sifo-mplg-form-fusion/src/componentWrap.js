@@ -127,12 +127,15 @@ const componentWrap = (Component, formItemProps) => {
       renderProps = propsFormatter(fieldProps) || fieldProps;
     }
     const errorMsg = getErrorMsg(validateInfo);
-    const itemClssName = cls({
-      'next-form-item': true,
-      'sifo-fusion-form-item': true,
-      'sifo-fusion-form-item-with-error': !!errorMsg,
-      [itemClassName]: !!itemClassName,
-    });
+    const itemClssName = cls(
+      {
+        'next-form-item': true,
+        'sifo-fusion-form-item': true,
+        'sifo-fusion-form-item-with-error': !!errorMsg,
+        [itemClassName]: !!itemClassName,
+      },
+      `sifo-fusion-form-item-${labelAlign || 'left'}`
+    );
     const compProps = {};
     if (errorMsg) {
       compProps.state = 'error';

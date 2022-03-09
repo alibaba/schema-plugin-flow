@@ -36,7 +36,7 @@ const FormItem = (props: FormItemProps) => {
     label,
     hideLabel,
     description,
-    labelAlign,
+    labelAlign = 'top',
     itemVisible,
     onItemClick,
     rules = [],

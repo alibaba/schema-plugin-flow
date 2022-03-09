@@ -41,7 +41,7 @@ function renderLabel(h, props) {
     className: labelColClassName,
     key: 'label',
   };
-  const LabelItem = labelAlign === "top" ? "div" : Col;
+  const LabelItem = labelAlign === 'top' ? 'div' : Col;
   return (label && hideLabel !== true) ? (
     h(
       LabelItem,
@@ -146,7 +146,7 @@ const componentWrap = (Component, formItemProps) => {
         display: 'none'
       };
     }
-    const ItemContainer = labelAlign === "top" ? "div" : Row;
+    const ItemContainer = labelAlign === 'top' ? 'div' : Row;
     return createElement(
       ItemContainer,
       {

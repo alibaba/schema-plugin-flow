@@ -26,11 +26,13 @@ function renderLabel(h, props) {
   } = props;
   const required = rules.some(rule => rule.required === true);
   const mergedLabelCol = labelCol || { span: 8 };
-  const labelColClassName = cls({
-    'next-form-item-label': true,
-    'sifo-fusion-form-item-label': true,
-    'sifo-fusion-form-item-label-left': labelAlign === 'left'
-  });
+  const labelColClassName = cls(
+    {
+      'next-form-item-label': true,
+      'sifo-fusion-form-item-label': true,
+    },
+    `sifo-fusion-form-item-label-${labelAlign || 'left'}`
+  );
   const labelClassName = cls({
     'sifo-fusion-form-item-required': required && validateDisabled !== true
   });
@@ -39,9 +41,10 @@ function renderLabel(h, props) {
     className: labelColClassName,
     key: 'label',
   };
+  const LabelItem = labelAlign === "top" ? "div" : Col;
   return (label && hideLabel !== true) ? (
     h(
-      Col,
+      LabelItem,
       { ...colProps },
       h(
         'label',
@@ -55,7 +58,7 @@ function renderLabel(h, props) {
   ) : null;
 }
 function renderWrapper(h, props, opts, fieldNode) {
-  const { wrapperCol } = props;
+  const { wrapperCol, labelAlign } = props;
   const { errorMsg } = opts;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = cls({
@@ -81,8 +84,9 @@ function renderWrapper(h, props, opts, fieldNode) {
     'next-form-item-control': true,
     'sifo-fusion-form-item-control': true
   });
+  const WrapperItem = labelAlign === 'top' ? 'div' : Col;
   return h(
-    Col, { ...colProps },
+    WrapperItem, { ...colProps },
     h(
       'div',
       {
@@ -113,7 +117,7 @@ const componentWrap = (Component, formItemProps) => {
     const mixinFormItemProps = { ...formItemProps, ...rest };
     // 字段
     const {
-      labelAlign, labelCol, wrapperCol, itemVisible,
+      labelAlign = 'left', labelCol, wrapperCol, itemVisible,
       rules, validators, validateDisabled, validateInfo,
       itemClassName, propsFormatter, label, // 转换字段的属性到组件属性
       ...fieldProps // 这是字段本身属性
@@ -139,8 +143,9 @@ const componentWrap = (Component, formItemProps) => {
         display: 'none'
       };
     }
+    const ItemContainer = labelAlign === "top" ? "div" : Row;
     return createElement(
-      Row,
+      ItemContainer,
       {
         className: itemClssName,
         'data-field-id': dataFieldId,

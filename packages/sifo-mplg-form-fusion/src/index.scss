@@ -12,8 +12,11 @@
     >label{
         color: #000000d9;
     }
+    &-top {
+      margin-bottom: 2px;
+    }
     &-left {
-      text-align: left;
+      // text-align: left;
     }
   }
   &-required:before {

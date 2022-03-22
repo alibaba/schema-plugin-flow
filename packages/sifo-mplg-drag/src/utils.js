@@ -58,6 +58,14 @@ export function buildSchema(schema) {
       }
       return index;
     },
+    replaceComponent(id, componentName) {
+      const item = nodeMap[id];
+      if (item) {
+        item.node.component = componentName;
+      }
+      rebuildMap(targetSchema);
+      return targetSchema;
+    },
     updateAttributes(id, attributes) {
       const item = nodeMap[id];
       if (item) {

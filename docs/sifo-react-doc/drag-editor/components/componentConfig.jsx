@@ -30,6 +30,7 @@ const componentList = [
     },
     propsRender: (id, node, api) => {
       const { attributes } = node;
+      window.inputapi = api;
       const { label, fieldKey } = attributes;
       return (
         <div>

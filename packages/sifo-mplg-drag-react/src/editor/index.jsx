@@ -11,8 +11,24 @@ class SifoDragEditor extends React.PureComponent {
     };
   }
   getApi = id => {
-    const { updateAttributes, updateId } = this.props;
+    const {
+      getNodeInfo, getSchema, deleteNode, updateAttributes,
+      updateId, replaceComponent, setSelectedId, getDomById
+    } = this.props;
     return {
+      editorApi: {
+        getNodeInfo,
+        getSchema,
+        deleteNode,
+        updateAttributes,
+        updateId,
+        replaceComponent,
+        setSelectedId,
+        getDomById
+      },
+      replaceComponent: (componentName, reload) => {
+        replaceComponent(id, componentName, reload);
+      },
       setAttributes: (attributes, reload) => {
         updateAttributes(id, attributes, reload);
       },
@@ -129,6 +145,10 @@ SifoDragEditor.propTypes = {
   deleteNode: PropTypes.func.isRequired,
   getSchema: PropTypes.func.isRequired,
   updateAttributes: PropTypes.func.isRequired,
+  replaceComponent: PropTypes.func.isRequired,
+  getDomById: PropTypes.func.isRequired,
+  getNodeInfo: PropTypes.func.isRequired,
+  setSelectedId: PropTypes.func.isRequired,
   updateId: PropTypes.func.isRequired,
   onDragStart: PropTypes.func.isRequired,
   onDragEnd: PropTypes.func.isRequired,

@@ -169,6 +169,22 @@ class DragModelPlugin {
       });
     }, 100);
   }
+  replaceComponent = (id, componentName, needReload = false) => {
+    const schema = this.buildApi.replaceComponent(id, componentName);
+    const info = this.buildApi.getNodeInfo(id);
+    if (needReload) {
+      this.doReloadPage(schema, id);
+    } else {
+      this.mApi.replaceComponent(id, componentName);
+      // refresh props editor
+      this.mApi.setAttributes(this.wrappedEditorId, {
+        selectedNode: {
+          node: info.node,
+          id
+        }
+      });
+    }
+  }
   updateAttributes = (id, attributes, needReload = false) => {
     const schema = this.buildApi.updateAttributes(id, attributes);
     const info = this.buildApi.getNodeInfo(id);
@@ -428,6 +444,11 @@ class DragModelPlugin {
     setTimeout(() => {
       this.triggerSelectId = null;
     }, 200);
+    const info = this.buildApi.getNodeInfo(id);
+    if (!info) {
+      console.warn(`id: ${id} not found.`);
+      return;
+    }
     if (this.selectedId) {
       const preDom = this.dragDomRef[this.selectedId];
       preDom && modifyCss(preDom, [], ['sifo-drag-selected'], '');
@@ -435,11 +456,6 @@ class DragModelPlugin {
     this.selectedId = id;
     const targetDom = this.dragDomRef[id];
     modifyCss(targetDom, ['sifo-drag-selected'], [], '');
-    const info = this.buildApi.getNodeInfo(id);
-    if (!info) {
-      console.warn('not init schema node');
-      return;
-    }
     this.mApi.setAttributes(this.wrappedEditorId, {
       selectedNode: {
         node: info.node,
@@ -461,9 +477,12 @@ class DragModelPlugin {
       },
       updateAttributes: this.updateAttributes,
       updateId: this.updateId,
+      replaceComponent: this.replaceComponent,
       deleteNode: this.doDeleteNode,
       getSchema: () => this.mApi.getEditedSchema(),
       getNodeInfo: id => this.buildApi.getNodeInfo(id),
+      getDomById: id => this.dragDomRef[id],
+      setSelectedId: this.onNodeSelected
     };
     return {
       component: 'SifoDragEditor',

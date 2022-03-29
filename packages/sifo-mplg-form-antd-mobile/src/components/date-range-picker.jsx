@@ -19,7 +19,7 @@ class DateRangePicker extends React.Component {
     };
   }
   onChange = (val) => {
-    const [startTime, endTime] = val;
+    const [startTime, endTime] = val || [];
     this.setState({
       startTime, endTime,
     });
@@ -34,8 +34,8 @@ class DateRangePicker extends React.Component {
     }, () => {
       if (onChange) {
         onChange({
-          startTime: dayjs(startTime).format(format),
-          endTime: dayjs(endTime).format(format),
+          startTime: startTime ? dayjs(startTime).format(format) : null,
+          endTime: endTime ? dayjs(endTime).format(format) : null,
         });
       }
     });
@@ -45,8 +45,8 @@ class DateRangePicker extends React.Component {
     // document.getElementsByTagName('body')[0].style.overflowY = this.originbodyScrollY;
     this.setState({
       show: false,
-      startTime: undefined,
-      endTime: undefined,
+      startTime: null,
+      endTime: null,
     }, () => {
       // 取消不处理数据
       // if (onChange) {
@@ -117,7 +117,7 @@ class DateRangePicker extends React.Component {
             <Calendar
               {...other}
               selectionMode="range"
-              value={[value?.startTime, value?.endTime]}
+              defaultValue={[value?.startTime ? new Date(value?.startTime) : null, value?.endTime ? new Date(value?.endTime) : null]}
               onChange={this.onChange}
               onCancel={this.onCancel}
               visible={show}

@@ -1,8 +1,27 @@
-import { isNumber, hasOwnProperty } from './utils';
+import { isNumber, isEmpty, hasOwnProperty } from './utils';
+
+function regExpValidate(rule, value, addInvalidate) {
+  const needValidate = hasOwnProperty(rule, 'regExp');
+  if (!needValidate) return;
+  const { regExp, message, skipEmpty } = rule;
+  if (skipEmpty && isEmpty(value)) return;
+  if (isEmpty(regExp) || !(/^\/[\S\s]*\/$/g.test(regExp))) {
+    console.warn(`${regExp}is not a valid regExp`);
+    return;
+  }
+  try {
+    const reg = new RegExp(regExp.substr(1, regExp.length - 2));
+    if (!reg.test(value)) {
+      addInvalidate({ passed: false, status: 'error', message: message || '正则校验不通过' });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 function typeValidate(rule, value, addInvalidate) {
   const { type, message } = rule;
-  if (!value) return; // 只对有值的情况进行校验
+  if (!hasOwnProperty(rule, 'type') || !value) return; // 只对有值的情况进行校验
   if (isNumber(value)) {
     const num = Number(value);
     if (type === 'integer' && (num < 0 || (`${value}`).indexOf('.') >= 0)) {
@@ -17,9 +36,7 @@ function typeValidate(rule, value, addInvalidate) {
 const requireValidate = (rule, value, addInvalidate) => {
   const { message } = rule;
   const required = hasOwnProperty(rule, 'required') && rule.required === true;
-  const isEmpty = (Number.isNaN(value) || value === undefined || value === null
-    || String(value).trim() === '');
-  if (required && isEmpty) {
+  if (required && isEmpty(value)) {
     addInvalidate({ passed: false, status: 'error', message: message || '此项必填' });
   }
 };
@@ -29,6 +46,8 @@ const numberValidate = (rule, value, addInvalidate) => {
   const { message } = rule;
   if (!value) return; // 只对有值的情况进行校验
   if (hasOwnProperty(rule, 'max') || hasOwnProperty(rule, 'min')) {
+    const { skipEmpty } = rule;
+    if (skipEmpty && isEmpty(value)) return;
     if (isNumber(value)) {
       const num = Number(value);
       if (hasOwnProperty(rule, 'max') && num > rule.max) {
@@ -62,6 +81,8 @@ const lengthValidate = (rule, value, addInvalidate) => {
   // 字符串 maxLength minLength
   const needValidate = hasOwnProperty(rule, 'maxLength') || hasOwnProperty(rule, 'minLength');
   if (!needValidate) return;
+  const { skipEmpty } = rule;
+  if (skipEmpty && isEmpty(value)) return;
   if (isNumber(value) || typeof value === 'string') {
     const str = String(value);
     maxLengthValidate(rule, str, addInvalidate);
@@ -89,11 +110,10 @@ function systemValidate(rules, value) {
   if (rules) {
     rules.forEach(rule => {
       requireValidate(rule, value, addInvalidate);
-      if (hasOwnProperty(rule, 'type')) {
-        typeValidate(rule, value, addInvalidate);
-      }
+      typeValidate(rule, value, addInvalidate);
       numberValidate(rule, value, addInvalidate);
       lengthValidate(rule, value, addInvalidate);
+      regExpValidate(rule, value, addInvalidate);
     });
   }
   return ret;

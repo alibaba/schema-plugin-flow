@@ -58,6 +58,24 @@
       }
     },
     {
+      "component": "Input",
+      "id": "testSkip",
+      "attributes": {
+        "name": "testSkip",
+        "label": "最少长度",
+        "placeholder": "最少5位，skipEmpty",
+        "rules": [
+          {
+            "minLength": 5,
+            "message": "最少5位",
+            "notAutoTrigger": false,
+            "trigger": [],
+            "skipEmpty": true
+          }
+        ]
+      }
+    },
+    {
       "component": "DatePicker",
       "id": "date",
       "attributes": {
@@ -121,6 +139,11 @@
             "rules": [
               {
                 "type": "integer"
+              },
+              {
+                "regExp": "/^8(.)*/",
+                "message": "应以8开头",
+                "skipEmpty": true
               }
             ]
           }

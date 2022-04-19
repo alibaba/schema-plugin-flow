@@ -1,4 +1,6 @@
 export const isNumber = s => String(s).trim() !== '' && !Number.isNaN(+String(s));
+export const isEmpty = value => (Number.isNaN(value) || value === undefined || value === null
+|| String(value).trim() === '');
 export const hasOwnProperty = (obj, propName) => Object.hasOwnProperty.call(obj, propName);
 
 export const keyHolder = (key, defValue) => {

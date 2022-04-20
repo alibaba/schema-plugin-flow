@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-form-core",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "author": "FrominXu",
   "description": "sifo form-core model plugin. 表单内核模型插件",
   "license": "MIT",

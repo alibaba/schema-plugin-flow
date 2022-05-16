@@ -115,7 +115,7 @@ const componentWrap = (Component, formItemProps) => {
     const mixinFormItemProps = { ...formItemProps, ...rest };
     // 字段
     const {
-      labelAlign = 'left', labelCol, wrapperCol, itemVisible,
+      labelAlign = 'left', labelCol, wrapperCol, itemVisible = true,
       rules, validators, validateDisabled, validateInfo,
       itemClassName, propsFormatter, // 转换字段的属性到组件属性
       ...fieldProps // 这是字段本身属性
@@ -154,6 +154,7 @@ const componentWrap = (Component, formItemProps) => {
           createElement, mixinFormItemProps, { errorMsg },
           createElement(Component, {
             ...renderProps,
+            itemVisible,
             key: __fieldKey__
           }, children)
         )

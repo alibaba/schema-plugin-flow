@@ -48,8 +48,8 @@ class DragModelPlugin {
     this.currentAddNode = null;
     this.selectedId = '';
     this.buildApi = {};
-    this.dragType = '';// move/add
-    this.dropType = 'cancel';// 'preInsert/subInsert/addChild'/'cancel'/'done'
+    this.dragType = ''; // move/add
+    this.dropType = 'cancel'; // 'preInsert/subInsert/addChild'/'cancel'/'done'
     this.eventUUID = `sifo-mplg-drag-${Math.random().toString().substr(3, 6)}`;
     this.refDomResets = {};
   }
@@ -58,7 +58,11 @@ class DragModelPlugin {
     if (this.currentTargetId) {
       const targetDom = this.dragDomRef[this.currentTargetId];
       if (targetDom) {
-        modifyCss(targetDom, [], ['insert', 'pre-insert', 'sub-insert', 'forbidden']);
+        modifyCss(
+          targetDom,
+          [],
+          ['insert', 'pre-insert', 'sub-insert', 'forbidden']
+        );
       }
     }
     // dropType 为 cancel 时，说明不可拖拽，此时事件不重置
@@ -117,13 +121,19 @@ class DragModelPlugin {
     if (item) {
       const { __dragNodeId__, __draggable__, __droppable__ } = item;
       if (!__dragNodeId__) return;
-      if (this.dragDomRef[__dragNodeId__] && this.dragDomRef[__dragNodeId__] !== refDom) {
+      if (
+        this.dragDomRef[__dragNodeId__] &&
+        this.dragDomRef[__dragNodeId__] !== refDom
+      ) {
         this.triggerRefDomResets(__dragNodeId__);
       }
       this.setRefDom(__dragNodeId__, refDom);
       if (!refDom) return;
       let force = false;
-      if (refDom.dataset.eventUuid && refDom.dataset.eventUuid !== this.eventUUID) {
+      if (
+        refDom.dataset.eventUuid &&
+        refDom.dataset.eventUuid !== this.eventUUID
+      ) {
         force = true;
       }
       refDom.dataset.eventUuid = this.eventUUID;
@@ -164,8 +174,8 @@ class DragModelPlugin {
         schema,
         externals: {
           ...externals,
-          sifoDragSelectId: selectedId
-        }
+          sifoDragSelectId: selectedId,
+        },
       });
     }, 100);
   }
@@ -180,8 +190,8 @@ class DragModelPlugin {
       this.mApi.setAttributes(this.wrappedEditorId, {
         selectedNode: {
           node: info.node,
-          id
-        }
+          id,
+        },
       });
     }
   }
@@ -196,8 +206,8 @@ class DragModelPlugin {
       this.mApi.setAttributes(this.wrappedEditorId, {
         selectedNode: {
           node: info.node,
-          id
-        }
+          id,
+        },
       });
     }
   }
@@ -220,38 +230,94 @@ class DragModelPlugin {
   doMove = (dropType, targetInfo, targetIdx) => {
     let schema = this.buildApi.renderSchema;
     if (dropType === 'preInsert') {
-      schema = this.buildApi.moveChildren(this.currentDragId, targetInfo.parentId, targetIdx);
+      schema = this.buildApi.moveChildren(
+        this.currentDragId,
+        targetInfo.parentId,
+        targetIdx
+      );
     } else if (dropType === 'subInsert') {
-      schema = this.buildApi.moveChildren(this.currentDragId, targetInfo.parentId, targetIdx + 1);
+      schema = this.buildApi.moveChildren(
+        this.currentDragId,
+        targetInfo.parentId,
+        targetIdx + 1
+      );
     } else {
       // addChild
       const childLen = targetInfo?.childrenLength || 0;
-      schema = this.buildApi.moveChildren(this.currentDragId, this.currentTargetId, childLen);
+      schema = this.buildApi.moveChildren(
+        this.currentDragId,
+        this.currentTargetId,
+        childLen
+      );
     }
     this.doReloadPage(schema, this.currentDragId);
   }
   doAdd = (dropType, targetInfo, targetIdx) => {
     if (!this.currentAddNode) {
-      return;
+      return false;
     }
     let schema = this.buildApi.renderSchema;
     if (dropType === 'preInsert') {
-      schema = this.buildApi.addChildren(this.currentAddNode, targetInfo.parentId, targetIdx);
+      schema = this.buildApi.addChildren(
+        this.currentAddNode,
+        targetInfo.parentId,
+        targetIdx
+      );
     } else if (dropType === 'subInsert') {
-      schema = this.buildApi.addChildren(this.currentAddNode, targetInfo.parentId, targetIdx + 1);
+      schema = this.buildApi.addChildren(
+        this.currentAddNode,
+        targetInfo.parentId,
+        targetIdx + 1
+      );
     } else {
       const childLen = targetInfo?.childrenLength || 0;
-      schema = this.buildApi.addChildren(this.currentAddNode, this.currentTargetId, childLen);
+      schema = this.buildApi.addChildren(
+        this.currentAddNode,
+        this.currentTargetId,
+        childLen
+      );
     }
     this.doReloadPage(schema, this.currentAddNode.id);
+    return true;
+  }
+  /**
+   * 直接在指定节点id下添加子节点
+   * @param {*} newNode 新的子节点
+   * @param {*} targetId 指定的节点id
+   * @returns
+   */
+  addChildrenNode = (newNode, targetId) => {
+    const info = this.buildApi.getNodeInfo(targetId);
+    if (!newNode || !targetId || !info) {
+      console.error('[sifo-mplg-drag] addChildrenNode: params error');
+      return false;
+    }
+    const validated = this.onDragAddNode(newNode);
+    if (!validated) return false;
+    const item = this.schemaInstance.nodeMap[targetId]; // 运行时schema
+    // 当前目标不允许拖入，或拖入自身节点，直接返回
+    if (!item || !item.__droppable__ || newNode.id === targetId) {
+      console.error('[sifo-mplg-drag] addChildrenNode: targetId __droppable__ false');
+      return false;
+    }
+    // 当前目标不允许增加子节点，直接返回
+    if (!item.__canAddChild__) {
+      console.error('[sifo-mplg-drag] addChildrenNode: targetId __canAddChild__ false');
+      return false;
+    }
+    this.currentTargetId = targetId;
+    const targetIdx = this.buildApi.getNodeIndex(targetId);
+    return this.doAdd('add', info, targetIdx);
   }
   doDeleteNode = id => {
     if (!id) return;
     const nodeInfo = this.buildApi.getNodeInfo(id);
-    if (this.deleteChecker(id, {
-      nodeInfo,
-      getNodeInfo: this.buildApi.getNodeInfo
-    })) {
+    if (
+      this.deleteChecker(id, {
+        nodeInfo,
+        getNodeInfo: this.buildApi.getNodeInfo,
+      })
+    ) {
       let schema = this.buildApi.renderSchema;
       schema = this.buildApi.deleteNode(id);
       this.doReloadPage(schema, schema.id);
@@ -270,7 +336,7 @@ class DragModelPlugin {
     }
     this.currentDragId = id;
     this.dragType = 'move';
-    e.stopPropagation();// 防穿透
+    e.stopPropagation(); // 防穿透
     modifyCss(e.target, ['sifo-drag'], [], '');
     e.dataTransfer.setData('id', id);
   }
@@ -283,6 +349,7 @@ class DragModelPlugin {
   onDragEnter = (id, e) => {
     preventDefault(e);
     // 阻止外部的 Dom 元素拖入
+    // currentDragId 是拖拽节点；currentAddNode 是拖入节点
     if (!this.currentDragId && !this.currentAddNode) {
       this.dropType = 'cancel';
       return;
@@ -303,7 +370,11 @@ class DragModelPlugin {
     if (this.currentTargetId) {
       const oldTargetDom = this.dragDomRef[this.currentTargetId];
       if (oldTargetDom) {
-        modifyCss(oldTargetDom, [], ['insert', 'pre-insert', 'sub-insert', 'forbidden']);
+        modifyCss(
+          oldTargetDom,
+          [],
+          ['insert', 'pre-insert', 'sub-insert', 'forbidden']
+        );
       }
     }
     this.currentTargetId = id;
@@ -318,7 +389,7 @@ class DragModelPlugin {
     if (this.currentTargetId) {
       const targetDom = this.dragDomRef[this.currentTargetId];
       if (targetDom) {
-        const targetRect = (targetDom).getBoundingClientRect();
+        const targetRect = targetDom.getBoundingClientRect();
         let dropType = calcDropPosition(e, targetRect);
         if (dropType === 'addChild') {
           const dragInfo = this.buildApi.getNodeInfo(this.currentDragId);
@@ -334,14 +405,26 @@ class DragModelPlugin {
         }
         // 'preInsert/subInsert/addChild'/'cancel'
         if (dropType === 'preInsert') {
-          modifyCss(targetDom, ['pre-insert'], ['insert', 'sub-insert', 'forbidden']);
+          modifyCss(
+            targetDom,
+            ['pre-insert'],
+            ['insert', 'sub-insert', 'forbidden']
+          );
         } else if (dropType === 'subInsert') {
-          modifyCss(targetDom, ['sub-insert'], ['insert', 'pre-insert', 'forbidden']);
+          modifyCss(
+            targetDom,
+            ['sub-insert'],
+            ['insert', 'pre-insert', 'forbidden']
+          );
         } else if (dropType === 'addChild') {
           const add = [];
           if (!canNotAddChild) {
             add.push('insert');
-            modifyCss(targetDom, add, ['sub-insert', 'pre-insert', 'forbidden']);
+            modifyCss(targetDom, add, [
+              'sub-insert',
+              'pre-insert',
+              'forbidden'
+            ]);
           } else {
             add.push('forbidden');
             modifyCss(targetDom, add, ['sub-insert', 'pre-insert', 'insert']);
@@ -389,13 +472,19 @@ class DragModelPlugin {
       }
       const targetIdx = this.buildApi.getNodeIndex(this.currentTargetId);
       if (this.dropFilter) {
-        const dragTarget = this.dragType === 'move' ? this.buildApi.getNodeInfo(this.currentDragId) : this.currentAddNode;
-        const dropTarget = this.dropType === 'addChild' ? info : this.buildApi.getNodeInfo(info.parentId);
+        const dragTarget =
+          this.dragType === 'move'
+            ? this.buildApi.getNodeInfo(this.currentDragId)
+            : this.currentAddNode;
+        const dropTarget =
+          this.dropType === 'addChild'
+            ? info
+            : this.buildApi.getNodeInfo(info.parentId);
         const filter = this.dropFilter({
           dragType: this.dragType,
           dropTarget,
           dragTarget,
-          getNodeInfo: this.buildApi.getNodeInfo
+          getNodeInfo: this.buildApi.getNodeInfo,
         });
         if (filter === false) {
           this.dropType = 'cancel';
@@ -412,7 +501,8 @@ class DragModelPlugin {
           this.doAdd(this.dropType, info, targetIdx);
           break;
         }
-        default: { }
+        default: {
+        }
       }
     }
   }
@@ -422,18 +512,22 @@ class DragModelPlugin {
    * @param {*} e
    */
   onDragAddNode = newNode => {
-    if (!newNode) return;
+    if (!newNode) return false;
     if (!newNode.id) {
       console.error('[sifo-mplg-drag] add node need a id');
       this.dragType = '';
-      return;
+      return false;
     } else if (this.buildApi.getNodeInfo(newNode.id)) {
-      console.error('[sifo-mplg-drag] add node id already existed:', newNode.id);
+      console.error(
+        '[sifo-mplg-drag] add node id already existed:',
+        newNode.id
+      );
       this.dragType = '';
-      return;
+      return false;
     }
     this.dragType = 'add';
     this.currentAddNode = { ...newNode };
+    return true;
   }
   onNodeSelected = id => {
     if (this.triggerSelectId) {
@@ -459,8 +553,8 @@ class DragModelPlugin {
     this.mApi.setAttributes(this.wrappedEditorId, {
       selectedNode: {
         node: info.node,
-        id
-      }
+        id,
+      },
     });
   }
   onNodePreprocess = (node, informations) => {
@@ -479,16 +573,17 @@ class DragModelPlugin {
       updateId: this.updateId,
       replaceComponent: this.replaceComponent,
       deleteNode: this.doDeleteNode,
+      addChildrenNode: this.addChildrenNode,
       getSchema: () => this.mApi.getEditedSchema(),
       getNodeInfo: id => this.buildApi.getNodeInfo(id),
       getDomById: id => this.dragDomRef[id],
-      setSelectedId: this.onNodeSelected
+      setSelectedId: this.onNodeSelected,
     };
     return {
       component: 'SifoDragEditor',
       id: this.wrappedEditorId,
       attributes,
-      children: [node]
+      children: [node],
     };
   }
   onComponentsWrap = components => {
@@ -531,7 +626,7 @@ class DragModelPlugin {
       return JSON.parse(initRawSchema);
     };
     applyModelApiMiddleware('getInitialSchema', getInitialSchema);
-    // 只能用初始schema编辑（开发态）
+    // 只能用初始schema编辑（设计时开发态）
     this.buildApi = buildSchema(initSchema);
     // 置入属性
     this.schemaInstance.loopDown(node => {
@@ -556,8 +651,8 @@ class DragModelPlugin {
       this.mApi.setAttributes(this.wrappedEditorId, {
         selectedNode: {
           node: info.node,
-          id: sifoDragSelectId
-        }
+          id: sifoDragSelectId,
+        },
       });
     }
   }

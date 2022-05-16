@@ -6,6 +6,13 @@
   },
   "children": [
     {
+      "component": "Button",
+      "id": "addChildren",
+      "attributes": {
+        "label": "直接添加子节点"
+      }
+    },
+    {
       "component": "Header",
       "id": "header",
       "attributes":{

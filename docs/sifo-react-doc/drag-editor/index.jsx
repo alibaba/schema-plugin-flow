@@ -41,6 +41,25 @@ const dragPluin = {
       mApi.addEventListener(event.key, 'onSave', (ctx, schema) => {
         console.log('this is edited schema:', schema);
       });
+      
+    }
+  },
+  addChildren: {
+    onComponentInitial: (params) => {
+      const { event, mApi } = params;
+      mApi.addEventListener(event.key, 'onClick', (ctx, schema) => {
+        const attrs = mApi.getAttributes('sifo_mplg_drag_editor_id');
+        console.log('addChildrenNode', attrs.addChildrenNode);
+        const id = Math.random().toString().substring(3, 6);
+        const newNode = {
+          id: "autoAdd_" + id,
+          component: "Button",
+          attributes: {
+            label: "直接添加" + id
+          }
+        };
+        attrs.addChildrenNode(newNode, 'main_id');
+      });
     }
   }
 }

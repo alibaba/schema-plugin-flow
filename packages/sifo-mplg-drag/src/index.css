@@ -1,12 +1,12 @@
 .sifo-mplg-drag-editor .sifo-mplg-drag-render-plate *[draggable]:hover{
-  outline: 1px dotted #4b90f9;
+  outline: 1px dotted #4b90f9 !important;
 }
 .sifo-drag {
   outline: 2px dashed #4b90f9 !important;
   box-shadow: none !important;
 }
 .sifo-drag-selected {
-  box-shadow: 0 0 0px 1px #4b90f9;
+  box-shadow: 0 0 0px 1px #4b90f9 !important;
 }
 .sifo-drag-selected:hover{
   cursor: grab;
@@ -15,25 +15,25 @@
   cursor: grabbing;
 }
 .sifo-drop-insert{
-  box-shadow: 0 0 4px 1px #038e13;
+  box-shadow: 0 0 4px 1px #038e13 !important;
 }
 .sifo-drag-selected.sifo-drop-insert {
-  box-shadow: 0 0 4px 1px #038e13;
+  box-shadow: 0 0 4px 1px #038e13 !important;
 }
 .sifo-drop-pre-insert {
-  box-shadow: -1px -1px 4px 1px #36d3fa;
+  box-shadow: -1px -1px 4px 1px #36d3fa !important;
 }
 .sifo-drag-selected.sifo-drop-pre-insert {
-  box-shadow: -1px -1px 4px 1px #36d3fa;
+  box-shadow: -1px -1px 4px 1px #36d3fa !important;
 }
 .sifo-drop-pre-insert::before{
   content: '';
 }
 .sifo-drop-sub-insert {
-  box-shadow: 1px 1px 4px 1px #42d54e;
+  box-shadow: 1px 1px 4px 1px #42d54e !important;
 }
 .sifo-drag-selected.sifo-drop-sub-insert {
-  box-shadow: 1px 1px 4px 1px #42d54e;
+  box-shadow: 1px 1px 4px 1px #42d54e !important;
 }
 .sifo-drop-sub-insert::after{
   content: '';

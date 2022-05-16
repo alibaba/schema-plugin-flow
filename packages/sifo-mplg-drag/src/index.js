@@ -286,10 +286,10 @@ class DragModelPlugin {
    * @param {*} targetId 指定的节点id
    * @returns
    */
-  addChildrenNode = (newNode, targetId) => {
+  addChildNode = (newNode, targetId) => {
     const info = this.buildApi.getNodeInfo(targetId);
     if (!newNode || !targetId || !info) {
-      console.error('[sifo-mplg-drag] addChildrenNode: params error');
+      console.error('[sifo-mplg-drag] addChildNode: params error');
       return false;
     }
     const validated = this.onDragAddNode(newNode);
@@ -297,12 +297,12 @@ class DragModelPlugin {
     const item = this.schemaInstance.nodeMap[targetId]; // 运行时schema
     // 当前目标不允许拖入，或拖入自身节点，直接返回
     if (!item || !item.__droppable__ || newNode.id === targetId) {
-      console.error('[sifo-mplg-drag] addChildrenNode: targetId __droppable__ false');
+      console.error('[sifo-mplg-drag] addChildNode: targetId __droppable__ false');
       return false;
     }
     // 当前目标不允许增加子节点，直接返回
     if (!item.__canAddChild__) {
-      console.error('[sifo-mplg-drag] addChildrenNode: targetId __canAddChild__ false');
+      console.error('[sifo-mplg-drag] addChildNode: targetId __canAddChild__ false');
       return false;
     }
     this.currentTargetId = targetId;
@@ -573,7 +573,7 @@ class DragModelPlugin {
       updateId: this.updateId,
       replaceComponent: this.replaceComponent,
       deleteNode: this.doDeleteNode,
-      addChildrenNode: this.addChildrenNode,
+      addChildNode: this.addChildNode,
       getSchema: () => this.mApi.getEditedSchema(),
       getNodeInfo: id => this.buildApi.getNodeInfo(id),
       getDomById: id => this.dragDomRef[id],

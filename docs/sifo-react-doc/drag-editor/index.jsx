@@ -49,7 +49,7 @@ const dragPluin = {
       const { event, mApi } = params;
       mApi.addEventListener(event.key, 'onClick', (ctx, schema) => {
         const attrs = mApi.getAttributes('sifo_mplg_drag_editor_id');
-        console.log('addChildrenNode', attrs.addChildrenNode);
+        console.log('addChildNode', attrs.addChildNode);
         const id = Math.random().toString().substring(3, 6);
         const newNode = {
           id: "autoAdd_" + id,
@@ -58,7 +58,7 @@ const dragPluin = {
             label: "直接添加" + id
           }
         };
-        attrs.addChildrenNode(newNode, 'main_id');
+        attrs.addChildNode(newNode, 'main_id');
       });
     }
   }

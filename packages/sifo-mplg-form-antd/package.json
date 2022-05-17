@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-mplg-form-antd",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "author": "FrominXu",
   "description": "sifo Form with ant-design.",
   "license": "MIT",

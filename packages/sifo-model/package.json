@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-model",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "author": "FrominXu",
   "description": "A highly extensible JavaScript library, abbreviated as Sifo. 高扩展性、可二开的插件式前端开发框架",
   "license": "MIT",

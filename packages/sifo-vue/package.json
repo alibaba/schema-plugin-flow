@@ -1,6 +1,6 @@
 {
   "name": "@schema-plugin-flow/sifo-vue",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "author": "FrominXu",
   "description": "A highly extensible JavaScript library, for Vue. 高扩展性、可二开的插件式前端开发框架",
   "license": "MIT",
@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@schema-plugin-flow/sifo-model": "^1.4.2",
-    "@schema-plugin-flow/sifo-singleton": "^1.1.4",
+    "@schema-plugin-flow/sifo-model": "^1.5.0",
+    "@schema-plugin-flow/sifo-singleton": "^1.2.0",
     "classnames": "^2.2.6",
     "uuid": "^3.3.2"
   },

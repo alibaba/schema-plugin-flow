@@ -93,12 +93,12 @@ sifoModel.destroy();
       
 在模型销毁前，调用实例的 `destroy` 方法将先后触发页面插件和模型插件的 `onDestroy` 生命周期方法，插件可在此时进行一些数据清除等操作。
 
-* `render`：【11】说明：非显式方法，模型渲染，调用的是实例化参数 refreshApi方法。
+* `render`：【12】说明：非显式方法，模型渲染，调用的是实例化参数 refreshApi方法。
 
 #### componentPlugin 组件插件
   *type: object*
-  * `onComponentInitial`:【8】说明：组件初始化
-  * `afterPageRender`: 【14】说明：页面渲染后, 这时组件一般（不能保证）已经渲染
+  * `onComponentInitial`:【9】说明：组件初始化
+  * `afterPageRender`: 【15】说明：页面渲染后, 这时组件一般（不能保证）已经渲染
 
 > 代码示例
 ```javascript
@@ -138,10 +138,10 @@ const componentPlugin = {
 #### pagePlugin 页面插件
   *type: object*
   * `onNodePreprocess`:【2】说明： 对节点动态修改
-  * `onPageInitial`:【7】说明：页面初始化
-  * `beforeRender`:【9】说明：渲染前
-  * `afterRender`:【13】说明：渲染后
-  * `onDestroy`: 【16】 说明：`destroy` 被调用时触发
+  * `onPageInitial`:【8】说明：页面初始化
+  * `beforeRender`:【10】说明：渲染前
+  * `afterRender`:【14】说明：渲染后
+  * `onDestroy`: 【17】 说明：`destroy` 被调用时触发
 
 > 代码示例
 ```javascript
@@ -185,8 +185,9 @@ const pagePlugin = {
   * `onComponentsWrap`: 【4】说明：组件包装
   * `onSchemaInstantiated`:【5】 说明：schema实例化
   * `onModelApiCreated`: 【6】说明：模型接口创建，仅在此周期内能够修改mApi接口
-  * `onReadyToRender`:【10】 说明：即将进行渲染
-  * `afterRender`:【12】说明：渲染后
+  * `onModelApiReady`: 【7】说明：mApi 装饰完成
+  * `onReadyToRender`:【11】 说明：即将进行渲染
+  * `afterRender`:【13】说明：渲染后
   * `onDestroy`: 【17】 说明：`destroy` 被调用时触发
 
 > 代码示例
@@ -240,7 +241,7 @@ class modelPlugin {
     applyModelApiMiddleware('formatFunc', (next, isEnd) => value => {
       console.log('modeltest: formatFunc in mApi', this.mApi.testFunc, args);
       let formatValue = value;
-      if (invalidate(value){
+      if (invalidate(value)){
         // 是最后一个方法
         if (isEnd) {
           return 'invalidate';
@@ -251,10 +252,13 @@ class modelPlugin {
       return next(formatValue);
     });
   }
+  onModelApiReady = params => {
+    const { mApi, event } = params;
+  }
   onReadyToRender = params => {
     const { mApi, event } = params;
   }
-  afterRender: params => {}
+  afterRender = params => {}
   onDestroy = parmas => {
     // do something
   }
@@ -281,7 +285,7 @@ const plugins = [
 ```
 
 ## 生命周期关系图
-![生命周期说明图](https://img.alicdn.com/tfs/TB14NFQhoz1gK0jSZLeXXb9kVXa-1036-1643.png)
+![生命周期说明图](https://img.alicdn.com/imgextra/i2/O1CN01M2rVnq1I73QoQX4sD_!!6000000000845-2-tps-1554-2466.png)
 
 ## mApi 模型接口
 

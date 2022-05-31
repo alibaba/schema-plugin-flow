@@ -72,6 +72,7 @@ class FormModelPlugin {
   }
   onModelApiCreated = params => {
     const { mApi, event } = params;
+    console.log('onModelApiCreated.mApi.submit', mApi.submit, event);
     this.mApi = mApi;
     if (!this.formId) return;
     const formRef = {
@@ -121,6 +122,16 @@ class FormModelPlugin {
         }, false);
       });
     }, true);
+  }
+  onModelApiReady = params => { 
+    const { mApi, event } = params;
+    console.log('onModelApiReady.mApi.submit', mApi.submit, event);
+  }
+  afterRender = params => {
+    console.log('model afterRender');
+  }
+  onDestroy = () => { 
+    console.log('model onDestroy');
   }
 }
 

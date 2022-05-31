@@ -37,6 +37,7 @@ enum MODEL_HANDLER {
   onComponentsWrap = 'onComponentsWrap', // 4
   onSchemaInstantiated = 'onSchemaInstantiated', // 5 schema实例化
   onModelApiCreated = 'onModelApiCreated', // 6 模型接口创建
+  onModelApiReady = 'onModelApiReady', // 7
   onReadyToRender = 'onReadyToRender', // 10 即将进行渲染
   afterRender = 'afterRender', // 12
   onDestroy = 'onDestroy', // 17
@@ -171,6 +172,7 @@ export default class Model {
         this.onComponentsWrap,
         this.onSchemaInstantiated,
         this.onModelApiCreated,
+        this.onModelApiReady,
         this.onPageInitial,
         this.onComponentInitial,
         this.beforeRender,
@@ -403,6 +405,14 @@ export default class Model {
     if (this.modelApiRef) {
       this.modelApiRef(refApi);
     }
+  }
+  /**
+   * mApi 修饰完成
+   */
+  onModelApiReady = () => { 
+    const handlers = this.getModelHandlers(MODEL_HANDLER.onModelApiReady);
+    const event = { eventType: MODEL_HANDLER.onModelApiReady };
+    this.reducer(handlers, event);
   }
   /**
    * 界面初始化，处理一些全局的逻辑

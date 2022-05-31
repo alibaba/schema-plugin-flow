@@ -354,6 +354,10 @@ declare module '@schema-plugin-flow/sifo-model' {
      */
     onModelApiCreated?: PluginHandler; // 6 模型接口创建
     /**
+     * mApi 修饰完成
+     */
+    onModelApiReady?: PluginHandler; // 7
+    /**
      * 即将进行渲染
      */
     onReadyToRender?: PluginHandler; // 10 即将进行渲染

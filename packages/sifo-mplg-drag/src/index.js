@@ -447,7 +447,7 @@ class DragModelPlugin {
   }
   onDrop = (id, e) => {
     // const sId = e.dataTransfer.getData('id');
-    // console.log('onDrop drag to drop:', this.currentDragId, this.dropType, this.currentTargetId);
+    console.log('onDrop drag to drop:', this.currentDragId, this.dropType, this.currentTargetId);
     preventDefault(e);
     if (this.currentTargetId) {
       const targetDom = this.dragDomRef[this.currentTargetId];

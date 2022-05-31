@@ -41,7 +41,7 @@ schema 是以节点来代表每一个分块，每个节点主要包含 id、comp
 Sifo Model 以生命周期为主线来运行，其生命周期中会执行注册的插件，三类插件分别承载不同范畴的职责。用一个人的神经系统举例，一个页面中，模型插件就像大脑，决定了页面的主要能力，比如一个表单模型插件决定了页面具有表单的能力；页面插件就像是脊髓神经，决定了页面整体上的功能，比如页面的初始数据等；模型插件就像周围神经系统，管理各个部件的属性与运作，比如按钮点击事件等。    
 Sifo Model 在执行插件生命周期方法，或组件事件触发时，会在上下文中提供 mApi，这个接口是操作 schema 的主要手段，比如有更改属性的 setAttributes，更改渲染组件的  replaceComponent，追加事件监听的 addEventListener 等。     
 * 下图是一个完整的生命周期流程与说明    
-![生命周期说明图](https://img.alicdn.com/tfs/TB14NFQhoz1gK0jSZLeXXb9kVXa-1036-1643.png)
+![生命周期说明图](https://img.alicdn.com/imgextra/i2/O1CN01M2rVnq1I73QoQX4sD_!!6000000000845-2-tps-1554-2466.png)
 #### 使用示例
 下面来看一些具体的例子    
 例一：拿到 schema 后，在页面中修改 schema。这个可以用页面插件的 onNodePreprocess 实现。

@@ -307,6 +307,18 @@ class DragModelPlugin {
     }
     this.currentTargetId = targetId;
     const targetIdx = this.buildApi.getNodeIndex(targetId);
+    const dropTarget = info;
+    const filter = this.dropFilter({
+      dragType: this.dragType,
+      dropTarget,
+      dragTarget: this.currentAddNode,
+      getNodeInfo: this.buildApi.getNodeInfo,
+    });
+    if (filter === false) {
+      this.dropType = 'cancel';
+      console.info('[sifo-mplg-drag] dropFilter return false, so addChildNode canceled');
+      return false;
+    }
     return this.doAdd('add', info, targetIdx);
   }
   doDeleteNode = id => {

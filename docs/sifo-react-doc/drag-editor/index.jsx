@@ -110,6 +110,7 @@ const FormDemo = (props) => {
             },
             dropFilter: (args) => {
               console.log('dropFilter', args);
+              // if (args.dragType === 'add' && args.dragTarget.component === 'Button') return false;
               return true;
             },
             getDraggable: (node) => {

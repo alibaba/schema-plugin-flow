@@ -5,17 +5,24 @@ function regExpValidate(rule, value, addInvalidate) {
   if (!needValidate) return;
   const { regExp, message, skipEmpty } = rule;
   if (skipEmpty && isEmpty(value)) return;
-  if (isEmpty(regExp) || !(/^\/[\S\s]*\/$/g.test(regExp))) {
-    console.warn(`${regExp}is not a valid regExp`);
-    return;
-  }
-  try {
-    const reg = new RegExp(regExp.substr(1, regExp.length - 2));
-    if (!reg.test(value)) {
-      addInvalidate({ passed: false, status: 'error', message: message || '正则校验不通过' });
+  let reg;
+  // 是正则表达式，则直接运行，否则实例化为正则表达式
+  if (regExp instanceof RegExp) {
+    reg = regExp;
+  } else {
+    if (isEmpty(regExp) || !(/^\/[\S\s]*\/$/g.test(regExp))) {
+      console.warn(`${regExp}is not a valid regExp`);
+      return;
     }
-  } catch (e) {
-    console.error(e);
+    try {
+      reg = new RegExp(regExp.substr(1, regExp.length - 2));
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  }
+  if (!reg.test(value)) {
+    addInvalidate({ passed: false, status: 'error', message: message || '正则校验不通过' });
   }
 }
 

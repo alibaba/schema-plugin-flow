@@ -239,7 +239,7 @@ class DragModelPlugin {
       );
     } else {
       // addChild
-      const childLen = targetInfo?.childrenLength || 0;
+      const childLen = targetInfo ?.childrenLength || 0;
       schema = this.buildApi.moveChildren(
         this.currentDragId,
         this.currentTargetId,
@@ -266,7 +266,7 @@ class DragModelPlugin {
         targetIdx + 1
       );
     } else {
-      const childLen = targetInfo?.childrenLength || 0;
+      const childLen = targetInfo ?.childrenLength || 0;
       schema = this.buildApi.addChildren(
         this.currentAddNode,
         this.currentTargetId,
@@ -648,34 +648,34 @@ class DragModelPlugin {
       return JSON.parse(initRawSchema);
     };
     applyModelApiMiddleware('getInitialSchema', getInitialSchema);
-    const reloadPage = (next) => (params, useEditedSchema = false) => {
-      const selectedId = this.selectedId;
+    const reloadPage = next => (args, useEditedSchema = false) => {
+      const { selectedId } = this;
       this.reset(true);
       // 处理完当前事件再reload
       setTimeout(() => {
-        const externals = this.mApi.getExternals() || {};
-        if(useEditedSchema){
+        const oldExternals = this.mApi.getExternals() || {};
+        if (useEditedSchema) {
           // 使用设计后的schema,一旦使用，那之后的渲染都是在此schema之上，与initSchema不再相同
-          let schema = this.buildApi.renderSchema;
+          const schema = this.buildApi.renderSchema;
           next({
             schema,
-            ...params,
+            ...args,
             externals: {
               sifoDragSelectId: selectedId,
-              ...((params || {}).externals || externals),
-              __initRawSchema__: externals.__initRawSchema__
+              ...((args || {}).externals || oldExternals),
+              __initRawSchema__: oldExternals.__initRawSchema__
             }
           });
-        }else{
+        } else {
           // 默认回归到真正初始的schema上
-          let schema = this.mApi.getInitialSchema();
+          const schema = this.mApi.getInitialSchema();
           next({
             schema,
-            ...params,
+            ...args,
             externals: {
               sifoDragSelectId: schema.id,
-              ...((params || {}).externals || externals),
-              __initRawSchema__: externals.__initRawSchema__
+              ...((args || {}).externals || oldExternals),
+              __initRawSchema__: oldExternals.__initRawSchema__
             }
           });
         }

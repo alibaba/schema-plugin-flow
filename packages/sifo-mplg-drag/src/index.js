@@ -167,17 +167,13 @@ class DragModelPlugin {
   }
   doReloadPage = (schema, selectedId) => {
     const externals = this.mApi.getExternals() || {};
-    this.reset(true);
-    // 处理完当前事件再reload
-    setTimeout(() => {
-      this.mApi.reloadPage({
-        schema,
-        externals: {
-          ...externals,
-          sifoDragSelectId: selectedId,
-        },
-      });
-    }, 100);
+    this.mApi.reloadPage({
+      schema,
+      externals: {
+        ...externals,
+        sifoDragSelectId: selectedId,
+      },
+    });
   }
   replaceComponent = (id, componentName, needReload = false) => {
     const schema = this.buildApi.replaceComponent(id, componentName);
@@ -311,12 +307,17 @@ class DragModelPlugin {
     const filter = this.dropFilter({
       dragType: this.dragType,
       dropTarget,
-      dragTarget: this.currentAddNode,
+      dragTarget: {
+        node: this.currentAddNode,
+        index: -1,
+        parentId: '',
+        childrenLength: this.currentAddNode.length || 0
+      },
       getNodeInfo: this.buildApi.getNodeInfo,
     });
     if (filter === false) {
       this.dropType = 'cancel';
-      console.info('[sifo-mplg-drag] dropFilter return false, so addChildNode canceled');
+      console.error('[sifo-mplg-drag] dropFilter return false, so addChildNode canceled');
       return false;
     }
     return this.doAdd('add', info, targetIdx);
@@ -467,18 +468,21 @@ class DragModelPlugin {
         modifyCss(targetDom, [], ['insert']);
       }
       const { dropType } = this;
-      if (!dropType || dropType === 'cancel') return;
+      if (!dropType || dropType === 'cancel') { this.reset(); return; }
       const info = this.buildApi.getNodeInfo(this.currentTargetId);
       if (!info) {
         console.error(`[sifo-mplg-drag] node info not found: ${this.currentTargetId}`);
         this.dropType = 'cancel';
+        this.reset();
         return;
       }
       if (dropType === 'addChild') {
         // addChild
         const node = this.schemaInstance.nodeMap[this.currentTargetId] || {};
         if (!node.__canAddChild__) {
+          console.error(`[sifo-mplg-drag] node can't add child: ${this.currentTargetId}`);
           this.dropType = 'cancel';
+          this.reset();
           return;
         }
       }
@@ -487,7 +491,12 @@ class DragModelPlugin {
         const dragTarget =
           this.dragType === 'move'
             ? this.buildApi.getNodeInfo(this.currentDragId)
-            : this.currentAddNode;
+            : {
+              node: this.currentAddNode,
+              index: -1,
+              parentId: '',
+              childrenLength: this.currentAddNode.length || 0
+            };
         const dropTarget =
           this.dropType === 'addChild'
             ? info
@@ -499,8 +508,9 @@ class DragModelPlugin {
           getNodeInfo: this.buildApi.getNodeInfo,
         });
         if (filter === false) {
+          console.error('[sifo-mplg-drag] dropFilter return false, so drop canceled');
           this.dropType = 'cancel';
-          console.info('[sifo-mplg-drag] dropFilter return false, so drop canceled');
+          this.reset();
           return;
         }
       }
@@ -633,12 +643,46 @@ class DragModelPlugin {
       initRawSchema = JSON.stringify(initSchema);
       externals.__initRawSchema__ = initRawSchema;
     }
-    // 先取得渲染schema，再覆盖getInitialSchema方法
+    // 先取得渲染schema，再覆盖getInitialSchema方法，保证取到的是真正初始时的schema
     const getInitialSchema = () => () => {
       return JSON.parse(initRawSchema);
     };
     applyModelApiMiddleware('getInitialSchema', getInitialSchema);
-    // 只能用初始schema编辑（设计时开发态）
+    const reloadPage = (next) => (params, useEditedSchema = false) => {
+      const selectedId = this.selectedId;
+      this.reset(true);
+      // 处理完当前事件再reload
+      setTimeout(() => {
+        const externals = this.mApi.getExternals() || {};
+        if(useEditedSchema){
+          // 使用设计后的schema,一旦使用，那之后的渲染都是在此schema之上，与initSchema不再相同
+          let schema = this.buildApi.renderSchema;
+          next({
+            schema,
+            ...params,
+            externals: {
+              sifoDragSelectId: selectedId,
+              ...((params || {}).externals || externals),
+              __initRawSchema__: externals.__initRawSchema__
+            }
+          });
+        }else{
+          // 默认回归到真正初始的schema上
+          let schema = this.mApi.getInitialSchema();
+          next({
+            schema,
+            ...params,
+            externals: {
+              sifoDragSelectId: schema.id,
+              ...((params || {}).externals || externals),
+              __initRawSchema__: externals.__initRawSchema__
+            }
+          });
+        }
+      }, 100);
+    };
+    applyModelApiMiddleware('reloadPage', reloadPage);
+    // 只能用初始schema编辑（设计时开发态）,并不是原始Schema
     this.buildApi = buildSchema(initSchema);
     // 置入属性
     this.schemaInstance.loopDown(node => {

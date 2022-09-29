@@ -13,6 +13,26 @@ Sifo 拖拽模型插件，在以任意组件与初始 Schema 渲染的基础上�
 | deleteChecker     |  func: (id, nodeInfo) => bool    |      节点是否可删除         |    () => true   |
 | SifoDragEditor     |  React.Component    |      拖拽工作面板组件，可使用内置的SifoDragEditor，也可以自定义拖拽工作面板，方法请参考内置的组件         |   null    |
 
+### 设计器 props:
+* id: 设计器节点id
+* instanceId: sifoApp 实例id
+* onDragStart: 拖入添加时调用，参数是节点数据 (newNode)=> bool;
+* onDragEnd: 拖入动作结束时调用
+* updateAttributes: 更新节点属性，(id, attributes, needReload = false) => {
+* updateId: 更新节点id，(id, newId) => void;
+* replaceComponent: 更新节点组件，(id, componentName, needReload = false) => void;
+* deleteNode: 删除指定节点，id=>void;
+* addChildNode: 添加子节点，(newNode, targetId) => bool;
+* getSchema: 获取编辑后的schema，等效于 () => this.mApi.getEditedSchema(),
+* getNodeInfo: 获取指定节点信息，id => info;
+* getDomById: 获取指定节点的DOM，id => Dom;
+* setSelectedId: 设置选中的节点id;
+
+
+## 扩展的 mApi 方法
+| 方法名            | 参数/类型               | 返回值类型             | 描述       |
+| ---------------- | -----------------------| --------------------- | ---------|
+| reloadPage       | (object?: { [externals] [, schema] [, plugins] [, components] }, useEditedSchema = false)    | ✘        | 创建新实例，重新加载页面，reloadPage 将重跑所有生命周期。useEditedSchema 表示是否使用编辑后的schema来渲染| 
 
 ## 使用示例
 

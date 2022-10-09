@@ -22,7 +22,9 @@ function renderLabel(h, props) {
   const mergedLabelCol = labelCol || { span: 8 };
   const labelColClassName = {
     'sifo-antdv-form-item-label': true,
-    'sifo-antdv-form-item-label-left': labelAlign === 'left'
+    'sifo-antdv-form-item-label-left': labelAlign === 'left',
+    'sifo-antdv-form-item-label-top': labelAlign === 'top',
+    [`sifo-antdv-form-item-label-text-${labelTextAlign || 'right'}`]: true
   };
   const labelClassName = {
     'sifo-antdv-form-item-required': required && validateDisabled !== true
@@ -35,9 +37,10 @@ function renderLabel(h, props) {
     class: labelColClassName,
     key: 'label',
   };
+  const LabelItem = labelAlign === 'top' ? 'div' : Col;
   return (label && hideLabel !== true) ? (
     h(
-      Col,
+      LabelItem,
       { ...colProps },
       [
         h(
@@ -53,7 +56,7 @@ function renderLabel(h, props) {
   ) : null;
 }
 function renderWrapper(h, props, opts, fieldNode) {
-  const { wrapperCol } = props;
+  const { wrapperCol, labelAlign } = props;
   const { errorMsg } = opts;
   const mergedWrapperCol = wrapperCol || { span: 16 };
   const controlWrapperClass = {
@@ -82,7 +85,8 @@ function renderWrapper(h, props, opts, fieldNode) {
     'sifo-antdv-form-item-control': true,
     'has-error': !!errorMsg, // 使用 antdv 的 Form 对 表单字段组件的样式
   };
-  return h(Col, { ...colProps }, [
+  const WrapperItem = labelAlign === 'top' ? 'div' : Col;
+  return h(WrapperItem, { ...colProps }, [
     h(
       'div',
       {

@@ -53,7 +53,8 @@ const plgs = [
         return {
           formItemProps: {
             labelCol: { span: 8 },
-            wrapperCol: { span: 16 }
+            wrapperCol: { span: 16 },
+            //labelTextAlign: "left"
           }
         };
       }

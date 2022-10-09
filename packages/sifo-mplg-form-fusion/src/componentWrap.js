@@ -21,6 +21,7 @@ function renderLabel(h, props) {
     hideLabel = false,
     labelAlign,
     labelCol,
+    labelTextAlign,
     rules = [],
     validateDisabled
   } = props;
@@ -31,7 +32,8 @@ function renderLabel(h, props) {
       'next-form-item-label': true,
       'sifo-fusion-form-item-label': true,
     },
-    `sifo-fusion-form-item-label-${labelAlign || 'left'}`
+    `sifo-fusion-form-item-label-${labelAlign || 'left'}`,
+    `sifo-fusion-form-item-label-text-${labelTextAlign || 'right'}`
   );
   const labelClassName = cls({
     'sifo-fusion-form-item-required': required && validateDisabled !== true

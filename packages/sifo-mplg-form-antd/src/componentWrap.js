@@ -20,6 +20,7 @@ function renderLabel(h, props) {
     hideLabel = false,
     labelAlign,
     labelCol,
+    labelTextAlign,
     rules = [],
     validateDisabled
   } = props;
@@ -29,7 +30,8 @@ function renderLabel(h, props) {
     {
       'sifo-antd-form-item-label': true
     },
-    `sifo-antd-form-item-label-${labelAlign || 'left'}`
+    `sifo-antd-form-item-label-${labelAlign || 'left'}`,
+    `sifo-antd-form-item-label-text-${labelTextAlign || 'right'}`
   );
   const labelClassName = cls({
     'sifo-antd-form-item-required': required && validateDisabled !== true

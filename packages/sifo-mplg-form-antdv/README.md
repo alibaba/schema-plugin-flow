@@ -118,6 +118,8 @@ SifoFormCore模型插件只有表单内核，不包含任何UI部分，UI可按�
 | rules           | 校验规则，见下文校验规则描述   | array  | - |
 | itemVisible     | 字段是否可见，即 display: none   | bool  | true |
 | itemClassName           | FormItem 上的样式   | string  | - |
+| labelAlign         | 标签对齐方式: 上下（top）、左右（left）  | 'left'/'top'  | 'left' |
+| labelTextAlign         | 标签文字对齐方式: 左（left）、右(right)  | 'left'/'right'  | 'right' |
 | labelCol           | 字段标签对应的 Col 属性  | string  | { span: 8 } |
 | wrapperCol         | 字段组件对应的 Col 属性  | string  | { span: 16 } |
 

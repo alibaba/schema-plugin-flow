@@ -15,6 +15,7 @@ function renderLabel(h, props) {
     hideLabel = false,
     labelAlign,
     labelCol,
+    labelTextAlign,
     rules = [],
     validateDisabled
   } = props;

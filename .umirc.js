@@ -24,7 +24,7 @@ export default {
         title: 'packages',
         children: [
           {
-            title: "sifo-mode",
+            title: "sifo-model",
             path: '../sifo-model'
           },
           {

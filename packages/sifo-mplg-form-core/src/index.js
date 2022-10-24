@@ -310,7 +310,9 @@ class FormCoreModelPlugin {
         const notPassed = result.details.filter(item => item.passed === false);
         result.passed = notPassed.length === 0;
         if (!result.passed && this.scrollToFirstError === true) {
-          this.mApi.scrollIntoView(notPassed[0].fieldKey);
+          setTimeout(() => {
+            this.mApi.scrollIntoView(notPassed[0].fieldKey);
+          }, 0);
         }
         return result;
       });

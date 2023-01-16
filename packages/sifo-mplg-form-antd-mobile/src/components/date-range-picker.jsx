@@ -12,11 +12,22 @@ class DateRangePicker extends React.Component {
   // originbodyScrollY = document.getElementsByTagName('body')[0].style.overflowY;
   constructor(props) {
     super(props);
-    const { dataType, format } = props;
+    const { dataType, format, value } = props;
     this.state = {
       show: false,
-      format: format || (dataType === 'dateTime' ? DATETIME : DATE)
+      format: format || (dataType === 'dateTime' ? DATETIME : DATE),
+      startTime: value?.startTime ? new Date(value?.startTime) : null,
+      endTime: value?.endTime ? new Date(value?.endTime) : null,
     };
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.value !== prevProps.value) {
+      const { value } = this.props;
+      this.setState({
+        startTime: value?.startTime ? new Date(value?.startTime) : null,
+        endTime: value?.endTime ? new Date(value?.endTime) : null,
+      });
+    }
   }
   onChange = (val) => {
     const [startTime, endTime] = val || [];
@@ -65,7 +76,7 @@ class DateRangePicker extends React.Component {
       setTriggerOnClick, itemClicked, resetItemClicked,
       extra, ...other } = this.props;
     const cls = classnames('sifo-adm-canlander', className);
-    const { show, format } = this.state;
+    const { show, format, startTime, endTime, } = this.state;
     return (
       <div className={cls}>
         <FieldContent
@@ -92,7 +103,7 @@ class DateRangePicker extends React.Component {
             }
           }
         />
-        <Popup
+        {show ? (<Popup
           visible={show}
           destroyOnClose
           onMaskClick={this.onCancel}
@@ -117,13 +128,15 @@ class DateRangePicker extends React.Component {
             <Calendar
               {...other}
               selectionMode="range"
-              defaultValue={[value?.startTime ? new Date(value?.startTime) : null, value?.endTime ? new Date(value?.endTime) : null]}
+              defaultValue={[startTime || null, endTime || null]}
+              value={[startTime || null, endTime || null]}
               onChange={this.onChange}
               onCancel={this.onCancel}
               visible={show}
             />
           </>
-        </Popup>
+        </Popup>) : null
+        }
       </div>
     );
   }
